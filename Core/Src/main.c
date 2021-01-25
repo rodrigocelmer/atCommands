@@ -101,19 +101,21 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  char rxBuf[10] = {'\0'};
+  char rxBuf[20] = {'\0'};
 
-//  txModule_turnOn();
-
-  txModule_transmit(AT_QPOWD);
+  txModule_turnOn();
+  txModule_receive(rxBuf);
+  txModule_receive(rxBuf);
 
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  txModule_receive(rxBuf);
 	  txModule_transmit(AT);
+	  txModule_receive(rxBuf);
+	  BREAKPOINT;
+	  txModule_transmit(AT_QPOWD);
 	  BREAKPOINT;
   }
   /* USER CODE END 3 */
@@ -244,13 +246,33 @@ void txModule_transmit(const char *txData)
 
 void txModule_receive(char *rxData)
 {
-//	uint8_t i = 0;
+	uint8_t timeout = 0;
+	uint32_t startTick, actualTick;
 
-//	do
-//	{
-		while(!(USART2->SR & USART_SR_RXNE));	//we wait to receive a information
-		*rxData = USART2->DR;						//store it in data
-//	}while(USART2->DR != '\n');
+	actualTick = HAL_GetTick();
+	startTick = actualTick;
+
+	while(!timeout)
+	{
+		if(USART2->SR & USART_SR_RXNE)
+		{
+			*rxData = USART2->DR;						//store it in data
+			rxData++;
+			actualTick = HAL_GetTick();
+			startTick = actualTick;
+		}
+		else
+		{
+			if(actualTick - startTick <= 1)
+			{
+				actualTick = HAL_GetTick();
+			}
+			else
+			{
+				timeout = 1;
+			}
+		}
+	}
 }
 /* USER CODE END 4 */
 
