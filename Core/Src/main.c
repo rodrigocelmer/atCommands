@@ -104,8 +104,6 @@ int main(void)
   char rxBuf[20] = {'\0'};
 
   txModule_turnOn();
-  txModule_receive(rxBuf);
-  txModule_receive(rxBuf);
 
   while (1)
   {
@@ -115,8 +113,13 @@ int main(void)
 	  txModule_transmit(AT);
 	  txModule_receive(rxBuf);
 	  BREAKPOINT;
-	  txModule_transmit(AT_QPOWD);
-	  BREAKPOINT;
+
+	  if(!(GPIOC->IDR & GPIO_IDR_ID13))
+	  {
+		  while(!(GPIOC->IDR & GPIO_IDR_ID13));
+		  txModule_transmit(AT_QPOWD);
+		  while(1);
+	  }
   }
   /* USER CODE END 3 */
 }
@@ -167,9 +170,12 @@ void SystemClock_Config(void)
 void gpioInit(void)
 {
 	RCC->AHB1ENR	|= 	RCC_AHB1ENR_GPIOAEN;
-
 	GPIOA->MODER	|= 	(0b01 << GPIO_MODER_MODE1_Pos);
 	GPIOA->ODR		|= 	GPIO_ODR_OD1;
+
+	RCC->AHB1ENR	|=	RCC_AHB1ENR_GPIOCEN;
+	GPIOC->MODER	|=	(0b00 << GPIO_MODER_MODE13_Pos);
+	GPIOC->PUPDR	|=	(0b00 << GPIO_PUPDR_PUPD13_Pos);
 }
 
 void uartInit(void)
