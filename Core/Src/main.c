@@ -166,6 +166,8 @@ int main(void)
 	  txModule_receive(rxBuf);
 	  breakpoint();
 
+	  delay_ms(5000);
+
 	  txModule_transmit(AT_CFUN1);
 	  txModule_receive(rxBuf);
 	  breakpoint();
