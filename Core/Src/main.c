@@ -61,28 +61,15 @@ const char AT_CEREG[]			= {"AT+CEREG?\r\n\0"};
 const char AT_CGATT0[]			= {"AT+CGATT=0\r\n\0"};
 const char AT_CGATT1[]			= {"AT+CGATT=1\r\n\0"};
 const char AT_CSQ[]				= {"AT+CSQ\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
-//const char []	= {"\r\n\0"};
+
+//MQTT commands
+const char AT_QMTOPEN[]			= {"AT+QMTOPEN=1,\"tailor.cloudmqtt.com\",13291\r\n\0"};
+const char AT_QMTCLOSE[]		= {"AT+QMTCLOSE=1\r\n\0"};
+const char AT_QMTCONN[]			= {"AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n\0"};
+const char AT_QMTDISC[]			= {"AT+QMTDISC=1\r\n\0"};
+const char AT_QMTSUB[]			= {"AT+QMTSUB=1,1,\"celmer\",1\r\n\0"};
+const char AT_QMTUNS[]			= {"AT+QMTUNS=1,1,\"celmer\"\r\n\0"};
+const char AT_QMTPUBEX[]		= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"test msg\"\r\n\0"};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
