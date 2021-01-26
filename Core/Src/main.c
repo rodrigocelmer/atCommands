@@ -70,7 +70,7 @@ const char AT_QMTCONN[]			= {"AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0
 const char AT_QMTDISC[]			= {"AT+QMTDISC=1\r\n\0"};
 const char AT_QMTSUB[]			= {"AT+QMTSUB=1,1,\"celmer\",1\r\n\0"};
 const char AT_QMTUNS[]			= {"AT+QMTUNS=1,1,\"celmer\"\r\n\0"};
-const char AT_QMTPUBEX[]		= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"test msg\"\r\n\0"};
+const char AT_QMTPUBEX[]		= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"many man\"\r\n\0"};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -372,6 +372,7 @@ void txModule_receive(char *rxData)
 {
 	uint8_t timeout = 0;
 	uint32_t startTick, actualTick;
+	uint32_t bufCount = 0;
 
 	actualTick = HAL_GetTick();
 	startTick = actualTick;
@@ -380,8 +381,22 @@ void txModule_receive(char *rxData)
 	{
 		if(USART2->SR & USART_SR_RXNE)
 		{
-			*rxData = USART2->DR;						//store it in data
-			rxData++;
+			USART2->SR &= ~USART_SR_RXNE;
+			if((USART2->DR != '\r') && (USART2->DR != '\n'))
+			{
+//				*rxData = USART2->DR;						//store it in data
+//				rxData++;
+				rxData[bufCount] = USART2->DR;
+				bufCount++;
+			}
+			else
+			{
+				if((bufCount != 0) && (rxData[bufCount - 1] != ' '))
+				{
+					rxData[bufCount] = ' ';
+					bufCount++;
+				}
+			}
 			actualTick = HAL_GetTick();
 			startTick = actualTick;
 		}
@@ -393,6 +408,7 @@ void txModule_receive(char *rxData)
 			}
 			else
 			{
+				rxData[bufCount - 1] = '\0';
 				timeout = 1;
 			}
 		}
