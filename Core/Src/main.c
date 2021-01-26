@@ -104,6 +104,7 @@ int main(void)
   char rxBuf[20] = {'\0'};
 
   txModule_turnOn();
+  delay_ms(10000);
 
   while (1)
   {
