@@ -45,8 +45,44 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-const char AT[5]		= {'A','T','\r','\n','\0'};
-const char AT_QPOWD[11] = {'A','T','+','Q','P','O','W','D','\r','\n','\0'};
+const char AT[]					= {"AT\r\n\0"};
+const char AT_QPOWD[] 			= {"AT+QPOWD\r\n\0"};
+const char AT_CPIN[]			= {"AT+CPIN?\r\n\0"};
+const char AT_QCFG_NWSCANMODE[]	= {"AT+QCFG=\"NWSCANMODE\",0\r\n\0"};
+const char AT_QCFG_NWSCANSEQ[]	= {"AT+QCFG=\"NWSCANSEQ\",020103\r\n\0"};
+const char AT_QCFG_IOTOPMODE[]	= {"AT+QCFG=\"IOTOPMODE\",2\r\n\0"};
+const char AT_QCFG_BAND[]		= {"AT+QCFG=\"BAND\",0XF,0,0X8000004\r\n\0"};
+const char AT_QICSGP[]			= {"\r\n\0"};
+const char AT_CFUN0[]			= {"AT+CFUN=0\r\n\0"};
+const char AT_CFUN1[]			= {"AT+CFUN=1\r\n\0"};
+const char AT_CREG[]			= {"AT+CREG?\r\n\0"};
+const char AT_CGREG[]			= {"AT+CGREG?\r\n\0"};
+const char AT_CEREG[]			= {"AT+CEREG?\r\n\0"};
+const char AT_CGATT0[]			= {"AT+CGATT=0\r\n\0"};
+const char AT_CGATT1[]			= {"AT+CGATT=1\r\n\0"};
+const char AT_CSQ[]				= {"AT+CSQ\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
+//const char []	= {"\r\n\0"};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
