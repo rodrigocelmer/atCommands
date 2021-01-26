@@ -34,7 +34,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define BREAKPOINT	asm("nop")
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -78,6 +77,7 @@ void SystemClock_Config(void);
 void gpioInit(void);
 void uartInit(void);
 void delay_ms(uint32_t time_ms);
+void breakpoint(void);
 void txModule_turnOn(void);
 void txModule_turnOff(void);
 void txModule_reset(void);
@@ -87,7 +87,7 @@ void txModule_receive(char *rxData);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+char rxBuf[100] = {'\0'};
 /* USER CODE END 0 */
 
 /**
@@ -124,8 +124,6 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  char rxBuf[20] = {'\0'};
-
   txModule_turnOn();
   delay_ms(10000);
 
@@ -134,16 +132,92 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  txModule_transmit(AT);
+	  txModule_transmit(AT_CPIN);
 	  txModule_receive(rxBuf);
-	  BREAKPOINT;
+	  breakpoint();
 
-	  if(!(GPIOC->IDR & GPIO_IDR_ID13))
-	  {
-		  while(!(GPIOC->IDR & GPIO_IDR_ID13));
-		  txModule_transmit(AT_QPOWD);
+	  txModule_transmit(AT_QCFG_NWSCANMODE);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_QCFG_NWSCANSEQ);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_QCFG_IOTOPMODE);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_QCFG_BAND);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_QICSGP);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_CFUN0);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_CFUN1);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_CREG);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_CGREG);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_CEREG);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_CSQ);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_CGATT1);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_QMTOPEN);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_QMTCONN);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_QMTPUBEX);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_QMTDISC);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_QMTCLOSE);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_CGATT0);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_QPOWD);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+//	  if(!(GPIOC->IDR & GPIO_IDR_ID13))
+//	  {
+//		  while(!(GPIOC->IDR & GPIO_IDR_ID13));
+//		  txModule_transmit(AT_QPOWD);
 		  while(1);
-	  }
+//	  }
   }
   /* USER CODE END 3 */
 }
@@ -236,6 +310,10 @@ void delay_ms(uint32_t time_ms)
 	}while(actualTick - startTick < time_ms);
 }
 
+void breakpoint(void)
+{
+	asm("nop");
+}
 /*
  * TX Module functions
  */
