@@ -60,6 +60,8 @@ const char AT_CEREG[]			= {"AT+CEREG?\r\n\0"};
 const char AT_CGATT0[]			= {"AT+CGATT=0\r\n\0"};
 const char AT_CGATT1[]			= {"AT+CGATT=1\r\n\0"};
 const char AT_CSQ[]				= {"AT+CSQ\r\n\0"};
+const char ATE0[]				= {"ATE0\r\n\0"};
+const char AT_QNWINFO[]			= {"AT+QNWINFO\r\n\0"};
 
 //MQTT commands
 const char AT_QMTOPEN[]			= {"AT+QMTOPEN=1,\"tailor.cloudmqtt.com\",13291\r\n\0"};
@@ -132,6 +134,10 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  txModule_transmit(ATE0);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
 	  txModule_transmit(AT_CPIN);
 	  txModule_receive(rxBuf);
 	  breakpoint();
@@ -173,6 +179,10 @@ int main(void)
 	  breakpoint();
 
 	  txModule_transmit(AT_CEREG);
+	  txModule_receive(rxBuf);
+	  breakpoint();
+
+	  txModule_transmit(AT_QNWINFO);
 	  txModule_receive(rxBuf);
 	  breakpoint();
 
@@ -313,6 +323,12 @@ void delay_ms(uint32_t time_ms)
 void breakpoint(void)
 {
 	asm("nop");
+
+	uint8_t i = 0;
+	for(i=0; i<100; i++)
+	{
+		rxBuf[i] = '\0';
+	}
 }
 /*
  * TX Module functions
