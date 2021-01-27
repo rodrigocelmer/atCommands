@@ -30,10 +30,27 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+typedef struct SIMcard_check {
+	char 		cmd[14];		//AT+CPIN?\r\n\0
+	uint32_t	timeout;
+}sSIMcardCheck_t;
+
+typedef struct radioConfig {
+	char		cmd[62];		//AT+QICSGP=1,1,\"virtueyes.com.br\",\"virtu\",\"virtu\",3\r\n\0
+	uint32_t	timeout;
+}sRadioConfig_t;
+
+typedef struct mqttCmds {
+	char		cmd[62];		//AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n\0
+	uint32_t	timeout;
+}sMqttCmds_t;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define SIM_CARD_CHECK_TIMEOUT	5000
+#define	RADIO_CONFIG_TIMEOUT	300
+#define MQTT_CMDS_TIMEOUT		15000
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -67,7 +84,9 @@ char rxBuf[100] = {'\0'};
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+//	sSIMcardCheck_t	simCard;
+//	sRadioConfig_t	radioConfig;
+//	sMqttCmds_t		mqttCmds;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -94,6 +113,10 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+//  simCard.timeout 		= SIM_CARD_CHECK_TIMEOUT;
+//  radioConfig.timeout	= RADIO_CONFIG_TIMEOUT;
+//  mqttCmds.timeout		= MQTT_CMDS_TIMEOUT;
+
   radio_turnOn();
   delay_ms(10000);
 
@@ -102,94 +125,72 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  radio_transmit(ATE0);
-	  radio_receive(rxBuf);
+	  radio_transmit(ATE0, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_CPIN);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_CPIN, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_QCFG_NWSCANMODE);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_QCFG_NWSCANMODE, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_QCFG_NWSCANSEQ);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_QCFG_NWSCANSEQ, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_QCFG_IOTOPMODE);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_QCFG_IOTOPMODE, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_QCFG_BAND);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_QCFG_BAND, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_QICSGP);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_QICSGP, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_CFUN0);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_CFUN0, rxBuf);
 	  breakpoint();
 
 	  delay_ms(5000);
 
-	  radio_transmit(AT_CFUN1);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_CFUN1, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_CREG);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_CREG, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_CGREG);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_CGREG, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_CEREG);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_CEREG, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_QNWINFO);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_QNWINFO, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_CSQ);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_CSQ, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_CGATT1);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_CGATT1, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_QMTOPEN);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_QMTOPEN, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_QMTCONN);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_QMTCONN, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_QMTPUBEX);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_QMTPUBEX, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_QMTDISC);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_QMTDISC, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_QMTCLOSE);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_QMTCLOSE, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_CGATT0);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_CGATT0, rxBuf);
 	  breakpoint();
 
-	  radio_transmit(AT_QPOWD);
-	  radio_receive(rxBuf);
+	  radio_transmit(AT_QPOWD, rxBuf);
 	  breakpoint();
 
 //	  if(!(GPIOC->IDR & GPIO_IDR_ID13))

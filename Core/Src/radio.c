@@ -3,6 +3,8 @@
 #include "string.h"
 #include "main.h"
 
+void radioResponse(char *response);
+
 void delay_ms(uint32_t time_ms)
 {
 	uint32_t startTick, actualTick;
@@ -37,7 +39,7 @@ void radio_reset(void)
 	GPIOA->ODR	 |= GPIO_ODR_OD1;
 }
 
-void radio_transmit(const char *txData)
+void radio_transmit(const char *txData, char *rxData)
 {
 	uint8_t i = 0, txDataSize = 0;
 
@@ -49,9 +51,10 @@ void radio_transmit(const char *txData)
 		USART2->DR = *txData;
 		txData++;
 	}
+	radioResponse(rxData);
 }
 
-void radio_receive(char *rxData)
+void radioResponse(char *response)
 {
 	uint8_t timeout = 0;
 	uint32_t startTick, actualTick;
@@ -69,14 +72,14 @@ void radio_receive(char *rxData)
 			{
 //				*rxData = USART2->DR;						//store it in data
 //				rxData++;
-				rxData[bufCount] = USART2->DR;
+				response[bufCount] = USART2->DR;
 				bufCount++;
 			}
 			else
 			{
-				if((bufCount != 0) && (rxData[bufCount - 1] != ' '))
+				if((bufCount != 0) && (response[bufCount - 1] != ' '))
 				{
-					rxData[bufCount] = ' ';
+					response[bufCount] = ' ';
 					bufCount++;
 				}
 			}
@@ -91,7 +94,7 @@ void radio_receive(char *rxData)
 			}
 			else
 			{
-				rxData[bufCount - 1] = '\0';
+				response[bufCount - 1] = '\0';
 				timeout = 1;
 			}
 		}

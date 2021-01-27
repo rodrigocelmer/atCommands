@@ -26,11 +26,10 @@ const char AT_QMTCONN[]			= {"AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0
 const char AT_QMTDISC[]			= {"AT+QMTDISC=1\r\n\0"};
 const char AT_QMTSUB[]			= {"AT+QMTSUB=1,1,\"celmer\",1\r\n\0"};
 const char AT_QMTUNS[]			= {"AT+QMTUNS=1,1,\"celmer\"\r\n\0"};
-const char AT_QMTPUBEX[]		= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"area codes\"\r\n\0"};
+const char AT_QMTPUBEX[]		= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"rose tattoo\"\r\n\0"};
 
 void delay_ms(uint32_t time_ms);
 void radio_turnOn(void);
 void radio_turnOff(void);
 void radio_reset(void);
-void radio_transmit(const char *txData);
-void radio_receive(char *rxData);
+void radio_transmit(const char *txData, char *rxData);
