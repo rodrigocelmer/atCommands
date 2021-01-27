@@ -1,3 +1,4 @@
+//AT commands
 const char AT[]					= {"AT\r\n\0"};
 const char AT_QPOWD[] 			= {"AT+QPOWD\r\n\0"};
 const char AT_CPIN[]			= {"AT+CPIN?\r\n\0"};
@@ -24,6 +25,6 @@ const char AT_QMTCONN[]			= {"AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0
 const char AT_QMTDISC[]			= {"AT+QMTDISC=1\r\n\0"};
 const char AT_QMTSUB[]			= {"AT+QMTSUB=1,1,\"celmer\",1\r\n\0"};
 const char AT_QMTUNS[]			= {"AT+QMTUNS=1,1,\"celmer\"\r\n\0"};
-const char AT_QMTPUBEX[]		= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"all that she want\"\r\n\0"};
+const char AT_QMTPUBEX[]		= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"changes\"\r\n\0"};
 
 void radioModule_transmit(const char *txData, char *rxData);

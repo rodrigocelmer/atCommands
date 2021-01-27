@@ -29,27 +29,12 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-typedef struct SIMcard_check {
-	char 		cmd[14];		//AT+CPIN?\r\n\0
-	uint32_t	timeout;
-}sSIMcardCheck_t;
 
-typedef struct radioConfig {
-	char		cmd[62];		//AT+QICSGP=1,1,\"virtueyes.com.br\",\"virtu\",\"virtu\",3\r\n\0
-	uint32_t	timeout;
-}sRadioConfig_t;
-
-typedef struct mqttCmds {
-	char		cmd[62];		//AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n\0
-	uint32_t	timeout;
-}sMqttCmds_t;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define SIM_CARD_CHECK_TIMEOUT	5000
-#define	RADIO_CONFIG_TIMEOUT	300
-#define MQTT_CMDS_TIMEOUT		15000
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -81,9 +66,7 @@ void uartInit(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-//	sSIMcardCheck_t	simCard;
-//	sRadioConfig_t	radioConfig;
-//	sMqttCmds_t		mqttCmds;
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -110,10 +93,6 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-//  simCard.timeout 		= SIM_CARD_CHECK_TIMEOUT;
-//  radioConfig.timeout	= RADIO_CONFIG_TIMEOUT;
-//  mqttCmds.timeout		= MQTT_CMDS_TIMEOUT;
-
   radio_turnOn();
   delay_ms(10000);
 
