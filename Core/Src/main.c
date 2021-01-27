@@ -71,6 +71,11 @@ const char AT_QMTDISC[]			= {"AT+QMTDISC=1\r\n\0"};
 const char AT_QMTSUB[]			= {"AT+QMTSUB=1,1,\"celmer\",1\r\n\0"};
 const char AT_QMTUNS[]			= {"AT+QMTUNS=1,1,\"celmer\"\r\n\0"};
 const char AT_QMTPUBEX[]		= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"many man\"\r\n\0"};
+
+//GPS commands
+const char AT_QGPS1[]			= {"AT+QGPS=1\r\n\0"};
+const char AT_QGPSLOC[]			= {"AT+QGPSLOC?\r\n\0"};
+const char AT_QGPSEND[]			= {"AT+QGPSEND\r\n\0"};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
