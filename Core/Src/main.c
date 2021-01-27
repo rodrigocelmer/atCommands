@@ -24,7 +24,6 @@
 /* USER CODE BEGIN Includes */
 #include "stm32f411xe.h"
 #include "stdint.h"
-#include "stdio.h"
 #include "radio.h"
 /* USER CODE END Includes */
 
@@ -69,12 +68,10 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 void gpioInit(void);
 void uartInit(void);
-void breakpoint(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-char rxBuf[100] = {'\0'};
 /* USER CODE END 0 */
 
 /**
@@ -125,80 +122,28 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  radio_transmit(ATE0, rxBuf);
-	  breakpoint();
 
-	  radio_transmit(AT_CPIN, rxBuf);
-	  breakpoint();
+	   radio_config();
 
-	  radio_transmit(AT_QCFG_NWSCANMODE, rxBuf);
-	  breakpoint();
 
-	  radio_transmit(AT_QCFG_NWSCANSEQ, rxBuf);
-	  breakpoint();
 
-	  radio_transmit(AT_QCFG_IOTOPMODE, rxBuf);
-	  breakpoint();
+	   radio_connect();
 
-	  radio_transmit(AT_QCFG_BAND, rxBuf);
-	  breakpoint();
 
-	  radio_transmit(AT_QICSGP, rxBuf);
-	  breakpoint();
 
-	  radio_transmit(AT_CFUN0, rxBuf);
-	  breakpoint();
+	   radio_publish();
 
-	  delay_ms(5000);
 
-	  radio_transmit(AT_CFUN1, rxBuf);
-	  breakpoint();
 
-	  radio_transmit(AT_CREG, rxBuf);
-	  breakpoint();
+	   radio_disconnect();
 
-	  radio_transmit(AT_CGREG, rxBuf);
-	  breakpoint();
 
-	  radio_transmit(AT_CEREG, rxBuf);
-	  breakpoint();
 
-	  radio_transmit(AT_QNWINFO, rxBuf);
-	  breakpoint();
+	   radio_turnOff();
 
-	  radio_transmit(AT_CSQ, rxBuf);
-	  breakpoint();
 
-	  radio_transmit(AT_CGATT1, rxBuf);
-	  breakpoint();
 
-	  radio_transmit(AT_QMTOPEN, rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QMTCONN, rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QMTPUBEX, rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QMTDISC, rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QMTCLOSE, rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_CGATT0, rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QPOWD, rxBuf);
-	  breakpoint();
-
-//	  if(!(GPIOC->IDR & GPIO_IDR_ID13))
-//	  {
-//		  while(!(GPIOC->IDR & GPIO_IDR_ID13));
-//		  radio_transmit(AT_QPOWD);
-		  while(1);
-//	  }
+	   while(1);
   }
   /* USER CODE END 3 */
 }
@@ -278,16 +223,7 @@ void uartInit(void)
 /*
  * General functions
  */
-void breakpoint(void)
-{
-	asm("nop");
 
-	uint8_t i = 0;
-	for(i=0; i<100; i++)
-	{
-		rxBuf[i] = '\0';
-	}
-}
 /* USER CODE END 4 */
 
 /**
