@@ -134,15 +134,30 @@ int main(void)
   radio_turnOn();
   delay_ms(10000);
 
+  radio_transmit(ATE0);
+  radio_receive(rxBuf);
+  breakpoint();
+
+  radio_transmit(AT_QGPS1);
+  radio_receive(rxBuf);
+  breakpoint();
+
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  radio_transmit(AT_QGPSLOC);
+	  radio_receive(rxBuf);
+	  breakpoint();
 
 	  if(!(GPIOC->IDR & GPIO_IDR_ID13))
 	  {
 		  while(!(GPIOC->IDR & GPIO_IDR_ID13));
+		  radio_transmit(AT_QGPSEND);
+		  radio_receive(rxBuf);
+		  breakpoint();
+
 		  radio_transmit(AT_QPOWD);
 		  while(1);
 	  }
@@ -320,7 +335,7 @@ void radio_receive(char *rxData)
 		}
 		else
 		{
-			if(actualTick - startTick <= 1)
+			if(actualTick - startTick <= 5000)
 			{
 				actualTick = HAL_GetTick();
 			}
