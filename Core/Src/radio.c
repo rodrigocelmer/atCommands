@@ -79,6 +79,8 @@ void radio_config(void)
 
 void radio_connect(void)
 {
+	char creg = 0, cgreg = 0, cereg = 0;
+
 	radioModule_transmit(AT_CFUN0, rxBuf);
 	breakpoint();
 
@@ -87,13 +89,19 @@ void radio_connect(void)
 	radioModule_transmit(AT_CFUN1, rxBuf);
 	breakpoint();
 
-	radioModule_transmit(AT_CREG, rxBuf);
-	breakpoint();
+	do
+	{
+		radioModule_transmit(AT_CREG, rxBuf);
+		creg = rxBuf[9];
 
-	radioModule_transmit(AT_CGREG, rxBuf);
-	breakpoint();
+		radioModule_transmit(AT_CGREG, rxBuf);
+		cgreg = rxBuf[10];
 
-	radioModule_transmit(AT_CEREG, rxBuf);
+		radioModule_transmit(AT_CEREG, rxBuf);
+		cereg = rxBuf[10];
+	}while(	((creg != '1')	|| (creg != '5'))	||
+			((cgreg != '1')	|| (cgreg != '5'))	||
+			((cereg != '1')	|| (cereg != '5'))	);
 	breakpoint();
 
 	radioModule_transmit(AT_QNWINFO, rxBuf);
