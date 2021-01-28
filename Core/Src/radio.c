@@ -94,9 +94,9 @@ void radio_connect(void)
 
 		radioModule_transmit(AT_CEREG, rxBuf);
 		cereg = rxBuf[10];
-	}while(	((creg != '1')	|| (creg != '5'))	||
-			((cgreg != '1')	|| (cgreg != '5'))	||
-			((cereg != '1')	|| (cereg != '5'))	);
+	}while(	((creg != '1')	&& (creg != '5'))	&&
+			((cgreg != '1')	&& (cgreg != '5'))	&&
+			((cereg != '1')	&& (cereg != '5'))	);
 	breakpoint();
 
 	radioModule_transmit(AT_QNWINFO, rxBuf);
