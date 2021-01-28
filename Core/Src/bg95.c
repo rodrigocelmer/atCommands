@@ -4,7 +4,7 @@
 #include "main.h"
 #include "radio.h"	//because of delay_ms()
 
-void radioModuleResponse(char *response);
+void radioModuleResponse(char *response, uint32_t respTimeout);
 
 void radioModule_turnOn(void)
 {
@@ -25,27 +25,22 @@ void radioModule_transmit(const char *txData, char *rxData, uint32_t timeout)
 		USART2->DR = *txData;
 		txData++;
 	}
-	radioModuleResponse(rxData);
+	radioModuleResponse(rxData, timeout);
 }
 
-void radioModuleResponse(char *response)
+void radioModuleResponse(char *response, uint32_t respTimeout)
 {
-	uint8_t timeout = 0;
-	uint32_t startTick, actualTick;
-	uint32_t bufCount = 0;
+	uint8_t		respACK		= 0;
+	uint32_t 	bufCount 	= 0,
+				startTick	= HAL_GetTick();
 
-	actualTick = HAL_GetTick();
-	startTick = actualTick;
-
-	while(!timeout)
+	do
 	{
 		if(USART2->SR & USART_SR_RXNE)
 		{
 			USART2->SR &= ~USART_SR_RXNE;
 			if((USART2->DR != '\r') && (USART2->DR != '\n'))
 			{
-//				*rxData = USART2->DR;						//store it in data
-//				rxData++;
 				response[bufCount] = USART2->DR;
 				bufCount++;
 			}
@@ -57,20 +52,13 @@ void radioModuleResponse(char *response)
 					bufCount++;
 				}
 			}
-			actualTick = HAL_GetTick();
-			startTick = actualTick;
 		}
-		else
+
+		if((response[bufCount-2] == 'O') && (response[bufCount-1] == 'K'))
 		{
-			if(actualTick - startTick <= 1000)
-			{
-				actualTick = HAL_GetTick();
-			}
-			else
-			{
-				response[bufCount - 1] = '\0';
-				timeout = 1;
-			}
+			respACK = 1;
 		}
-	}
+
+	}while((respACK == 0) && ((HAL_GetTick() - startTick) <= respTimeout));
+	asm("nop");
 }
