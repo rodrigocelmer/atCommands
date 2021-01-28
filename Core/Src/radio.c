@@ -29,9 +29,7 @@ void delay_ms(uint32_t time_ms)
 
 void radio_turnOn(void)
 {
-	GPIOA->ODR	 &= ~GPIO_ODR_OD1;
-	delay_ms(750);
-	GPIOA->ODR	 |= GPIO_ODR_OD1;
+	radioModule_turnOn();
 }
 
 void radio_turnOff(void)

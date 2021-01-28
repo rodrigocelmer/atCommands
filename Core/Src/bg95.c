@@ -2,8 +2,16 @@
 #include "stdint.h"
 #include "string.h"
 #include "main.h"
+#include "radio.h"	//because of delay_ms()
 
 void radioModuleResponse(char *response);
+
+void radioModule_turnOn(void)
+{
+	GPIOA->ODR	 &= ~GPIO_ODR_OD1;
+	delay_ms(750);
+	GPIOA->ODR	 |= GPIO_ODR_OD1;
+}
 
 void radioModule_transmit(const char *txData, char *rxData)
 {
