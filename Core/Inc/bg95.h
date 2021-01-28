@@ -1,3 +1,12 @@
+/*
+ * AT commands' response timeout for the BG95. All values in milliseconds
+ */
+#define CPIN_TIMEOUT	5000
+#define CFUN_TIMEOUT	15000
+#define CGATT_TIMEOUT	140000
+#define MQTT_TIMEOUT	15000
+#define CONFIG_TIMEOUT	300
+
 //AT commands
 const char AT[]					= {"AT\r\n\0"};
 const char AT_QPOWD[] 			= {"AT+QPOWD\r\n\0"};
@@ -28,4 +37,4 @@ const char AT_QMTUNS[]			= {"AT+QMTUNS=1,1,\"celmer\"\r\n\0"};
 const char AT_QMTPUBEX[]		= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"changes\"\r\n\0"};
 
 void radioModule_turnOn(void);
-void radioModule_transmit(const char *txData, char *rxData);
+void radioModule_transmit(const char *txData, char *rxData, uint32_t timeout);

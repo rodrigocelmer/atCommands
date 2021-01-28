@@ -34,10 +34,7 @@ void radio_turnOn(void)
 
 void radio_turnOff(void)
 {
-//	GPIOA->ODR	 &= ~GPIO_ODR_OD1;
-//	delay_ms(1250);
-//	GPIOA->ODR	 |= GPIO_ODR_OD1;
-	radioModule_transmit(AT_QPOWD, rxBuf);
+	radioModule_transmit(AT_QPOWD, rxBuf, CONFIG_TIMEOUT);
 	breakpoint();
 }
 
@@ -50,25 +47,25 @@ void radio_reset(void)
 
 void radio_config(void)
 {
-	radioModule_transmit(ATE0, rxBuf);
+	radioModule_transmit(ATE0, rxBuf, CONFIG_TIMEOUT);
 	breakpoint();
 
-	radioModule_transmit(AT_CPIN, rxBuf);
+	radioModule_transmit(AT_CPIN, rxBuf, CPIN_TIMEOUT);
 	breakpoint();
 
-	radioModule_transmit(AT_QCFG_NWSCANMODE, rxBuf);
+	radioModule_transmit(AT_QCFG_NWSCANMODE, rxBuf, CONFIG_TIMEOUT);
 	breakpoint();
 
-	radioModule_transmit(AT_QCFG_NWSCANSEQ, rxBuf);
+	radioModule_transmit(AT_QCFG_NWSCANSEQ, rxBuf, CONFIG_TIMEOUT);
 	breakpoint();
 
-	radioModule_transmit(AT_QCFG_IOTOPMODE, rxBuf);
+	radioModule_transmit(AT_QCFG_IOTOPMODE, rxBuf, CONFIG_TIMEOUT);
 	breakpoint();
 
-	radioModule_transmit(AT_QCFG_BAND, rxBuf);
+	radioModule_transmit(AT_QCFG_BAND, rxBuf, CONFIG_TIMEOUT);
 	breakpoint();
 
-	radioModule_transmit(AT_QICSGP, rxBuf);
+	radioModule_transmit(AT_QICSGP, rxBuf, CONFIG_TIMEOUT);
 	breakpoint();
 }
 
@@ -76,56 +73,56 @@ void radio_connect(void)
 {
 	char creg = 0, cgreg = 0, cereg = 0;
 
-	radioModule_transmit(AT_CFUN0, rxBuf);
+	radioModule_transmit(AT_CFUN0, rxBuf, CFUN_TIMEOUT);
 	breakpoint();
 
 	delay_ms(5000);
 
-	radioModule_transmit(AT_CFUN1, rxBuf);
+	radioModule_transmit(AT_CFUN1, rxBuf, CFUN_TIMEOUT);
 	breakpoint();
 
 	do
 	{
-		radioModule_transmit(AT_CREG, rxBuf);
+		radioModule_transmit(AT_CREG, rxBuf, CONFIG_TIMEOUT);
 		creg = rxBuf[9];
 
-		radioModule_transmit(AT_CGREG, rxBuf);
+		radioModule_transmit(AT_CGREG, rxBuf, CONFIG_TIMEOUT);
 		cgreg = rxBuf[10];
 
-		radioModule_transmit(AT_CEREG, rxBuf);
+		radioModule_transmit(AT_CEREG, rxBuf, CONFIG_TIMEOUT);
 		cereg = rxBuf[10];
 	}while(	((creg != '1')	&& (creg != '5'))	&&
 			((cgreg != '1')	&& (cgreg != '5'))	&&
 			((cereg != '1')	&& (cereg != '5'))	);
 	breakpoint();
 
-	radioModule_transmit(AT_QNWINFO, rxBuf);
+	radioModule_transmit(AT_QNWINFO, rxBuf, CONFIG_TIMEOUT);
 	breakpoint();
 
-	radioModule_transmit(AT_CSQ, rxBuf);
+	radioModule_transmit(AT_CSQ, rxBuf, CONFIG_TIMEOUT);
 	breakpoint();
 
-	radioModule_transmit(AT_CGATT1, rxBuf);
+	radioModule_transmit(AT_CGATT1, rxBuf, CGATT_TIMEOUT);
 	breakpoint();
 
-	radioModule_transmit(AT_QMTOPEN, rxBuf);
+	radioModule_transmit(AT_QMTOPEN, rxBuf, MQTT_TIMEOUT);
 	breakpoint();
 
-	radioModule_transmit(AT_QMTCONN, rxBuf);
+	radioModule_transmit(AT_QMTCONN, rxBuf, MQTT_TIMEOUT);
 	breakpoint();
 }
 
 void radio_publish(void)	//const char *msg)
 {
-	radioModule_transmit(AT_QMTPUBEX, rxBuf);
+	radioModule_transmit(AT_QMTPUBEX, rxBuf, MQTT_TIMEOUT);
 	breakpoint();
 }
 
 void radio_disconnect(void)
 {
-	radioModule_transmit(AT_QMTDISC, rxBuf);
+	radioModule_transmit(AT_QMTDISC, rxBuf, MQTT_TIMEOUT);
 	breakpoint();
 
-	radioModule_transmit(AT_CGATT0, rxBuf);
+	radioModule_transmit(AT_CGATT0, rxBuf, CGATT_TIMEOUT);
 	breakpoint();
 }
