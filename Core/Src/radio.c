@@ -126,9 +126,6 @@ void radio_disconnect(void)
 	radioModule_transmit(AT_QMTDISC, rxBuf);
 	breakpoint();
 
-	radioModule_transmit(AT_QMTCLOSE, rxBuf);
-	breakpoint();
-
 	radioModule_transmit(AT_CGATT0, rxBuf);
 	breakpoint();
 }
