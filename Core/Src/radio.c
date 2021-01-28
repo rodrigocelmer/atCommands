@@ -1,6 +1,7 @@
 #include "stdint.h"
 #include "main.h"
 #include "bg95.h"
+#include "string.h"
 
 char rxBuf[100] = {'\0'};
 
@@ -10,11 +11,7 @@ void breakpoint(void)
 {
 	asm("nop");
 
-	uint8_t i = 0;
-	for(i=0; i<100; i++)
-	{
-		rxBuf[i] = '\0';
-	}
+	memset(rxBuf, '\0', 100);
 }
 
 void delay_ms(uint32_t time_ms)
