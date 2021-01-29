@@ -7,8 +7,8 @@
 
 //AT commands
 const char AT[]					= {"AT\r\n\0"};															//resp: OK
-const char QPOWD[] 				= {"AT+QPOWD\r\n\0"};													//resp: OK\r\nPOWERED DOWN
-const char CPIN[]				= {"AT+CPIN?\r\n\0"};													//resp: +CPIN: READY
+const char QPOWD[] 				= {"AT+QPOWD\r\n\0"};													//resp: OK POWERED DOWN
+const char CPIN[]				= {"AT+CPIN?\r\n\0"};													//resp: +CPIN: [7]R[8]EADY OK
 const char QCFG_NWSCANMODE[]	= {"AT+QCFG=\"NWSCANMODE\",0\r\n\0"};									//resp: OK
 const char QCFG_NWSCANSEQ[]		= {"AT+QCFG=\"NWSCANSEQ\",020103\r\n\0"};								//resp: OK
 const char QCFG_IOTOPMODE[]		= {"AT+QCFG=\"IOTOPMODE\",2\r\n\0"};									//resp: OK
@@ -16,27 +16,27 @@ const char QCFG_BAND[]			= {"AT+QCFG=\"BAND\",0XF,0,0X8000004\r\n\0"};							//r
 const char QICSGP[]				= {"AT+QICSGP=1,1,\"virtueyes.com.br\",\"virtu\",\"virtu\",3\r\n\0"};	//resp: OK
 const char CFUN0[]				= {"AT+CFUN=0\r\n\0"};													//resp: OK
 const char CFUN1[]				= {"AT+CFUN=1\r\n\0"};													//resp: OK
-const char CREG[]				= {"AT+CREG?\r\n\0"};													//resp: +CREG: 0,2
-const char CGREG[]				= {"AT+CGREG?\r\n\0"};													//resp: +CGREG: 0,4
-const char CEREG[]				= {"AT+CEREG?\r\n\0"};													//resp: +CEREG: 0,2
+const char CREG[]				= {"AT+CREG?\r\n\0"};													//resp: +CREG: 0,[9]2
+const char CGREG[]				= {"AT+CGREG?\r\n\0"};													//resp: +CGREG: 0,[10]4
+const char CEREG[]				= {"AT+CEREG?\r\n\0"};													//resp: +CEREG: 0,[10]2
 const char CGATT0[]				= {"AT+CGATT=0\r\n\0"};													//resp: OK
 const char CGATT1[]				= {"AT+CGATT=1\r\n\0"};													//resp: OK
-const char CSQ[]				= {"AT+CSQ\r\n\0"};														//resp: +CSQ: 26,99
+const char CSQ[]				= {"AT+CSQ\r\n\0"};														//resp: +CSQ: [6]2[7]6,99
 const char ATE0[]				= {"ATE0\r\n\0"};														//resp:
 const char QNWINFO[]			= {"AT+QNWINFO\r\n\0"};													//resp: +QNWINFO: "GPRS","72405,"GSM 1800", 594
 
 //MQTT commands
-const char QMTOPEN[]			= {"AT+QMTOPEN=1,\"tailor.cloudmqtt.com\",13291\r\n\0"};				//resp: OK\r\n+QMTOPEN: 1,0
+const char QMTOPEN[]			= {"AT+QMTOPEN=1,\"tailor.cloudmqtt.com\",13291\r\n\0"};				//resp: OK +QMTOPEN: [13]1,[15]0
 const char QMTCLOSE[]			= {"AT+QMTCLOSE=1\r\n\0"};												//resp:
-const char QMTCONN[]			= {"AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n\0"};	//resp: OK\r\n+QMTCONN: 1,0,0
-const char QMTDISC[]			= {"AT+QMTDISC=1\r\n\0"};												//resp: OK\r\n+QMTDISC: 1,0
-const char QMTSUB[]				= {"AT+QMTSUB=1,1,\"celmer\",1\r\n\0"};									//resp: OK\r\n+QMTSUB: 1,1,0,1\r\n+QMTRECV: 1,1,"topic","msg"
-const char QMTUNS[]				= {"AT+QMTUNS=1,1,\"celmer\"\r\n\0"};									//resp: OK\r\n+QMTUNS: 1,1,0
-const char QMTPUBEX[]			= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"fall to pieces\"\r\n\0"};			//resp: OK\r\n+QMTPUB: 1,3,0
+const char QMTCONN[]			= {"AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n\0"};	//resp: OK +QMTCONN: [13]1,[15]0,[17]0
+const char QMTDISC[]			= {"AT+QMTDISC=1\r\n\0"};												//resp: OK +QMTDISC: [13]1,[15]0
+const char QMTSUB[]				= {"AT+QMTSUB=1,1,\"celmer\",1\r\n\0"};									//resp: OK +QMTSUB: [12]1,[14]1,[16]0,[18]1 +QMTRECV: 1,1,"topic","msg"
+const char QMTUNS[]				= {"AT+QMTUNS=1,1,\"celmer\"\r\n\0"};									//resp: OK +QMTUNS: [12]1,[14]1,[16]0
+const char QMTPUBEX[]			= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"man enough\"\r\n\0"};				//resp: OK +QMTPUB: [12]1,[14]3,[16]0
 
 void radioModule_sendCmd(const char *txData, uint32_t txDataSize);
 uint32_t radioModule_response(eAtCmd_t cmdSent, char *response, uint32_t respTimeout);
-void radioModule_parser(const char *respToParse, uint32_t respSize);
+eRadioStatus_t radioModule_parser(eAtCmd_t cmdToParse, const char *respToParse, uint32_t respSize);
 
 void radioModule_turnOn(void)
 {
@@ -45,9 +45,10 @@ void radioModule_turnOn(void)
 	GPIOA->ODR	 |= GPIO_ODR_OD1;
 }
 
-void radioModule_transmit(eAtCmd_t atCmd, char*rxData)
+eRadioStatus_t radioModule_transmit(eAtCmd_t atCmd, char*rxData)
 {
 	uint32_t timeout = 0, responseDataSize = 0;
+	eRadioStatus_t	debug;
 
 	switch(atCmd)
 	{
@@ -157,7 +158,10 @@ void radioModule_transmit(eAtCmd_t atCmd, char*rxData)
 	}
 
 	responseDataSize = radioModule_response(atCmd, rxData, timeout);
-	radioModule_parser(rxData, responseDataSize);
+	if(atCmd == AT_ATE0)
+		return radio_ok;
+	debug = radioModule_parser(atCmd, rxData, responseDataSize);
+	return debug;
 }
 
 void radioModule_sendCmd(const char *txData, uint32_t txDataSize)
@@ -208,7 +212,144 @@ uint32_t radioModule_response(eAtCmd_t cmdSent, char *response, uint32_t respTim
 	return (bufCount - 1);
 }
 
-void radioModule_parser(const char *respToParse, uint32_t respSize)
+eRadioStatus_t radioModule_parser(eAtCmd_t cmdToParse, const char *respToParse, uint32_t respSize)
 {
+	switch(cmdToParse)
+	{
+		case AT_CPIN:		//+CPIN: [7]R[8]EADY OK
+			if(respToParse[7] == 'R')
+			{
+				return radio_ok;
+			}
+			else
+			{
+				return simCard_error;
+			}
+			break;
+		case AT_CREG:		//+CREG: 0,[9]2
+			if((respToParse[9] == '1') || (respToParse[9] == '5'))
+			{
+				return creg_ok;
+			}
+			else
+			{
+				return creg_noSignal;
+			}
+			break;
+		case AT_CGREG:		//+CGREG: 0,[10]4
+			if((respToParse[10] == '1') || (respToParse[10] == '5'))
+			{
+				return cgreg_ok;
+			}
+			else
+			{
+				return cgreg_noSignal;
+			}
+			break;
+		case AT_CEREG:		//+CEREG: 0,[10]2
+			if((respToParse[10] == '1') || (respToParse[10] == '5'))
+			{
+				return cereg_ok;
+			}
+			else
+			{
+				return cereg_noSignal;
+			}
+			break;
+		case AT_CSQ:		//+CSQ: [6]2[7]6,99 - does this work? kkkkk
+			if((respToParse[6] == '9') && (respToParse[7] <= '9'))
+			{
+				return noSignal;
+			}
+			else
+			{
+				if((respToParse[6] == '1') && (respToParse[7] <= '7'))
+				{
+					return poorSignal;
+				}
+				else
+				{
+					if((respToParse[6] >= '3') && (respToParse[7] >= '1'))
+					{
+						return greatSignal;
+					}
+					else
+					{
+						return goodSignal;
+					}
+				}
+			}
+			break;
+		case AT_QNWINFO:	//+QNWINFO: "GPRS","72405,"GSM 1800", 594
+			//#TODO ?
+			break;
+		case AT_QMTOPEN:	//OK +QMTOPEN: [13]1,[15]0
+			if(respToParse[15] == '0')
+			{
+				return mqtt_ok;
+			}
+			else
+			{
+				return mqtt_fail;
+			}
+			break;
+		case AT_QMTCONN:	//OK +QMTCONN: [13]1,[15]0,[17]0
+			if(respToParse[17] == '0')
+			{
+				return mqtt_ok;
+			}
+			else
+			{
+				return mqtt_fail;
+			}
+			break;
+		case AT_QMTDISC:	//OK +QMTDISC: [13]1,[15]0
+			if(respToParse[15] == '0')
+			{
+				return mqtt_ok;
+			}
+			else
+			{
+				return mqtt_fail;
+			}
+			break;
+		case AT_QMTSUB:		//OK +QMTSUB: [12]1,[14]1,[16]0,[18]1 +QMTRECV: 1,1,"topic","msg"	#TODO msg return
+			if(respToParse[16] == '2')
+			{
+				return mqtt_fail;
+			}
+			else
+			{
+				return mqtt_ok;
+			}
+			break;
+		case AT_QMTUNS:		//OK +QMTUNS: [12]1,[14]1,[16]0
+			if(respToParse[16] == '2')
+			{
+				return mqtt_fail;
+			}
+			else
+			{
+				return mqtt_ok;
+			}
+			break;
+		case AT_QMTPUBEX:	//OK +QMTPUB: [12]1,[14]3,[16]0
+			if(respToParse[14] == '2')
+			{
+				return mqtt_fail;
+			}
+			else
+			{
+				return mqtt_ok;
+			}
+			break;
+		default:
+			if((respToParse[0] == 'O') && (respToParse[1] == 'K'))
+			{
+				return radio_ok;
+			}
+			break;
+	}
 
+	return radio_error;
 }

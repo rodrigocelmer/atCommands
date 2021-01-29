@@ -35,6 +35,24 @@ typedef enum {
 	AT_QMTPUBEX
 }eAtCmd_t;
 
+typedef enum {
+	radio_ok = 0x00,
+	radio_error,
+	simCard_error,
+	creg_ok,
+	creg_noSignal,
+	cgreg_ok,
+	cgreg_noSignal,
+	cereg_ok,
+	cereg_noSignal,
+	noSignal,
+	poorSignal,
+	goodSignal,
+	greatSignal,
+	mqtt_ok,
+	mqtt_fail
+}eRadioStatus_t;
+
 void radioModule_turnOn(void);
-void radioModule_transmit(eAtCmd_t atCmd, char*rxData);
+eRadioStatus_t radioModule_transmit(eAtCmd_t atCmd, char*rxData);
 		//const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize);
