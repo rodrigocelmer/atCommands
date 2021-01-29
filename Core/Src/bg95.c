@@ -6,37 +6,37 @@
 #include "bg95.h"
 
 //AT commands
-const char AT[]					= {"AT\r\n\0"};
-const char QPOWD[] 				= {"AT+QPOWD\r\n\0"};
-const char CPIN[]				= {"AT+CPIN?\r\n\0"};
-const char QCFG_NWSCANMODE[]	= {"AT+QCFG=\"NWSCANMODE\",0\r\n\0"};
-const char QCFG_NWSCANSEQ[]		= {"AT+QCFG=\"NWSCANSEQ\",020103\r\n\0"};
-const char QCFG_IOTOPMODE[]		= {"AT+QCFG=\"IOTOPMODE\",2\r\n\0"};
-const char QCFG_BAND[]			= {"AT+QCFG=\"BAND\",0XF,0,0X8000004\r\n\0"};
-const char QICSGP[]				= {"AT+QICSGP=1,1,\"virtueyes.com.br\",\"virtu\",\"virtu\",3\r\n\0"};
-const char CFUN0[]				= {"AT+CFUN=0\r\n\0"};
-const char CFUN1[]				= {"AT+CFUN=1\r\n\0"};
-const char CREG[]				= {"AT+CREG?\r\n\0"};
-const char CGREG[]				= {"AT+CGREG?\r\n\0"};
-const char CEREG[]				= {"AT+CEREG?\r\n\0"};
-const char CGATT0[]				= {"AT+CGATT=0\r\n\0"};
-const char CGATT1[]				= {"AT+CGATT=1\r\n\0"};
-const char CSQ[]				= {"AT+CSQ\r\n\0"};
-const char ATE0[]				= {"ATE0\r\n\0"};
-const char QNWINFO[]			= {"AT+QNWINFO\r\n\0"};
+const char AT[]					= {"AT\r\n\0"};															//resp: OK
+const char QPOWD[] 				= {"AT+QPOWD\r\n\0"};													//resp: OK\r\nPOWERED DOWN
+const char CPIN[]				= {"AT+CPIN?\r\n\0"};													//resp: +CPIN: READY
+const char QCFG_NWSCANMODE[]	= {"AT+QCFG=\"NWSCANMODE\",0\r\n\0"};									//resp: OK
+const char QCFG_NWSCANSEQ[]		= {"AT+QCFG=\"NWSCANSEQ\",020103\r\n\0"};								//resp: OK
+const char QCFG_IOTOPMODE[]		= {"AT+QCFG=\"IOTOPMODE\",2\r\n\0"};									//resp: OK
+const char QCFG_BAND[]			= {"AT+QCFG=\"BAND\",0XF,0,0X8000004\r\n\0"};							//resp: OK
+const char QICSGP[]				= {"AT+QICSGP=1,1,\"virtueyes.com.br\",\"virtu\",\"virtu\",3\r\n\0"};	//resp: OK
+const char CFUN0[]				= {"AT+CFUN=0\r\n\0"};													//resp: OK
+const char CFUN1[]				= {"AT+CFUN=1\r\n\0"};													//resp: OK
+const char CREG[]				= {"AT+CREG?\r\n\0"};													//resp: +CREG: 0,2
+const char CGREG[]				= {"AT+CGREG?\r\n\0"};													//resp: +CGREG: 0,4
+const char CEREG[]				= {"AT+CEREG?\r\n\0"};													//resp: +CEREG: 0,2
+const char CGATT0[]				= {"AT+CGATT=0\r\n\0"};													//resp: OK
+const char CGATT1[]				= {"AT+CGATT=1\r\n\0"};													//resp: OK
+const char CSQ[]				= {"AT+CSQ\r\n\0"};														//resp: +CSQ: 26,99
+const char ATE0[]				= {"ATE0\r\n\0"};														//resp:
+const char QNWINFO[]			= {"AT+QNWINFO\r\n\0"};													//resp: +QNWINFO: "GPRS","72405,"GSM 1800", 594
 
 //MQTT commands
-const char QMTOPEN[]			= {"AT+QMTOPEN=1,\"tailor.cloudmqtt.com\",13291\r\n\0"};
-const char QMTCLOSE[]			= {"AT+QMTCLOSE=1\r\n\0"};
-const char QMTCONN[]			= {"AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n\0"};
-const char QMTDISC[]			= {"AT+QMTDISC=1\r\n\0"};
-const char QMTSUB[]				= {"AT+QMTSUB=1,1,\"celmer\",1\r\n\0"};
-const char QMTUNS[]				= {"AT+QMTUNS=1,1,\"celmer\"\r\n\0"};
-const char QMTPUBEX[]			= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"fall to pieces\"\r\n\0"};
+const char QMTOPEN[]			= {"AT+QMTOPEN=1,\"tailor.cloudmqtt.com\",13291\r\n\0"};				//resp: OK\r\n+QMTOPEN: 1,0
+const char QMTCLOSE[]			= {"AT+QMTCLOSE=1\r\n\0"};												//resp:
+const char QMTCONN[]			= {"AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n\0"};	//resp: OK\r\n+QMTCONN: 1,0,0
+const char QMTDISC[]			= {"AT+QMTDISC=1\r\n\0"};												//resp: OK\r\n+QMTDISC: 1,0
+const char QMTSUB[]				= {"AT+QMTSUB=1,1,\"celmer\",1\r\n\0"};									//resp: OK\r\n+QMTSUB: 1,1,0,1\r\n+QMTRECV: 1,1,"topic","msg"
+const char QMTUNS[]				= {"AT+QMTUNS=1,1,\"celmer\"\r\n\0"};									//resp: OK\r\n+QMTUNS: 1,1,0
+const char QMTPUBEX[]			= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"fall to pieces\"\r\n\0"};			//resp: OK\r\n+QMTPUB: 1,3,0
 
 void radioModule_sendCmd(const char *txData, uint32_t txDataSize);
-void radioModule_response(eAtCmd_t cmdSent, char *response, uint32_t respTimeout);
-void radioModule_parser();
+uint32_t radioModule_response(eAtCmd_t cmdSent, char *response, uint32_t respTimeout);
+void radioModule_parser(const char *respToParse, uint32_t respSize);
 
 void radioModule_turnOn(void)
 {
@@ -47,7 +47,7 @@ void radioModule_turnOn(void)
 
 void radioModule_transmit(eAtCmd_t atCmd, char*rxData)
 {
-	uint32_t timeout = 0;
+	uint32_t timeout = 0, responseDataSize = 0;
 
 	switch(atCmd)
 	{
@@ -156,8 +156,8 @@ void radioModule_transmit(eAtCmd_t atCmd, char*rxData)
 			break;
 	}
 
-	radioModule_response(atCmd, rxData, timeout);
-//	radioModule_parser(rxData);
+	responseDataSize = radioModule_response(atCmd, rxData, timeout);
+	radioModule_parser(rxData, responseDataSize);
 }
 
 void radioModule_sendCmd(const char *txData, uint32_t txDataSize)
@@ -172,7 +172,7 @@ void radioModule_sendCmd(const char *txData, uint32_t txDataSize)
 	}
 }
 
-void radioModule_response(eAtCmd_t cmdSent, char *response, uint32_t respTimeout)
+uint32_t radioModule_response(eAtCmd_t cmdSent, char *response, uint32_t respTimeout)
 {
 	uint8_t		respACK		= 0;
 	uint32_t 	bufCount 	= 0,
@@ -205,4 +205,10 @@ void radioModule_response(eAtCmd_t cmdSent, char *response, uint32_t respTimeout
 
 	}while((respACK == 0) && ((HAL_GetTick() - startTick) <= respTimeout));
 	asm("nop");
+	return (bufCount - 1);
+}
+
+void radioModule_parser(const char *respToParse, uint32_t respSize)
+{
+
 }
