@@ -32,7 +32,7 @@ const char QMTCONN[]			= {"AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0_2r
 const char QMTDISC[]			= {"AT+QMTDISC=1\r\n\0"};												//resp: OK +QMTDISC: [13]1,[15]0
 const char QMTSUB[]				= {"AT+QMTSUB=1,1,\"celmer\",1\r\n\0"};									//resp: OK +QMTSUB: [12]1,[14]1,[16]0,[18]1 +QMTRECV: 1,1,"topic","msg"
 const char QMTUNS[]				= {"AT+QMTUNS=1,1,\"celmer\"\r\n\0"};									//resp: OK +QMTUNS: [12]1,[14]1,[16]0
-const char QMTPUBEX[]			= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"man enough\"\r\n\0"};				//resp: OK +QMTPUB: [12]1,[14]3,[16]0
+const char QMTPUBEX[]			= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"bark at the moon\"\r\n\0"};		//resp: OK +QMTPUB: [12]1,[14]3,[16]0
 
 void radioModule_sendCmd(const char *txData, uint32_t txDataSize);
 uint32_t radioModule_response(eAtCmd_t cmdSent, char *response, uint32_t respTimeout);
@@ -202,9 +202,20 @@ uint32_t radioModule_response(eAtCmd_t cmdSent, char *response, uint32_t respTim
 			}
 		}
 
-		if((response[bufCount-2] == 'O') && (response[bufCount-1] == 'K'))
+		if(cmdSent <= AT_QNWINFO)
 		{
-			respACK = 1;
+			if((response[bufCount-2] == 'O') && (response[bufCount-1] == 'K'))
+			{
+				respACK = 1;
+			}
+		}
+		else
+		{
+			if((response[bufCount-1] != '\0') && (response[bufCount] == ' '))
+			{
+				response[bufCount] = '\0';
+				respACK = 1;
+			}
 		}
 
 	}while((respACK == 0) && ((HAL_GetTick() - startTick) <= respTimeout));

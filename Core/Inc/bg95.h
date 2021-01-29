@@ -26,6 +26,10 @@ typedef enum {
 	AT_CSQ,
 	AT_ATE0,
 	AT_QNWINFO,
+	/*
+	 * You should not add non-mqtt related
+	 * commands in between the following ones
+	 */
 	AT_QMTOPEN,
 	AT_QMTCLOSE,
 	AT_QMTCONN,
