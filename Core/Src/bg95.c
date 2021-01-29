@@ -4,7 +4,7 @@
 #include "main.h"
 #include "radio.h"	//because of delay_ms()
 
-void radioModuleResponse(char *response, uint32_t respTimeout);
+void radioModule_response(char *response, uint32_t respTimeout);
 
 void radioModule_turnOn(void)
 {
@@ -23,10 +23,10 @@ void radioModule_transmit(const char *txData, char *rxData, uint32_t timeout, ui
 		USART2->DR = *txData;
 		txData++;
 	}
-	radioModuleResponse(rxData, timeout);
+	radioModule_response(rxData, timeout);
 }
 
-void radioModuleResponse(char *response, uint32_t respTimeout)
+void radioModule_response(char *response, uint32_t respTimeout)
 {
 	uint8_t		respACK		= 0;
 	uint32_t 	bufCount 	= 0,
