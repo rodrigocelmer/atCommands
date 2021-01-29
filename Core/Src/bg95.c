@@ -13,11 +13,9 @@ void radioModule_turnOn(void)
 	GPIOA->ODR	 |= GPIO_ODR_OD1;
 }
 
-void radioModule_transmit(const char *txData, char *rxData, uint32_t timeout)
+void radioModule_transmit(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize)
 {
-	uint8_t i = 0, txDataSize = 0;
-
-	txDataSize = strlen(txData);
+	uint8_t i = 0;
 
 	for(i = 0; i< txDataSize; i++)
 	{
