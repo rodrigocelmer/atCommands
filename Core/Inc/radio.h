@@ -1,5 +1,14 @@
 #include "stdint.h"
 
+typedef enum {
+	radio_ok = 0x00,
+	radio_error,
+	noSignal,
+	poorSignal,
+	goodSignal,
+	greatSignal,
+}eRadioStatus_t;
+
 void delay_ms(uint32_t time_ms);
 void radio_reset(void);
 
