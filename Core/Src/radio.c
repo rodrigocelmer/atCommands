@@ -29,12 +29,12 @@ void delay_ms(uint32_t time_ms)
 
 void radio_turnOn(void)
 {
-	radioModule_turnOn();
+	bg95_turnOn();
 }
 
 void radio_turnOff(void)
 {
-	radioModule_transmit(AT_QPOWD, rxBuf);
+	bg95_transmit(AT_QPOWD, rxBuf);
 	breakpoint();
 }
 
@@ -47,25 +47,25 @@ void radio_reset(void)
 
 void radio_config(void)
 {
-	radioModule_transmit(AT_ATE0, rxBuf);
+	bg95_transmit(AT_ATE0, rxBuf);
 	breakpoint();
 
-	radioModule_transmit(AT_CPIN, rxBuf);
+	bg95_transmit(AT_CPIN, rxBuf);
 	breakpoint();
 
-	radioModule_transmit(AT_QCFG_NWSCANMODE, rxBuf);
+	bg95_transmit(AT_QCFG_NWSCANMODE, rxBuf);
 	breakpoint();
 
-	radioModule_transmit(AT_QCFG_NWSCANSEQ, rxBuf);
+	bg95_transmit(AT_QCFG_NWSCANSEQ, rxBuf);
 	breakpoint();
 
-	radioModule_transmit(AT_QCFG_IOTOPMODE, rxBuf);
+	bg95_transmit(AT_QCFG_IOTOPMODE, rxBuf);
 	breakpoint();
 
-	radioModule_transmit(AT_QCFG_BAND, rxBuf);
+	bg95_transmit(AT_QCFG_BAND, rxBuf);
 	breakpoint();
 
-	radioModule_transmit(AT_QICSGP, rxBuf);
+	bg95_transmit(AT_QICSGP, rxBuf);
 	breakpoint();
 }
 
@@ -73,56 +73,56 @@ void radio_connect(void)
 {
 	char creg = 0, cgreg = 0, cereg = 0;
 
-	radioModule_transmit(AT_CFUN0, rxBuf);
+	bg95_transmit(AT_CFUN0, rxBuf);
 	breakpoint();
 
 	delay_ms(5000);
 
-	radioModule_transmit(AT_CFUN1, rxBuf);
+	bg95_transmit(AT_CFUN1, rxBuf);
 	breakpoint();
 
 	do
 	{
-		radioModule_transmit(AT_CREG, rxBuf);
+		bg95_transmit(AT_CREG, rxBuf);
 		creg = rxBuf[9];
 
-		radioModule_transmit(AT_CGREG, rxBuf);
+		bg95_transmit(AT_CGREG, rxBuf);
 		cgreg = rxBuf[10];
 
-		radioModule_transmit(AT_CEREG, rxBuf);
+		bg95_transmit(AT_CEREG, rxBuf);
 		cereg = rxBuf[10];
 	}while(	((creg != '1')	&& (creg != '5'))	&&
 			((cgreg != '1')	&& (cgreg != '5'))	&&
 			((cereg != '1')	&& (cereg != '5'))	);
 	breakpoint();
 
-	radioModule_transmit(AT_QNWINFO, rxBuf);
+	bg95_transmit(AT_QNWINFO, rxBuf);
 	breakpoint();
 
-	radioModule_transmit(AT_CSQ, rxBuf);
+	bg95_transmit(AT_CSQ, rxBuf);
 	breakpoint();
 
-	radioModule_transmit(AT_CGATT1, rxBuf);
+	bg95_transmit(AT_CGATT1, rxBuf);
 	breakpoint();
 
-	radioModule_transmit(AT_QMTOPEN, rxBuf);
+	bg95_transmit(AT_QMTOPEN, rxBuf);
 	breakpoint();
 
-	radioModule_transmit(AT_QMTCONN, rxBuf);
+	bg95_transmit(AT_QMTCONN, rxBuf);
 	breakpoint();
 }
 
 void radio_publish(void)	//const char *msg)
 {
-	radioModule_transmit(AT_QMTPUBEX, rxBuf);
+	bg95_transmit(AT_QMTPUBEX, rxBuf);
 	breakpoint();
 }
 
 void radio_disconnect(void)
 {
-	radioModule_transmit(AT_QMTDISC, rxBuf);
+	bg95_transmit(AT_QMTDISC, rxBuf);
 	breakpoint();
 
-	radioModule_transmit(AT_CGATT0, rxBuf);
+	bg95_transmit(AT_CGATT0, rxBuf);
 	breakpoint();
 }

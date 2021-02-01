@@ -57,6 +57,6 @@ typedef enum {
 	mqtt_fail
 }eRadioStatus_t;
 
-void radioModule_turnOn(void);
-eRadioStatus_t radioModule_transmit(eAtCmd_t atCmd, char*rxData);
+void bg95_turnOn(void);
+eRadioStatus_t bg95_transmit(eAtCmd_t atCmd, char*rxData);
 		//const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize);
