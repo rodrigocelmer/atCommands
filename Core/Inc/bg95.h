@@ -40,23 +40,14 @@ typedef enum {
 }eAtCmd_t;
 
 typedef enum {
-	radio_ok = 0x00,
-	radio_error,
-	simCard_error,
-	creg_ok,
-	creg_noSignal,
-	cgreg_ok,
-	cgreg_noSignal,
-	cereg_ok,
-	cereg_noSignal,
-	noSignal,
-	poorSignal,
-	goodSignal,
-	greatSignal,
-	mqtt_ok,
-	mqtt_fail
-}eRadioStatus_t;
+	bg95_ok = 0x00,
+	bg95_error,
+	csq_noSignal,
+	csq_poorSignal,
+	csq_goodSignal,
+	csq_greatSignal
+}eBg95Status_t;
 
 void bg95_turnOn(void);
-eRadioStatus_t bg95_transmit(eAtCmd_t atCmd, char*rxData);
+eBg95Status_t bg95_transmit(eAtCmd_t atCmd, char*rxData);
 		//const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize);
