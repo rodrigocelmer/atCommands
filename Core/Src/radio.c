@@ -71,7 +71,7 @@ void radio_config(void)
 
 void radio_connect(void)
 {
-	char creg = 0, cgreg = 0, cereg = 0;
+	eBg95Status_t creg = bg95_error, cgreg = bg95_error, cereg = bg95_error;
 
 	bg95_transmit(AT_CFUN0, rxBuf);
 	breakpoint();
@@ -83,17 +83,14 @@ void radio_connect(void)
 
 	do
 	{
-		bg95_transmit(AT_CREG, rxBuf);
-		creg = rxBuf[9];
+		creg = bg95_transmit(AT_CREG, rxBuf);
 
-		bg95_transmit(AT_CGREG, rxBuf);
-		cgreg = rxBuf[10];
+		cgreg = bg95_transmit(AT_CGREG, rxBuf);
 
-		bg95_transmit(AT_CEREG, rxBuf);
-		cereg = rxBuf[10];
-	}while(	((creg != '1')	&& (creg != '5'))	&&
-			((cgreg != '1')	&& (cgreg != '5'))	&&
-			((cereg != '1')	&& (cereg != '5'))	);
+		cereg = bg95_transmit(AT_CEREG, rxBuf);
+	}while(	(creg != bg95_ok)	&&
+			(cgreg != bg95_ok)	&&
+			(cereg != bg95_ok)	);
 	breakpoint();
 
 	bg95_transmit(AT_QNWINFO, rxBuf);
