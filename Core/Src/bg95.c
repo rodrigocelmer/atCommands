@@ -39,14 +39,20 @@ eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, 
 		else if(memcmp(rxData, "CREG", 4) == 0)
 		{
 			asm("nop"); //parser = creg_parser;
+			if(rxData[8] == '1')
+				return bg95_ok;
 		}
 		else if(memcmp(rxData, "CGREG", 5) == 0)
 		{
 			asm("nop"); //parser = cgreg_parser;
+			if(rxData[9] == '1')
+				return bg95_ok;
 		}
 		else if(memcmp(rxData, "CEREG", 5) == 0)
 		{
 			asm("nop"); //parser = cereg_parser;
+			if(rxData[9] == '1')
+				return bg95_ok;
 		}
 		else if(memcmp(rxData, "CSQ", 3) == 0)
 		{
