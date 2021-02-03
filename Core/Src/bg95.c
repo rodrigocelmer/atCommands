@@ -201,7 +201,7 @@ void bg95_receiveResponse(char *response, uint32_t respTimeout, uint8_t isMqttCm
 		{
 			if((bufCount >=2) && (response[bufCount-2] == 'O'))
 			{
-				if((response[bufCount-1 == 'K']) || (response[bufCount-1] == 'R'))	//"OK" or "errOR"
+				if((response[bufCount-1] == 'K') || (response[bufCount-1] == 'R'))	//"OK" or "errOR"
 				{
 					respACK = 1;
 				}
