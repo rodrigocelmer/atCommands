@@ -7,8 +7,8 @@
 #include "atCommands.h"
 
 eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize);
-void bg95_sendCmd(const char *txData, uint32_t txDataSize);
-void bg95_response(char *response, uint32_t respTimeout, uint8_t isMqttCmd);
+void bg95_sendCommand(const char *txData, uint32_t txDataSize);
+void bg95_receiveResponse(char *response, uint32_t respTimeout, uint8_t isMqttCmd);
 eBg95Status_t bg95_parseResponse(char *respToParse);
 
 char rxBuf[100] = {'\0'};
@@ -23,8 +23,8 @@ void bg95_turnOn(void)
 void bg95_turnOff(void)
 {
 //	bg95_transmit(AT_QPOWD, rxBuf, CONFIG_TIMEOUT, strlen(AT_QPOWD));
-	bg95_sendCmd(AT_QPOWD, strlen(AT_QPOWD));
-	bg95_response(rxBuf, CONFIG_TIMEOUT, 0);
+	bg95_sendCommand(AT_QPOWD, strlen(AT_QPOWD));
+	bg95_receiveResponse(rxBuf, CONFIG_TIMEOUT, 0);
 
 }
 
@@ -110,14 +110,14 @@ eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, 
 		flagMqttCmd = 1;
 	}
 
-	bg95_sendCmd(txData, txDataSize);
+	bg95_sendCommand(txData, txDataSize);
 
-	bg95_response(rxData, timeout, flagMqttCmd);
+	bg95_receiveResponse(rxData, timeout, flagMqttCmd);
 
 	return bg95_parseResponse(rxData);
 }
 
-void bg95_sendCmd(const char *txData, uint32_t txDataSize)
+void bg95_sendCommand(const char *txData, uint32_t txDataSize)
 {
 	uint8_t i = 0;
 
@@ -129,7 +129,7 @@ void bg95_sendCmd(const char *txData, uint32_t txDataSize)
 	}
 }
 
-void bg95_response(char *response, uint32_t respTimeout, uint8_t isMqttCmd)
+void bg95_receiveResponse(char *response, uint32_t respTimeout, uint8_t isMqttCmd)
 {
 	uint8_t		respACK		= 0;
 	uint32_t 	bufCount 	= 0,
