@@ -29,9 +29,9 @@ eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, 
 
 	bg95_response(rxData, timeout, flagMqttCmd);
 
-	if(*rxData == '+')
+	c0 = *rxData++;
+	if(c0 == '+')
 	{
-		c0 = *rxData++;
 		if(memcmp(rxData, "CPIN", 4) == 0)
 		{
 			asm("nop"); //parser = cpin_parser;
@@ -61,7 +61,6 @@ eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, 
 	}
 	else
 	{
-		c0 = *rxData++;
 		c1 = *rxData++;
 		rxData = rxData + 2;
 		if(memcmp(rxData, "QMT", 3) == 0)
