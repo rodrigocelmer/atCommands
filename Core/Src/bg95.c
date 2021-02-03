@@ -20,7 +20,7 @@ eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, 
 {
 	uint32_t responseDataSize = 0;
 	eBg95Status_t	debug;
-	char c0, c1, cw;
+	char c0, c1;
 
 	bg95_sendCmd(txData, txDataSize);
 
@@ -54,8 +54,7 @@ eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, 
 	{
 		c0 = *rxData++;
 		c1 = *rxData++;
-		cw = *rxData++;
-		cw = *rxData++;
+		rxData = rxData + 2;
 		if(memcmp(rxData, "QMT", 3) == 0)
 		{
 			asm("nop");
