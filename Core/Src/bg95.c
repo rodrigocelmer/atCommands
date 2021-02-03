@@ -4,9 +4,13 @@
 #include "main.h"
 #include "radio.h"	//because of delay_ms()
 #include "bg95.h"
+#include "atCommands.h"
 
+eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize);
 void bg95_sendCmd(const char *txData, uint32_t txDataSize);
 void bg95_response(char *response, uint32_t respTimeout, uint8_t isMqttCmd);
+
+char rxBuf[100] = {'\0'};
 
 void bg95_turnOn(void)
 {
@@ -14,6 +18,84 @@ void bg95_turnOn(void)
 	delay_ms(750);
 	GPIOA->ODR	 |= GPIO_ODR_OD1;
 }
+
+void bg95_turnOff(void)
+{
+	bg95_transmit(AT_QPOWD, rxBuf, CONFIG_TIMEOUT, strlen(AT_QPOWD));
+}
+
+void bg95_reset(void)
+{
+	GPIOA->ODR	 &= ~GPIO_ODR_OD1;
+	delay_ms(2500);
+	GPIOA->ODR	 |= GPIO_ODR_OD1;
+}
+
+void bg95_config(void)
+{
+	bg95_transmit(AT_ATE0, rxBuf, CONFIG_TIMEOUT, strlen(AT_ATE0));
+
+	bg95_transmit(AT_CPIN, rxBuf, CPIN_TIMEOUT, strlen(AT_CPIN));
+
+	bg95_transmit(AT_QCFG_NWSCANMODE, rxBuf, CONFIG_TIMEOUT, strlen(AT_QCFG_NWSCANMODE));
+
+	bg95_transmit(AT_QCFG_NWSCANSEQ, rxBuf, CONFIG_TIMEOUT, strlen(AT_QCFG_NWSCANSEQ));
+
+	bg95_transmit(AT_QCFG_IOTOPMODE, rxBuf, CONFIG_TIMEOUT, strlen(AT_QCFG_IOTOPMODE));
+
+	bg95_transmit(AT_QCFG_BAND, rxBuf, CONFIG_TIMEOUT, strlen(AT_QCFG_BAND));
+
+	bg95_transmit(AT_QICSGP, rxBuf, CONFIG_TIMEOUT, strlen(AT_QICSGP));
+}
+
+void bg95_connect(void)
+{
+	eBg95Status_t creg = bg95_error, cgreg = bg95_error, cereg = bg95_error;
+
+	bg95_transmit(AT_CFUN0, rxBuf, CFUN_TIMEOUT, strlen(AT_CFUN0));
+
+	delay_ms(5000);
+
+	bg95_transmit(AT_CFUN1, rxBuf, CFUN_TIMEOUT, strlen(AT_CFUN1));
+
+	do
+	{
+		creg = bg95_transmit(AT_CREG, rxBuf, CONFIG_TIMEOUT, strlen(AT_CREG));
+
+		cgreg = bg95_transmit(AT_CGREG, rxBuf, CONFIG_TIMEOUT, strlen(AT_CGREG));
+
+		cereg = bg95_transmit(AT_CEREG, rxBuf, CONFIG_TIMEOUT, strlen(AT_CEREG));
+	}while(	(creg != bg95_ok)	&&
+			(cgreg != bg95_ok)	&&
+			(cereg != bg95_ok)	);
+
+	bg95_transmit(AT_QNWINFO, rxBuf, CONFIG_TIMEOUT, strlen(AT_QNWINFO));
+
+	bg95_transmit(AT_CSQ, rxBuf, CONFIG_TIMEOUT, strlen(AT_CSQ));
+
+	bg95_transmit(AT_CGATT1, rxBuf, CGATT_TIMEOUT, strlen(AT_CGATT1));
+
+	bg95_transmit(AT_QMTOPEN, rxBuf, MQTT_TIMEOUT, strlen(AT_QMTOPEN));
+
+	bg95_transmit(AT_QMTCONN, rxBuf, MQTT_TIMEOUT, strlen(AT_QMTCONN));
+}
+
+void bg95_publish(void)	//const char *msg)
+{
+	bg95_transmit(AT_QMTPUBEX, rxBuf, MQTT_TIMEOUT, strlen(AT_QMTPUBEX));
+}
+
+void bg95_disconnect(void)
+{
+	bg95_transmit(AT_QMTDISC, rxBuf, MQTT_TIMEOUT, strlen(AT_QMTDISC));
+
+	bg95_transmit(AT_CGATT0, rxBuf, CGATT_TIMEOUT, strlen(AT_CGATT0));
+}
+
+
+
+
+
 
 eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize)
 {

@@ -17,6 +17,9 @@ typedef enum {
 }eBg95Status_t;
 
 void bg95_turnOn(void);
-eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize);
-		//eAtCmd_t atCmd, char*rxData);
-		//
+void bg95_turnOff(void);
+void bg95_reset(void);
+void bg95_config(void);
+void bg95_connect(void);
+void bg95_publish(void);	//const char *msg);
+void bg95_disconnect(void);
