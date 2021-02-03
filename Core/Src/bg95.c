@@ -9,6 +9,7 @@
 eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize);
 void bg95_sendCmd(const char *txData, uint32_t txDataSize);
 void bg95_response(char *response, uint32_t respTimeout, uint8_t isMqttCmd);
+eBg95Status_t bg95_parseResponse(char *respToParse);
 
 char rxBuf[100] = {'\0'};
 
@@ -21,7 +22,10 @@ void bg95_turnOn(void)
 
 void bg95_turnOff(void)
 {
-	bg95_transmit(AT_QPOWD, rxBuf, CONFIG_TIMEOUT, strlen(AT_QPOWD));
+//	bg95_transmit(AT_QPOWD, rxBuf, CONFIG_TIMEOUT, strlen(AT_QPOWD));
+	bg95_sendCmd(AT_QPOWD, strlen(AT_QPOWD));
+	bg95_response(rxBuf, CONFIG_TIMEOUT, 0);
+
 }
 
 void bg95_reset(void)
@@ -99,7 +103,6 @@ void bg95_disconnect(void)
 
 eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize)
 {
-	char 	c0, c1;
 	uint8_t	flagMqttCmd = 0;
 
 	if(memcmp(txData, "AT+QMT", 6) == 0)
@@ -111,51 +114,7 @@ eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, 
 
 	bg95_response(rxData, timeout, flagMqttCmd);
 
-	c0 = *rxData++;
-	if(c0 == '+')
-	{
-		if(memcmp(rxData, "CPIN", 4) == 0)
-		{
-			asm("nop"); //parser = cpin_parser;
-		}
-		else if(memcmp(rxData, "CREG", 4) == 0)
-		{
-			asm("nop"); //parser = creg_parser;
-			if(rxData[8] == '1')
-				return bg95_ok;
-		}
-		else if(memcmp(rxData, "CGREG", 5) == 0)
-		{
-			asm("nop"); //parser = cgreg_parser;
-			if(rxData[9] == '1')
-				return bg95_ok;
-		}
-		else if(memcmp(rxData, "CEREG", 5) == 0)
-		{
-			asm("nop"); //parser = cereg_parser;
-			if(rxData[9] == '1')
-				return bg95_ok;
-		}
-		else if(memcmp(rxData, "CSQ", 3) == 0)
-		{
-			asm("nop"); //parser = csq_parser;
-		}
-	}
-	else
-	{
-		c1 = *rxData++;
-		rxData = rxData + 2;
-		if(memcmp(rxData, "QMT", 3) == 0)
-		{
-			asm("nop");	//parser = mqtt_parser (each mqtt cmd?)
-		}
-		else if((c0 = 'O') && (c1 = 'K'))
-		{
-			return bg95_ok;
-		}
-	}
-
-	return bg95_error;
+	return bg95_parseResponse(rxData);
 }
 
 void bg95_sendCmd(const char *txData, uint32_t txDataSize)
@@ -214,4 +173,55 @@ void bg95_response(char *response, uint32_t respTimeout, uint8_t isMqttCmd)
 
 	}while((respACK == 0) && ((HAL_GetTick() - startTick) <= respTimeout));
 	asm("nop");
+}
+
+eBg95Status_t bg95_parseResponse(char *respToParse)
+{
+	char c0, c1;
+
+	c0 = *respToParse++;
+	if(c0 == '+')
+	{
+		if(memcmp(respToParse, "CPIN", 4) == 0)
+		{
+			asm("nop"); //parser = cpin_parser;
+		}
+		else if(memcmp(respToParse, "CREG", 4) == 0)
+		{
+			asm("nop"); //parser = creg_parser;
+			if(respToParse[8] == '1')
+				return bg95_ok;
+		}
+		else if(memcmp(respToParse, "CGREG", 5) == 0)
+		{
+			asm("nop"); //parser = cgreg_parser;
+			if(respToParse[9] == '1')
+				return bg95_ok;
+		}
+		else if(memcmp(respToParse, "CEREG", 5) == 0)
+		{
+			asm("nop"); //parser = cereg_parser;
+			if(respToParse[9] == '1')
+				return bg95_ok;
+		}
+		else if(memcmp(respToParse, "CSQ", 3) == 0)
+		{
+			asm("nop"); //parser = csq_parser;
+		}
+	}
+	else
+	{
+		c1 = *respToParse++;
+		respToParse = respToParse + 2;
+		if(memcmp(respToParse, "QMT", 3) == 0)
+		{
+			asm("nop");	//parser = mqtt_parser (each mqtt cmd?)
+		}
+		else if((c0 = 'O') && (c1 = 'K'))
+		{
+			return bg95_ok;
+		}
+	}
+
+	return bg95_error;
 }
