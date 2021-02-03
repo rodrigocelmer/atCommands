@@ -7,7 +7,6 @@
 
 void bg95_sendCmd(const char *txData, uint32_t txDataSize);
 void bg95_response(const char *cmdSent, char *response, uint32_t respTimeout);
-eBg95Status_t bg95_parser(const char *respToParse, uint32_t respSize);
 
 void bg95_turnOn(void)
 {
@@ -18,8 +17,6 @@ void bg95_turnOn(void)
 
 eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize)
 {
-	uint32_t responseDataSize = 0;
-	eBg95Status_t	debug;
 	char c0, c1;
 
 	bg95_sendCmd(txData, txDataSize);
@@ -65,8 +62,7 @@ eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, 
 		}
 	}
 
-	debug = bg95_parser(rxData, responseDataSize);
-	return debug;	//bg95_error;
+	return bg95_error;
 }
 
 void bg95_sendCmd(const char *txData, uint32_t txDataSize)
@@ -130,11 +126,4 @@ void bg95_response(const char *cmdSent, char *response, uint32_t respTimeout)
 
 	}while((respACK == 0) && ((HAL_GetTick() - startTick) <= respTimeout));
 	asm("nop");
-}
-
-eBg95Status_t bg95_parser(const char *respToParse, uint32_t respSize)
-{
-
-
-	return bg95_ok;	//#TODO must be bg95_error
 }
