@@ -191,7 +191,7 @@ void bg95_receiveResponse(char *response, uint32_t respTimeout, uint8_t isMqttCm
 
 		if(isMqttCmd)
 		{
-			if((response[bufCount-3] == ',') && (response[bufCount-2] != '\0') && (response[bufCount-1] == ' '))
+			if((bufCount >=3) && (response[bufCount-3] == ',') && (response[bufCount-2] != '\0') && (response[bufCount-1] == ' '))
 			{
 				response[bufCount - 1] = '\0';
 				respACK = 1;
@@ -199,12 +199,15 @@ void bg95_receiveResponse(char *response, uint32_t respTimeout, uint8_t isMqttCm
 		}
 		else
 		{
-			if((response[bufCount-2] == 'O') && (response[bufCount-1] == 'K'))
+			if((bufCount >=2) && (response[bufCount-2] == 'O'))
 			{
-				respACK = 1;
+				if((response[bufCount-1 == 'K']) || (response[bufCount-1] == 'R'))	//"OK" or "errOR"
+				{
+					respACK = 1;
+				}
 			}
 		}
-
+		//#TODO what about +CME ERROR: xxx ?
 	}while((respACK == 0) && ((HAL_GetTick() - startTick) <= respTimeout));
 	asm("nop");
 }
