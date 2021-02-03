@@ -26,4 +26,4 @@ const char AT_QMTCONN[]				= {"AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi
 const char AT_QMTDISC[]				= {"AT+QMTDISC=1\r\n\0"};												//resp: OK +QMTDISC: [13]1,[15]0
 const char AT_QMTSUB[]				= {"AT+QMTSUB=1,1,\"celmer\",1\r\n\0"};									//resp: OK +QMTSUB: [12]1,[14]1,[16]0,[18]1 +QMTRECV: 1,1,"topic","msg"
 const char AT_QMTUNS[]				= {"AT+QMTUNS=1,1,\"celmer\"\r\n\0"};									//resp: OK +QMTUNS: [12]1,[14]1,[16]0
-const char AT_QMTPUBEX[]			= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"careless whisper\"\r\n\0"};				//resp: OK +QMTPUB: [12]1,[14]3,[16]0
+const char AT_QMTPUBEX[]			= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"shake that\"\r\n\0"};				//resp: OK +QMTPUB: [12]1,[14]3,[16]0

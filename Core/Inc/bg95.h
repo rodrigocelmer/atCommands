@@ -1,3 +1,5 @@
+//#include "radio.h"
+
 /*
  * AT commands' response timeout for the BG95. All values in milliseconds
  */
@@ -17,7 +19,7 @@ typedef enum {
 }eBg95Status_t;
 
 void bg95_turnOn(void);
-void bg95_turnOff(void);
+eRadioStatus_t bg95_turnOff(void);
 void bg95_reset(void);
 void bg95_config(void);
 void bg95_connect(void);

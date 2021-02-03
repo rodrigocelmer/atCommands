@@ -1,5 +1,6 @@
 #include "stdint.h"
 #include "main.h"
+#include "radio.h"
 #include "bg95.h"
 #include "string.h"
 
@@ -21,9 +22,9 @@ void radio_turnOn(void)
 	bg95_turnOn();
 }
 
-void radio_turnOff(void)
+eRadioStatus_t radio_turnOff(void)
 {
-	bg95_turnOff();
+	return bg95_turnOff();
 }
 
 void radio_reset(void)
