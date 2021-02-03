@@ -6,7 +6,7 @@
 #include "bg95.h"
 
 void bg95_sendCmd(const char *txData, uint32_t txDataSize);
-void bg95_response(const char *cmdSent, char *response, uint32_t respTimeout);
+void bg95_response(char *response, uint32_t respTimeout, uint8_t isMqttCmd);
 
 void bg95_turnOn(void)
 {
@@ -17,11 +17,17 @@ void bg95_turnOn(void)
 
 eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize)
 {
-	char c0, c1;
+	char 	c0, c1;
+	uint8_t	flagMqttCmd = 0;
+
+	if(memcmp(txData, "AT+QMT", 6) == 0)
+	{
+		flagMqttCmd = 1;
+	}
 
 	bg95_sendCmd(txData, txDataSize);
 
-	bg95_response(txData, rxData, timeout);
+	bg95_response(rxData, timeout, flagMqttCmd);
 
 	if(*rxData == '+')
 	{
@@ -77,16 +83,11 @@ void bg95_sendCmd(const char *txData, uint32_t txDataSize)
 	}
 }
 
-void bg95_response(const char *cmdSent, char *response, uint32_t respTimeout)
+void bg95_response(char *response, uint32_t respTimeout, uint8_t isMqttCmd)
 {
-	uint8_t		respACK		= 0, flagMqttCmd = 0;
+	uint8_t		respACK		= 0;
 	uint32_t 	bufCount 	= 0,
 				startTick	= HAL_GetTick();
-
-	if(memcmp(cmdSent, "AT+QMT", 6) == 0)
-	{
-		flagMqttCmd = 1;
-	}
 
 	do
 	{
@@ -108,7 +109,7 @@ void bg95_response(const char *cmdSent, char *response, uint32_t respTimeout)
 			}
 		}
 
-		if(flagMqttCmd)
+		if(isMqttCmd)
 		{
 			if((response[bufCount-3] == ',') && (response[bufCount-2] != '\0') && (response[bufCount-1] == ' '))
 			{
