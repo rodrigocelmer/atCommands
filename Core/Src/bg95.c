@@ -23,7 +23,7 @@ eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, 
 
 	bg95_response(txData, rxData, timeout);
 
-	if(*rxData == '+')								//check status command. Returns a status
+	if(*rxData == '+')
 	{
 		c0 = *rxData++;
 		if(memcmp(rxData, "CPIN", 4) == 0)
@@ -47,14 +47,14 @@ eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, 
 			asm("nop"); //parser = csq_parser;
 		}
 	}
-	else											//mqtt command
+	else
 	{
 		c0 = *rxData++;
 		c1 = *rxData++;
 		rxData = rxData + 2;
 		if(memcmp(rxData, "QMT", 3) == 0)
 		{
-			asm("nop");
+			asm("nop");	//parser = mqtt_parser (each mqtt cmd?)
 		}
 		else if((c0 = 'O') && (c1 = 'K'))
 		{
