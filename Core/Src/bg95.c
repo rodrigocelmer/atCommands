@@ -242,6 +242,10 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 		{
 			asm("nop"); //parser = csq_parser;
 		}
+		else if(memcmp(respToParse, "CME", 3) == 0)
+		{
+			asm("nop");	//errorHandler;
+		}
 	}
 	else
 	{
@@ -257,5 +261,5 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 		}
 	}
 
-	return bg95_error;
+	return bg95_error;	//ERROR
 }
