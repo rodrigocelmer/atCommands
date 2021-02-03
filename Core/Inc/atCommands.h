@@ -3,8 +3,8 @@
 const char AT_AT[]					= {"AT\r\n\0"};															//resp: OK
 const char AT_QPOWD[] 				= {"AT+QPOWD\r\n\0"};													//resp: OK POWERED DOWN
 const char AT_QCFG_NWSCANMODE[]		= {"AT+QCFG=\"NWSCANMODE\",0\r\n\0"};									//resp: OK
-const char AT_QCFG_NWSCANSEQ[]		= {"AT+QCFG=\"NWSCANSEQ\",020103\r\n\0"};								//resp: OK
-const char AT_QCFG_IOTOPMODE[]		= {"AT+QCFG=\"IOTOPMODE\",2\r\n\0"};									//resp: OK
+const char AT_QCFG_NWSCANSEQ[]		= {"AT+QCFG=\"NWSCANSEQ\",030102\r\n\0"};//020103\r\n\0"};								//resp: OK
+const char AT_QCFG_IOTOPMODE[]		= {"AT+QCFG=\"IOTOPMODE\",1\r\n\0"};//2\r\n\0"};									//resp: OK
 const char AT_QCFG_BAND[]			= {"AT+QCFG=\"BAND\",0XF,0,0X8000004\r\n\0"};							//resp: OK
 const char AT_QICSGP[]				= {"AT+QICSGP=1,1,\"virtueyes.com.br\",\"virtu\",\"virtu\",3\r\n\0"};	//resp: OK
 const char AT_CFUN0[]				= {"AT+CFUN=0\r\n\0"};													//resp: OK
