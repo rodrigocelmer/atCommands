@@ -41,33 +41,24 @@ void bg95_config(void)
 	char rxBuf[CONF_RXBUF_SIZE] = {'\0'};
 
 	bg95_transmit(AT_ATE0, rxBuf, CONFIG_TIMEOUT, strlen(AT_ATE0));
-	memset(rxBuf, '\0', CONF_RXBUF_SIZE);
 
 	bg95_transmit(AT_CPIN, rxBuf, CPIN_TIMEOUT, strlen(AT_CPIN));
-	memset(rxBuf, '\0', CONF_RXBUF_SIZE);
 
 	bg95_transmit(AT_QCFG_NWSCANMODE, rxBuf, CONFIG_TIMEOUT, strlen(AT_QCFG_NWSCANMODE));
-	memset(rxBuf, '\0', CONF_RXBUF_SIZE);
 
 	bg95_transmit(AT_QCFG_NWSCANSEQ, rxBuf, CONFIG_TIMEOUT, strlen(AT_QCFG_NWSCANSEQ));
-	memset(rxBuf, '\0', CONF_RXBUF_SIZE);
 
 	bg95_transmit(AT_QCFG_IOTOPMODE, rxBuf, CONFIG_TIMEOUT, strlen(AT_QCFG_IOTOPMODE));
-	memset(rxBuf, '\0', CONF_RXBUF_SIZE);
 
 	bg95_transmit(AT_QCFG_BAND, rxBuf, CONFIG_TIMEOUT, strlen(AT_QCFG_BAND));
-	memset(rxBuf, '\0', CONF_RXBUF_SIZE);
 
 	bg95_transmit(AT_QICSGP, rxBuf, CONFIG_TIMEOUT, strlen(AT_QICSGP));
-	memset(rxBuf, '\0', CONF_RXBUF_SIZE);
 
 	bg95_transmit(AT_CFUN0, rxBuf, CFUN_TIMEOUT, strlen(AT_CFUN0));
-	memset(rxBuf, '\0', CONF_RXBUF_SIZE);
 
 	delay_ms(5000);
 
 	bg95_transmit(AT_CFUN1, rxBuf, CFUN_TIMEOUT, strlen(AT_CFUN1));
-	memset(rxBuf, '\0', CONF_RXBUF_SIZE);
 }
 
 #define CONN_RXBUF_SIZE	100
@@ -81,31 +72,23 @@ void bg95_connect(void)
 	do
 	{
 		creg = bg95_transmit(AT_CREG, rxBuf, CONFIG_TIMEOUT, strlen(AT_CREG));
-		memset(rxBuf, '\0', CONN_RXBUF_SIZE);
 
 		cgreg = bg95_transmit(AT_CGREG, rxBuf, CONFIG_TIMEOUT, strlen(AT_CGREG));
-		memset(rxBuf, '\0', CONN_RXBUF_SIZE);
 
 		cereg = bg95_transmit(AT_CEREG, rxBuf, CONFIG_TIMEOUT, strlen(AT_CEREG));
-		memset(rxBuf, '\0', CONN_RXBUF_SIZE);
 	}while(	(creg != bg95_ok)	&&
 			(cgreg != bg95_ok)	&&
 			(cereg != bg95_ok)	);
 
 	bg95_transmit(AT_QNWINFO, rxBuf, CONFIG_TIMEOUT, strlen(AT_QNWINFO));
-	memset(rxBuf, '\0', CONN_RXBUF_SIZE);
 
 	bg95_transmit(AT_CSQ, rxBuf, CONFIG_TIMEOUT, strlen(AT_CSQ));
-	memset(rxBuf, '\0', CONN_RXBUF_SIZE);
 
 	bg95_transmit(AT_CGATT1, rxBuf, CGATT_TIMEOUT, strlen(AT_CGATT1));
-	memset(rxBuf, '\0', CONN_RXBUF_SIZE);
 
 	bg95_transmit(AT_QMTOPEN, rxBuf, MQTT_TIMEOUT, strlen(AT_QMTOPEN));
-	memset(rxBuf, '\0', CONN_RXBUF_SIZE);
 
 	bg95_transmit(AT_QMTCONN, rxBuf, MQTT_TIMEOUT, strlen(AT_QMTCONN));
-	memset(rxBuf, '\0', CONN_RXBUF_SIZE);
 }
 
 #define PUB_RXBUF_SIZE	100
@@ -114,7 +97,6 @@ void bg95_publish(void)	//const char *msg)
 	char rxBuf[PUB_RXBUF_SIZE] = {'\0'};
 
 	bg95_transmit(AT_QMTPUBEX, rxBuf, MQTT_TIMEOUT, strlen(AT_QMTPUBEX));
-	memset(rxBuf, '\0', PUB_RXBUF_SIZE);
 }
 
 #define DISC_RXBUF_SIZE	20
@@ -123,10 +105,8 @@ void bg95_disconnect(void)
 	char rxBuf[DISC_RXBUF_SIZE] = {'\0'};
 
 	bg95_transmit(AT_QMTDISC, rxBuf, MQTT_TIMEOUT, strlen(AT_QMTDISC));
-	memset(rxBuf, '\0', DISC_RXBUF_SIZE);
 
 	bg95_transmit(AT_CGATT0, rxBuf, CGATT_TIMEOUT, strlen(AT_CGATT0));
-	memset(rxBuf, '\0', DISC_RXBUF_SIZE);
 }
 
 
