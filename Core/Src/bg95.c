@@ -203,6 +203,7 @@ eBg95Status_t bg95_receiveResponse(char *response, uint32_t respTimeout, uint8_t
 			{
 				if((response[bufCount-1] == 'K') || (response[bufCount-1] == 'R'))	//"OK" or "errOR"
 				{
+					response[bufCount] = '\0';
 					respACK = 1;
 					return bg95_ok;
 				}
