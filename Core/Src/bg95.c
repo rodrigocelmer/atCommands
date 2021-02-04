@@ -7,8 +7,8 @@
 #include "atCommands.h"
 
 eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize);
-void bg95_sendCommand(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize, uint8_t mqttCmd);
-void bg95_receiveResponse(char *response, uint32_t respTimeout, uint8_t isMqttCmd);
+eBg95Status_t bg95_sendCommand(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize, uint8_t mqttCmd);
+eBg95Status_t bg95_receiveResponse(char *response, uint32_t respTimeout, uint8_t isMqttCmd);
 eBg95Status_t bg95_parseResponse(char *respToParse);
 
 void bg95_turnOn(void)
@@ -148,7 +148,7 @@ eBg95Status_t bg95_transmit(const char *txData, char *rxData, uint32_t timeout, 
 	return bg95_parseResponse(rxData);
 }
 
-void bg95_sendCommand(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize, uint8_t mqttCmd)
+eBg95Status_t bg95_sendCommand(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize, uint8_t mqttCmd)
 {
 	uint8_t i = 0;
 
@@ -159,10 +159,10 @@ void bg95_sendCommand(const char *txData, char *rxData, uint32_t timeout, uint32
 		txData++;
 	}
 
-	bg95_receiveResponse(rxData, timeout, mqttCmd);
+	return bg95_receiveResponse(rxData, timeout, mqttCmd);
 }
 
-void bg95_receiveResponse(char *response, uint32_t respTimeout, uint8_t isMqttCmd)
+eBg95Status_t bg95_receiveResponse(char *response, uint32_t respTimeout, uint8_t isMqttCmd)
 {
 	uint8_t		respACK		= 0;
 	uint32_t 	bufCount 	= 0,
@@ -194,6 +194,7 @@ void bg95_receiveResponse(char *response, uint32_t respTimeout, uint8_t isMqttCm
 			{
 				response[bufCount - 1] = '\0';
 				respACK = 1;
+				return bg95_ok;
 			}
 		}
 		else
@@ -203,12 +204,14 @@ void bg95_receiveResponse(char *response, uint32_t respTimeout, uint8_t isMqttCm
 				if((response[bufCount-1] == 'K') || (response[bufCount-1] == 'R'))	//"OK" or "errOR"
 				{
 					respACK = 1;
+					return bg95_ok;
 				}
 			}
 		}
 		//#TODO what about +CME ERROR: xxx ?
 	}while((respACK == 0) && ((HAL_GetTick() - startTick) <= respTimeout));
-	asm("nop");
+
+	return bg95_error;
 }
 
 eBg95Status_t bg95_parseResponse(char *respToParse)
