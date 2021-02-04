@@ -89,6 +89,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   gpioInit();
   uartInit();
+  radio_init();	//gpio and uartInit() must be inside radio_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -173,8 +174,12 @@ void SystemClock_Config(void)
 void gpioInit(void)
 {
 	RCC->AHB1ENR	|= 	RCC_AHB1ENR_GPIOAEN;
-	GPIOA->MODER	|= 	(0b01 << GPIO_MODER_MODE1_Pos);
+	GPIOA->MODER	|= 	(0b01 << GPIO_MODER_MODE1_Pos)	|
+						(0b00 << GPIO_MODER_MODE4_Pos)	|
+						(0b00 << GPIO_MODER_MODE5_Pos)	;
 	GPIOA->ODR		|= 	GPIO_ODR_OD1;
+	GPIOA->PUPDR	|=	(0b10 << GPIO_PUPDR_PUPD4_Pos)	|
+						(0b10 << GPIO_PUPDR_PUPD5_Pos)	;
 
 	RCC->AHB1ENR	|=	RCC_AHB1ENR_GPIOCEN;
 	GPIOC->MODER	|=	(0b00 << GPIO_MODER_MODE13_Pos);
