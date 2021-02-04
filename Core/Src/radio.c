@@ -2,7 +2,6 @@
 #include "main.h"
 #include "radio.h"
 #include "bg95.h"
-#include "string.h"
 
 void delay_ms(uint32_t time_ms)
 {

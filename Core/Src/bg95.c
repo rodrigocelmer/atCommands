@@ -22,7 +22,7 @@ void bg95_turnOff(void)
 {
 	char rxBuf[5] = {'\0'};
 
-	bg95_sendAtCmd(AT_QPOWD, rxBuf, CONFIG_TIMEOUT, strlen(AT_QPOWD));
+	bg95_sendAtCmd(AT_QPOWD, rxBuf, CONFIG_TIMEOUT, sizeof(AT_QPOWD));
 }
 
 void bg95_reset(void)
@@ -37,25 +37,25 @@ void bg95_config(void)
 {
 	char rxBuf[CONF_RXBUF_SIZE] = {'\0'};
 
-	bg95_sendAtCmd(AT_ATE0, rxBuf, CONFIG_TIMEOUT, strlen(AT_ATE0));
+	bg95_sendAtCmd(AT_ATE0, rxBuf, CONFIG_TIMEOUT, sizeof(AT_ATE0));
 
-	bg95_sendAtCmd(AT_CPIN, rxBuf, CPIN_TIMEOUT, strlen(AT_CPIN));
+	bg95_sendAtCmd(AT_CPIN, rxBuf, CPIN_TIMEOUT, sizeof(AT_CPIN));
 
-	bg95_sendAtCmd(AT_QCFG_NWSCANMODE, rxBuf, CONFIG_TIMEOUT, strlen(AT_QCFG_NWSCANMODE));
+	bg95_sendAtCmd(AT_QCFG_NWSCANMODE, rxBuf, CONFIG_TIMEOUT, sizeof(AT_QCFG_NWSCANMODE));
 
-	bg95_sendAtCmd(AT_QCFG_NWSCANSEQ, rxBuf, CONFIG_TIMEOUT, strlen(AT_QCFG_NWSCANSEQ));
+	bg95_sendAtCmd(AT_QCFG_NWSCANSEQ, rxBuf, CONFIG_TIMEOUT, sizeof(AT_QCFG_NWSCANSEQ));
 
-	bg95_sendAtCmd(AT_QCFG_IOTOPMODE, rxBuf, CONFIG_TIMEOUT, strlen(AT_QCFG_IOTOPMODE));
+	bg95_sendAtCmd(AT_QCFG_IOTOPMODE, rxBuf, CONFIG_TIMEOUT, sizeof(AT_QCFG_IOTOPMODE));
 
-	bg95_sendAtCmd(AT_QCFG_BAND, rxBuf, CONFIG_TIMEOUT, strlen(AT_QCFG_BAND));
+	bg95_sendAtCmd(AT_QCFG_BAND, rxBuf, CONFIG_TIMEOUT, sizeof(AT_QCFG_BAND));
 
-	bg95_sendAtCmd(AT_QICSGP, rxBuf, CONFIG_TIMEOUT, strlen(AT_QICSGP));
+	bg95_sendAtCmd(AT_QICSGP, rxBuf, CONFIG_TIMEOUT, sizeof(AT_QICSGP));
 
-	bg95_sendAtCmd(AT_CFUN0, rxBuf, CFUN_TIMEOUT, strlen(AT_CFUN0));
+	bg95_sendAtCmd(AT_CFUN0, rxBuf, CFUN_TIMEOUT, sizeof(AT_CFUN0));
 
 	delay_ms(5000);
 
-	bg95_sendAtCmd(AT_CFUN1, rxBuf, CFUN_TIMEOUT, strlen(AT_CFUN1));
+	bg95_sendAtCmd(AT_CFUN1, rxBuf, CFUN_TIMEOUT, sizeof(AT_CFUN1));
 }
 
 #define CONN_RXBUF_SIZE	100
@@ -68,24 +68,24 @@ void bg95_connect(void)
 
 	do
 	{
-		creg = bg95_sendAtCmd(AT_CREG, rxBuf, CONFIG_TIMEOUT, strlen(AT_CREG));
+		creg = bg95_sendAtCmd(AT_CREG, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CREG));
 
-		cgreg = bg95_sendAtCmd(AT_CGREG, rxBuf, CONFIG_TIMEOUT, strlen(AT_CGREG));
+		cgreg = bg95_sendAtCmd(AT_CGREG, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CGREG));
 
-		cereg = bg95_sendAtCmd(AT_CEREG, rxBuf, CONFIG_TIMEOUT, strlen(AT_CEREG));
+		cereg = bg95_sendAtCmd(AT_CEREG, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CEREG));
 	}while(	(creg != bg95_ok)	&&
 			(cgreg != bg95_ok)	&&
 			(cereg != bg95_ok)	);
 
-	bg95_sendAtCmd(AT_QNWINFO, rxBuf, CONFIG_TIMEOUT, strlen(AT_QNWINFO));
+	bg95_sendAtCmd(AT_QNWINFO, rxBuf, CONFIG_TIMEOUT, sizeof(AT_QNWINFO));
 
-	bg95_sendAtCmd(AT_CSQ, rxBuf, CONFIG_TIMEOUT, strlen(AT_CSQ));
+	bg95_sendAtCmd(AT_CSQ, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CSQ));
 
-	bg95_sendAtCmd(AT_CGATT1, rxBuf, CGATT_TIMEOUT, strlen(AT_CGATT1));
+	bg95_sendAtCmd(AT_CGATT1, rxBuf, CGATT_TIMEOUT, sizeof(AT_CGATT1));
 
-	bg95_sendAtCmd(AT_QMTOPEN, rxBuf, MQTT_TIMEOUT, strlen(AT_QMTOPEN));
+	bg95_sendAtCmd(AT_QMTOPEN, rxBuf, MQTT_TIMEOUT, sizeof(AT_QMTOPEN));
 
-	bg95_sendAtCmd(AT_QMTCONN, rxBuf, MQTT_TIMEOUT, strlen(AT_QMTCONN));
+	bg95_sendAtCmd(AT_QMTCONN, rxBuf, MQTT_TIMEOUT, sizeof(AT_QMTCONN));
 }
 
 #define PUB_RXBUF_SIZE	100
@@ -93,7 +93,7 @@ void bg95_publish(void)	//const char *msg)
 {
 	char rxBuf[PUB_RXBUF_SIZE] = {'\0'};
 
-	bg95_sendAtCmd(AT_QMTPUBEX, rxBuf, MQTT_TIMEOUT, strlen(AT_QMTPUBEX));
+	bg95_sendAtCmd(AT_QMTPUBEX, rxBuf, MQTT_TIMEOUT, sizeof(AT_QMTPUBEX));
 }
 
 #define DISC_RXBUF_SIZE	20
@@ -101,9 +101,9 @@ void bg95_disconnect(void)
 {
 	char rxBuf[DISC_RXBUF_SIZE] = {'\0'};
 
-	bg95_sendAtCmd(AT_QMTDISC, rxBuf, MQTT_TIMEOUT, strlen(AT_QMTDISC));
+	bg95_sendAtCmd(AT_QMTDISC, rxBuf, MQTT_TIMEOUT, sizeof(AT_QMTDISC));
 
-	bg95_sendAtCmd(AT_CGATT0, rxBuf, CGATT_TIMEOUT, strlen(AT_CGATT0));
+	bg95_sendAtCmd(AT_CGATT0, rxBuf, CGATT_TIMEOUT, sizeof(AT_CGATT0));
 }
 
 eBg95Status_t bg95_sendAtCmd(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize)
