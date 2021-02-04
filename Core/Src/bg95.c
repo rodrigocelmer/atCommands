@@ -160,24 +160,24 @@ eBg95Status_t bg95_serialRX(char *response, uint32_t respTimeout, uint8_t isMqtt
 					bufCount++;
 				}
 			}
-		}
 
-		if(isMqttCmd)
-		{
-			if((bufCount >=3) && (response[bufCount-3] == ',') && (response[bufCount-2] != '\0') && (response[bufCount-1] == ' '))
+			if(isMqttCmd)
 			{
-				response[bufCount - 1] = '\0';
-				return bg95_ok;
-			}
-		}
-		else
-		{
-			if((bufCount >=2) && (response[bufCount-2] == 'O'))
-			{
-				if((response[bufCount-1] == 'K') || (response[bufCount-1] == 'R'))	//"OK" or "errOR"
+				if((bufCount >=3) && (response[bufCount-3] == ',') && (response[bufCount-2] != '\0') && (response[bufCount-1] == ' '))
 				{
-					response[bufCount] = '\0';
+					response[bufCount - 1] = '\0';
 					return bg95_ok;
+				}
+			}
+			else
+			{
+				if((bufCount >=2) && (response[bufCount-2] == 'O'))
+				{
+					if((response[bufCount-1] == 'K') || (response[bufCount-1] == 'R'))	//"OK" or "errOR"
+					{
+						response[bufCount] = '\0';
+						return bg95_ok;
+					}
 				}
 			}
 		}
