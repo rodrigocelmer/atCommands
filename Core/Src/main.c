@@ -94,7 +94,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  radio_turnOn();
+  radio.turnOn();
   delay_ms(10000);
 
   while (1)
@@ -103,23 +103,23 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	   radio_config();
+	   radio.config();
 
 
 
-	   radio_connect();
+	   radio.connect();
 
 
 
-	   radio_publish();
+	   radio.publish();
 
 
 
-	   radio_disconnect();
+	   radio.disconnect();
 
 
 
-	   radio_turnOff();
+	   radio.turnOff();
 
 
 
@@ -174,16 +174,16 @@ void SystemClock_Config(void)
 void gpioInit(void)
 {
 	RCC->AHB1ENR	|= 	RCC_AHB1ENR_GPIOAEN;
-	GPIOA->MODER	|= 	(0b01 << GPIO_MODER_MODE1_Pos)	|
-						(0b00 << GPIO_MODER_MODE4_Pos)	|
-						(0b00 << GPIO_MODER_MODE5_Pos)	;
+	GPIOA->MODER	|= 	(0b01 << GPIO_MODER_MODE1_Pos);
 	GPIOA->ODR		|= 	GPIO_ODR_OD1;
-	GPIOA->PUPDR	|=	(0b10 << GPIO_PUPDR_PUPD4_Pos)	|
-						(0b10 << GPIO_PUPDR_PUPD5_Pos)	;
 
 	RCC->AHB1ENR	|=	RCC_AHB1ENR_GPIOCEN;
-	GPIOC->MODER	|=	(0b00 << GPIO_MODER_MODE13_Pos);
-	GPIOC->PUPDR	|=	(0b00 << GPIO_PUPDR_PUPD13_Pos);
+	GPIOC->MODER	|=	(0b00 << GPIO_MODER_MODE13_Pos)	|
+						(0b00 << GPIO_MODER_MODE1_Pos)	|
+						(0b00 << GPIO_MODER_MODE0_Pos)	;
+	GPIOC->PUPDR	|=	(0b00 << GPIO_PUPDR_PUPD13_Pos)	|
+						(0b10 << GPIO_PUPDR_PUPD1_Pos)	|
+						(0b10 << GPIO_PUPDR_PUPD0_Pos)	;
 }
 
 void uartInit(void)
