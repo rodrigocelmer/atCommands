@@ -19,7 +19,7 @@ typedef enum {
 }eBg95Status_t;
 
 void bg95_turnOn(void);
-eRadioStatus_t bg95_turnOff(void);
+void bg95_turnOff(void);
 void bg95_reset(void);
 void bg95_config(void);
 void bg95_connect(void);
