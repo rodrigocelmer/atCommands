@@ -115,7 +115,10 @@ eBg95Status_t bg95_sendAtCmd(const char *txData, char *rxData, uint32_t timeout,
 		flagMqttCmd = 1;
 	}
 
-	bg95_serialTx(txData, rxData, timeout, txDataSize, flagMqttCmd);
+	if(bg95_serialTx(txData, rxData, timeout, txDataSize, flagMqttCmd) == bg95_timeout)
+	{
+		return bg95_timeout;
+	}
 
 	return bg95_parseResponse(rxData);
 }
@@ -136,7 +139,6 @@ eBg95Status_t bg95_serialTx(const char *txData, char *rxData, uint32_t timeout, 
 
 eBg95Status_t bg95_serialRX(char *response, uint32_t respTimeout, uint8_t isMqttCmd)
 {
-	uint8_t		respACK		= 0;
 	uint32_t 	bufCount 	= 0,
 				startTick	= HAL_GetTick();
 
@@ -165,7 +167,6 @@ eBg95Status_t bg95_serialRX(char *response, uint32_t respTimeout, uint8_t isMqtt
 			if((bufCount >=3) && (response[bufCount-3] == ',') && (response[bufCount-2] != '\0') && (response[bufCount-1] == ' '))
 			{
 				response[bufCount - 1] = '\0';
-				respACK = 1;
 				return bg95_ok;
 			}
 		}
@@ -176,15 +177,14 @@ eBg95Status_t bg95_serialRX(char *response, uint32_t respTimeout, uint8_t isMqtt
 				if((response[bufCount-1] == 'K') || (response[bufCount-1] == 'R'))	//"OK" or "errOR"
 				{
 					response[bufCount] = '\0';
-					respACK = 1;
 					return bg95_ok;
 				}
 			}
 		}
 		//#TODO what about +CME ERROR: xxx ?
-	}while((respACK == 0) && ((HAL_GetTick() - startTick) <= respTimeout));
+	}while((HAL_GetTick() - startTick) <= respTimeout);
 
-	return bg95_error;
+	return bg95_timeout;
 }
 
 eBg95Status_t bg95_parseResponse(char *respToParse)
