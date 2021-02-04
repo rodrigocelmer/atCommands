@@ -12,6 +12,7 @@
 typedef enum {
 	bg95_ok = 0x00,
 	bg95_error,
+	bg95_timeout,
 	csq_noSignal,
 	csq_poorSignal,
 	csq_goodSignal,
