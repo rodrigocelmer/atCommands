@@ -60,6 +60,14 @@ void bg95_config(void)
 
 	bg95_transmit(AT_QICSGP, rxBuf, CONFIG_TIMEOUT, strlen(AT_QICSGP));
 	memset(rxBuf, '\0', CONF_RXBUF_SIZE);
+
+	bg95_transmit(AT_CFUN0, rxBuf, CFUN_TIMEOUT, strlen(AT_CFUN0));
+	memset(rxBuf, '\0', CONF_RXBUF_SIZE);
+
+	delay_ms(5000);
+
+	bg95_transmit(AT_CFUN1, rxBuf, CFUN_TIMEOUT, strlen(AT_CFUN1));
+	memset(rxBuf, '\0', CONF_RXBUF_SIZE);
 }
 
 #define CONN_RXBUF_SIZE	100
@@ -69,14 +77,6 @@ void bg95_connect(void)
 	eBg95Status_t 	creg	= bg95_error,
 					cgreg	= bg95_error,
 					cereg	= bg95_error;
-
-	bg95_transmit(AT_CFUN0, rxBuf, CFUN_TIMEOUT, strlen(AT_CFUN0));
-	memset(rxBuf, '\0', CONN_RXBUF_SIZE);
-
-	delay_ms(5000);
-
-	bg95_transmit(AT_CFUN1, rxBuf, CFUN_TIMEOUT, strlen(AT_CFUN1));
-	memset(rxBuf, '\0', CONN_RXBUF_SIZE);
 
 	do
 	{
