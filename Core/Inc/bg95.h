@@ -1,5 +1,3 @@
-//#include "radio.h"
-
 /*
  * AT commands' response timeout for the BG95. All values in milliseconds
  */
