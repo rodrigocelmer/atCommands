@@ -6,10 +6,24 @@
 #include "bg95.h"
 #include "atCommands.h"
 
+typedef eBg95Status_t (*parseFunction)(char *respToParse);
+
 eBg95Status_t bg95_sendAtCmd(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize);
 eBg95Status_t bg95_serialTx(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize, uint8_t mqttCmd);
 eBg95Status_t bg95_serialRX(char *response, uint32_t respTimeout, uint8_t isMqttCmd);
 eBg95Status_t bg95_parseResponse(char *respToParse);
+eBg95Status_t parse_cpin(char *respToParse);
+eBg95Status_t parse_creg(char *respToParse);
+eBg95Status_t parse_cgreg(char *respToParse);
+eBg95Status_t parse_cereg(char *respToParse);
+eBg95Status_t parse_csq(char *respToParse);
+eBg95Status_t parse_cme(char *respToParse);
+eBg95Status_t parse_mqttOpen(char *respToParse);
+eBg95Status_t parse_mqttConn(char *respToParse);
+eBg95Status_t parse_mqttDisc(char *respToParse);
+eBg95Status_t parse_mqttSub(char *respToParse);
+eBg95Status_t parse_mqttUns(char *respToParse);
+eBg95Status_t parse_mqttPubex(char *respToParse);
 
 void bg95_turnOn(void)
 {
@@ -189,6 +203,7 @@ eBg95Status_t bg95_serialRX(char *response, uint32_t respTimeout, uint8_t isMqtt
 
 eBg95Status_t bg95_parseResponse(char *respToParse)
 {
+	parseFunction	parser;
 	char c0, c1;
 
 	c0 = *respToParse++;
@@ -196,33 +211,31 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 	{
 		if(memcmp(respToParse, "CPIN", 4) == 0)
 		{
-			asm("nop"); //parser = cpin_parser;
+			parser = parse_cpin;
 		}
 		else if(memcmp(respToParse, "CREG", 4) == 0)
 		{
-			asm("nop"); //parser = creg_parser;
-			if(respToParse[8] == '1')
-				return bg95_ok;
+			parser = parse_creg;
 		}
 		else if(memcmp(respToParse, "CGREG", 5) == 0)
 		{
-			asm("nop"); //parser = cgreg_parser;
-			if(respToParse[9] == '1')
-				return bg95_ok;
+			parser = parse_cgreg;
 		}
 		else if(memcmp(respToParse, "CEREG", 5) == 0)
 		{
-			asm("nop"); //parser = cereg_parser;
-			if(respToParse[9] == '1')
-				return bg95_ok;
+			parser = parse_cereg;
 		}
 		else if(memcmp(respToParse, "CSQ", 3) == 0)
 		{
-			asm("nop"); //parser = csq_parser;
+			parser = parse_csq;
 		}
 		else if(memcmp(respToParse, "CME", 3) == 0)
 		{
-			asm("nop");	//errorHandler;
+			parser = parse_cme;
+		}
+		else if(memcmp(respToParse, "QNWINFO", 7) == 0)	//#TODO
+		{
+			return bg95_ok;
 		}
 	}
 	else
@@ -231,13 +244,146 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 		respToParse = respToParse + 2;
 		if(memcmp(respToParse, "QMT", 3) == 0)
 		{
-			asm("nop");	//parser = mqtt_parser (each mqtt cmd?)
+			respToParse = respToParse + 3;
+			if(memcmp(respToParse, "OPEN", 4) == 0)
+			{
+				parser = parse_mqttOpen;
+			}
+			else if(memcmp(respToParse, "CONN", 4) == 0)
+			{
+				parser = parse_mqttConn;
+			}
+			else if(memcmp(respToParse, "DISC", 4) == 0)
+			{
+				parser = parse_mqttDisc;
+			}
+			else if(memcmp(respToParse, "SUB", 3) == 0)
+			{
+				parser = parse_mqttSub;
+			}
+			else if(memcmp(respToParse, "UNS", 3) == 0)
+			{
+				parser = parse_mqttUns;
+			}
+			else if(memcmp(respToParse, "PUB", 3) == 0)
+			{
+				parser = parse_mqttPubex;
+			}
 		}
-		else if((c0 = 'O') && (c1 = 'K'))
+		else if((c0 == 'O') && (c1 == 'K'))
+		{
+			return bg95_ok;
+		}
+		else if((c0 == 'A') && (c1 == 'T'))	//ATE0
 		{
 			return bg95_ok;
 		}
 	}
 
-	return bg95_error;	//ERROR
+	return parser(respToParse);
+}
+
+eBg95Status_t parse_cpin(char *respToParse)
+{
+	if(respToParse[6] == 'R')	//CPIN: [6]READY OK
+	{
+		return bg95_ok;
+	}
+	return bg95_error;
+}
+
+eBg95Status_t parse_creg(char *respToParse)
+{
+	if(respToParse[8] == '1')	//CREG: 0,[8]2 OK
+	{
+		return bg95_ok;
+	}
+	return bg95_error;
+}
+
+eBg95Status_t parse_cgreg(char *respToParse)
+{
+	if(respToParse[9] == '1')	//CGREG: 0,[9]2 OK
+	{
+		return bg95_ok;
+	}
+	return bg95_error;
+}
+
+eBg95Status_t parse_cereg(char *respToParse)
+{
+	if(respToParse[9] == '1')	//CEREG: 0,[9]2 OK
+	{
+		return bg95_ok;
+	}
+	return bg95_error;
+}
+
+eBg95Status_t parse_csq(char *respToParse)
+{
+	//CSQ: [5]2[6]6,99 OK
+	if((respToParse[5] >= '0') && (respToParse[6] >= '0'))
+	{
+		return bg95_ok;
+	}
+	return bg95_error;
+}
+
+eBg95Status_t parse_cme(char *respToParse)
+{
+	//#TODO error handler
+}
+
+eBg95Status_t parse_mqttOpen(char *respToParse)
+{
+	if(respToParse[8] == '0')	//OPEN: 1,[8]0
+	{
+		return bg95_ok;
+	}
+	return bg95_error;
+}
+
+eBg95Status_t parse_mqttConn(char *respToParse)
+{
+	if(respToParse[10] == '0')	//CONN: 1,0,[10]0
+	{
+		return bg95_ok;
+	}
+	return bg95_error;
+}
+
+eBg95Status_t parse_mqttDisc(char *respToParse)
+{
+	if(respToParse[8] == '0')	//DISC: 1,[8]0
+	{
+		return bg95_ok;
+	}
+	return bg95_error;
+}
+
+eBg95Status_t parse_mqttSub(char *respToParse)
+{
+	if(respToParse[9] != '2')	//SUB: 1,1,0,1 +QMTRECV: 1,1,"topic","msg"
+	{
+		return bg95_ok;
+	}
+	return bg95_error;
+}
+
+eBg95Status_t parse_mqttUns(char *respToParse)
+{
+	if(respToParse[9] != '2')	//UNS: 1,1,[9]0
+	{
+		return bg95_ok;
+	}
+	return bg95_error;
+}
+
+eBg95Status_t parse_mqttPubex(char *respToParse)
+{
+	if(respToParse[9] != '2')	//PUB: 1,3,[9]0
+	{
+		return bg95_ok;
+	}
+	return bg95_error;
 }
