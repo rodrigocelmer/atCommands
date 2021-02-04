@@ -22,9 +22,9 @@ void radio_turnOn(void)
 	bg95_turnOn();
 }
 
-eRadioStatus_t radio_turnOff(void)
+void radio_turnOff(void)
 {
-	return bg95_turnOff();
+	bg95_turnOff();
 }
 
 void radio_reset(void)
