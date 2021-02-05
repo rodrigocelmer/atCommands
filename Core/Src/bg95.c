@@ -374,9 +374,21 @@ eBg95Status_t parse_cereg(char *respToParse)
 eBg95Status_t parse_csq(char *respToParse)
 {
 	//CSQ: [5]2[6]6,99 OK
-	if((respToParse[5] >= '0') && (respToParse[6] >= '0'))
+	if((respToParse[5] == '9') && (respToParse[6] == '9'))
 	{
-		return bg95_ok;
+		return csq_noSignal;
+	}
+	else if((respToParse[5] <= '1') && (respToParse[6] <= '7'))
+	{
+		return csq_poorSignal;
+	}
+	else if((respToParse[5] >= '3') && (respToParse[6] >= '1'))
+	{
+		return csq_greatSignal;
+	}
+	else
+	{
+		return csq_goodSignal;
 	}
 	return bg95_error;
 }
