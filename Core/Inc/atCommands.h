@@ -22,8 +22,8 @@ const char AT_QNWINFO[]				= {"AT+QNWINFO\r\n"};												//resp: +QNWINFO: "G
 //MQTT commands
 const char AT_QMTOPEN[]				= {"AT+QMTOPEN=1,\"tailor.cloudmqtt.com\",13291\r\n"};				//resp: OK +QMTOPEN: [13]1,[15]0
 const char AT_QMTCLOSE[]			= {"AT+QMTCLOSE=1\r\n"};											//resp:
-const char AT_QMTCONN[]				= {"AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n"};	//resp: OK +QMTCONN: [13]1,[15]0,[17]0
+//const char AT_QMTCONN[]				= {"AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n"};	//resp: OK +QMTCONN: [13]1,[15]0,[17]0
 const char AT_QMTDISC[]				= {"AT+QMTDISC=1\r\n"};												//resp: OK +QMTDISC: [13]1,[15]0
 const char AT_QMTSUB[]				= {"AT+QMTSUB=1,1,\"celmer\",1\r\n"};								//resp: OK +QMTSUB: 1,1,0,1 +QMTRECV: 1,1,"topic","msg"
 const char AT_QMTUNS[]				= {"AT+QMTUNS=1,1,\"celmer\"\r\n"};									//resp: OK +QMTUNS: [12]1,[14]1,[16]0
-const char AT_QMTPUBEX[]			= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"tiimmy turner\"\r\n"};			//resp: OK +QMTPUB: [12]1,[14]3,[16]0
+const char AT_QMTPUBEX[]			= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"all the way\"\r\n"};			//resp: OK +QMTPUB: [12]1,[14]3,[16]0
