@@ -5,6 +5,7 @@
 #include "radio.h"	//because of delay_ms()
 #include "bg95.h"
 #include "atCommands.h"
+#include "stdio.h"
 
 typedef eBg95Status_t (*parseFunction)(char *respToParse);
 
@@ -102,14 +103,17 @@ void bg95_config(void)
 	}
 }
 
-#define CONN_RXBUF_SIZE	100
-void bg95_connect(void)
+#define CONN_RXBUF_SIZE		100
+#define QMTCONN_STRING_SIZE	43
 void bg95_connect(char *mcu_uid, uint32_t uidSize)
 {
+	char 			AT_QMTCONN[QMTCONN_STRING_SIZE + (uidSize - 1)];
 	char 			rxBuf[CONN_RXBUF_SIZE] = {'\0'};
 	eBg95Status_t 	creg	= bg95_error,
 					cgreg	= bg95_error,
 					cereg	= bg95_error;
+
+	sprintf(AT_QMTCONN, "AT+QMTCONN=1,\"%s\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n", mcu_uid);
 
 	do
 	{
