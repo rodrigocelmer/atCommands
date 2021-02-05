@@ -126,7 +126,7 @@ void bg95_connect(void)
 		while(1);
 	}
 
-	if(bg95_sendAtCmd(AT_CSQ, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CSQ)) != bg95_ok)
+	if(bg95_sendAtCmd(AT_CSQ, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CSQ)) == bg95_error)
 	{
 		while(1);
 	}
