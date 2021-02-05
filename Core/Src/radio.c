@@ -16,20 +16,20 @@ void delay_ms(uint32_t time_ms)
 	}while(actualTick - startTick < time_ms);
 }
 
-void radio_init(void)
+void radio_init(sRadio_t *radioModule)
 {
 	//gpio_init();
 
 	if((GPIOC->IDR & GPIO_IDR_ID1) && !(GPIOC->IDR & GPIO_IDR_ID0))
 	{
 		//bg95
-		radio.turnOn		= bg95_turnOn;
-		radio.turnOff		= bg95_turnOff;
-		radio.reset			= bg95_reset;
-		radio.config		= bg95_config;
-		radio.connect		= bg95_connect;
-		radio.publish		= bg95_publish;
-		radio.disconnect	= bg95_disconnect;
+		radioModule->turnOn		= bg95_turnOn;
+		radioModule->turnOff		= bg95_turnOff;
+		radioModule->reset			= bg95_reset;
+		radioModule->config		= bg95_config;
+		radioModule->connect		= bg95_connect;
+		radioModule->publish		= bg95_publish;
+		radioModule->disconnect	= bg95_disconnect;
 	}
 	else if(!(GPIOC->IDR & GPIO_IDR_ID1) && (GPIOC->IDR & GPIO_IDR_ID0))
 	{

@@ -11,8 +11,6 @@ typedef enum {
 
 void delay_ms(uint32_t time_ms);	//must be on proper module
 
-void radio_init(void);
-
 /**
   * @brief  Generic radio modules
   */
@@ -68,4 +66,4 @@ typedef struct sRadio
 	void (*disconnect)(void);
 }sRadio_t;
 
-sRadio_t radio;
+void radio_init(sRadio_t *radioModule);

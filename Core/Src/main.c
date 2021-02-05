@@ -66,6 +66,7 @@ void uartInit(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	sRadio_t radio;
 
   /* USER CODE END 1 */
 
@@ -89,7 +90,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   gpioInit();
   uartInit();
-  radio_init();	//gpio and uartInit() must be inside radio_init();
+  radio_init(&radio);	//gpio and uartInit() must be inside radio_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
