@@ -229,23 +229,21 @@ eBg95Status_t bg95_serialRX(char *response, uint32_t respTimeout, uint8_t isMqtt
 				}
 			}
 
-			if(isMqttCmd)
+			if((isMqttCmd) && (bufCount > 10))	//it is safe to check for MQTT response after receiving 10 chars
 			{
-				if((bufCount >=3) && (response[bufCount-3] == ',') && (response[bufCount-2] != '\0') && (response[bufCount-1] == ' '))
+				if((response[bufCount-3] == ',') && (response[bufCount-2] != '\0') && (response[bufCount-1] == ' '))
 				{
 					response[bufCount - 1] = '\0';
 					return bg95_ok;
 				}
 			}
-			else
+			else if(bufCount >=2)
 			{
-				if((bufCount >=2) && (response[bufCount-2] == 'O'))
+				if(	(memcmp((void *)&response[bufCount-2], "OK", 2) == 0)	||
+					(memcmp((void *)&response[bufCount-2], "OR", 2) == 0)	);
 				{
-					if((response[bufCount-1] == 'K') || (response[bufCount-1] == 'R'))	//"OK" or "errOR"
-					{
-						response[bufCount] = '\0';
-						return bg95_ok;
-					}
+					response[bufCount] = '\0';
+					return bg95_ok;
 				}
 			}
 		}
