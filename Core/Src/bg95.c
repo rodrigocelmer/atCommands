@@ -104,6 +104,7 @@ void bg95_config(void)
 
 #define CONN_RXBUF_SIZE	100
 void bg95_connect(void)
+void bg95_connect(char *mcu_uid, uint32_t uidSize)
 {
 	char 			rxBuf[CONN_RXBUF_SIZE] = {'\0'};
 	eBg95Status_t 	creg	= bg95_error,

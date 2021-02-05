@@ -49,7 +49,7 @@ typedef struct sRadio
 	  * @param	None
 	  * @retval None
 	  */
-	void (*connect)(void);
+	void (*connect)(char *mcuUid, uint32_t uidSize);
 
 	/**
 	  * @brief  Pointer to
