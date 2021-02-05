@@ -82,6 +82,7 @@ int main(void)
 
   /* USER CODE BEGIN Init */
   read_uniqueID(uidString);
+
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -113,7 +114,7 @@ int main(void)
 
 
 
-	   radio.connect();
+	   radio.connect(uidString, UID_STRING_SIZE);
 
 
 
@@ -215,7 +216,7 @@ void uartInit(void)
  */
 void read_uniqueID(char *uid)
 {
-	sprintf(uid,"0x%08lx%08lx%08lx\n", *(volatile uint32_t *)(UID_BASE+8), *(volatile uint32_t *)(UID_BASE+4), *(volatile uint32_t *)(UID_BASE));
+	sprintf(uid,"0x%08lx%08lx%08lx", *(volatile uint32_t *)(UID_BASE+8), *(volatile uint32_t *)(UID_BASE+4), *(volatile uint32_t *)(UID_BASE));
 }
 /* USER CODE END 4 */
 
