@@ -25,6 +25,7 @@
 #include "stm32f411xe.h"
 #include "stdint.h"
 #include "radio.h"
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -34,6 +35,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define UID_SIZE		12				/*!< Actual STM32L053's unique ID size	*/
+#define UID_STRING_SIZE	(UID_SIZE + 16)	/*!< 16 bytes offset for uidString		*/
 
 /* USER CODE END PD */
 
@@ -53,6 +56,7 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 void gpioInit(void);
 void uartInit(void);
+void read_uniqueID(char *uid);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -66,7 +70,8 @@ void uartInit(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	sRadio_t radio;
+	char		uidString[UID_STRING_SIZE];
+	sRadio_t 	radio;
 
   /* USER CODE END 1 */
 
@@ -76,7 +81,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  read_uniqueID(uidString);
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -208,7 +213,10 @@ void uartInit(void)
 /*
  * General functions
  */
-
+void read_uniqueID(char *uid)
+{
+	sprintf(uid,"0x%08lx%08lx%08lx\n", *(volatile uint32_t *)(UID_BASE+8), *(volatile uint32_t *)(UID_BASE+4), *(volatile uint32_t *)(UID_BASE));
+}
 /* USER CODE END 4 */
 
 /**
