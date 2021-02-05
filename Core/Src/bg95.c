@@ -305,10 +305,10 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 	else
 	{
 		c1 = *respToParse++;
-		respToParse = respToParse + 2;
-		if(memcmp(respToParse, "QMT", 3) == 0)
+//		respToParse = respToParse + 2;
+		if(memcmp(respToParse, " +QMT", 5) == 0)
 		{
-			respToParse = respToParse + 3;
+			respToParse = respToParse + 5;
 			if(memcmp(respToParse, "OPEN", 4) == 0)
 			{
 				parser = parse_mqttOpen;
