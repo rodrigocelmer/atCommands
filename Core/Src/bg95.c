@@ -125,21 +125,6 @@ eRadioStatus_t bg95_config(void)
 eRadioStatus_t bg95_checkSignal(void)
 {
 	char 			rxBuf[CHECK_SIGNAL_RXBUF_SIZE] = {'\0'};
-	eBg95Status_t 	creg	= bg95_error,
-					cgreg	= bg95_error,
-					cereg	= bg95_error;
-
-	//#TODO we have to add a timeout here
-	do
-	{
-		creg = bg95_sendAtCmd(AT_CREG, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CREG));
-
-		cgreg = bg95_sendAtCmd(AT_CGREG, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CGREG));
-
-		cereg = bg95_sendAtCmd(AT_CEREG, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CEREG));
-	}while(	(creg != bg95_ok)	&&
-			(cgreg != bg95_ok)	&&
-			(cereg != bg95_ok)	);
 
 	if(bg95_sendAtCmd(AT_QNWINFO, rxBuf, CONFIG_TIMEOUT, sizeof(AT_QNWINFO)) != bg95_ok)
 	{
@@ -165,6 +150,22 @@ eRadioStatus_t bg95_connect(char *mcu_uid, uint32_t uidSize)
 	char 			rxBuf[CONN_RXBUF_SIZE] = {'\0'};
 
 	sprintf(AT_QMTCONN, "AT+QMTCONN=1,\"%s\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n", mcu_uid);
+
+	eBg95Status_t 	creg	= bg95_error,
+					cgreg	= bg95_error,
+					cereg	= bg95_error;
+
+	//#TODO we have to add a timeout here
+	do
+	{
+		creg = bg95_sendAtCmd(AT_CREG, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CREG));
+
+		cgreg = bg95_sendAtCmd(AT_CGREG, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CGREG));
+
+		cereg = bg95_sendAtCmd(AT_CEREG, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CEREG));
+	}while(	(creg != bg95_ok)	&&
+			(cgreg != bg95_ok)	&&
+			(cereg != bg95_ok)	);
 
 	if(bg95_sendAtCmd(AT_CGATT1, rxBuf, CGATT_TIMEOUT, sizeof(AT_CGATT1)) != bg95_ok)
 	{
