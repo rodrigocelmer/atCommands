@@ -110,35 +110,35 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	   if(radio.config() != radio_ok)								//error on SIM card check
+	   if(radio.config() == radio_error)							//error on SIM card check
 	   {
 		   Error_Handler();
 	   }
 
 
 
-	   if(radio.checkSignal() != radio_ok)							//not registred to network, poor signal,
+	   if(radio.checkSignal() == radio_error)						//not registred to network, poor signal,
 	   {
 		   Error_Handler();
 	   }
 
 
 
-	   if(radio.connect(uidString, UID_STRING_SIZE) != radio_ok)	//cannot attach or open/connect do mqtt
+	   if(radio.connect(uidString, UID_STRING_SIZE) == radio_error)	//cannot attach or open/connect do mqtt
 	   {
 		   Error_Handler();
 	   }
 
 
 
-	   if(radio.publish() != radio_ok)								//error on publish
+	   if(radio.publish() == radio_error)							//error on publish
 	   {
 		   Error_Handler();
 	   }
 
 
 
-	   if(radio.disconnect() != radio_ok)							//I don't think we're going to have problems here
+	   if(radio.disconnect() == radio_error)						//I don't think we're going to have problems here
 	   {
 		   Error_Handler();
 	   }
