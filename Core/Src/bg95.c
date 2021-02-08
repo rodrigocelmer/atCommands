@@ -154,7 +154,7 @@ eRadioStatus_t bg95_checkSignal(void)
 		return radio_error;
 	}
 
-	return bg95_ok;
+	return radio_ok;
 }
 
 #define CONN_RXBUF_SIZE		20
