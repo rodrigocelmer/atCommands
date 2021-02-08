@@ -57,9 +57,25 @@ void bg95_reset(void)
 	GPIOA->ODR	 |= GPIO_ODR_OD1;
 }
 
+#define SERIAL_NUMBER_SIZE	30
 eRadioStatus_t bg95_getSerialNumber(char *serialNumBuf)
 {
-	return bg95_sendAtCmd(AT_GSN, serialNumBuf, CONFIG_TIMEOUT, sizeof(AT_GSN));
+	char 		rxBuf[SERIAL_NUMBER_SIZE] = {'\0'};
+	uint8_t 	i = 0;
+
+	if(bg95_sendAtCmd(AT_GSN, rxBuf, CONFIG_TIMEOUT, sizeof(AT_GSN)) == bg95_error)
+	{
+		breakpoint();
+		return radio_error;
+	}
+
+	while(rxBuf[i] != ' ')
+	{
+		serialNumBuf[i] = rxBuf[i];
+		i++;
+	}
+
+	return bg95_ok;
 }
 
 #define CONF_RXBUF_SIZE	20
