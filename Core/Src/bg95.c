@@ -26,6 +26,13 @@ eBg95Status_t parse_mqttSub(char *respToParse);
 eBg95Status_t parse_mqttUns(char *respToParse);
 eBg95Status_t parse_mqttPubex(char *respToParse);
 
+void breakpoint(void);
+
+void breakpoint(void)
+{
+	asm("nop");
+}
+
 void bg95_turnOn(void)
 {
 	GPIOA->ODR	 &= ~GPIO_ODR_OD1;
@@ -57,41 +64,49 @@ eRadioStatus_t bg95_config(void)
 
 	if(bg95_sendAtCmd(AT_ATE0, rxBuf, CONFIG_TIMEOUT, sizeof(AT_ATE0)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
 	if(bg95_sendAtCmd(AT_CPIN, rxBuf, CPIN_TIMEOUT, sizeof(AT_CPIN)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
 	if(bg95_sendAtCmd(AT_QCFG_NWSCANMODE, rxBuf, CONFIG_TIMEOUT, sizeof(AT_QCFG_NWSCANMODE)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
 	if(bg95_sendAtCmd(AT_QCFG_NWSCANSEQ, rxBuf, CONFIG_TIMEOUT, sizeof(AT_QCFG_NWSCANSEQ)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
 	if(bg95_sendAtCmd(AT_QCFG_IOTOPMODE, rxBuf, CONFIG_TIMEOUT, sizeof(AT_QCFG_IOTOPMODE)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
 	if(bg95_sendAtCmd(AT_QCFG_BAND, rxBuf, CONFIG_TIMEOUT, sizeof(AT_QCFG_BAND)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
 	if(bg95_sendAtCmd(AT_QICSGP, rxBuf, CONFIG_TIMEOUT, sizeof(AT_QICSGP)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
 	if(bg95_sendAtCmd(AT_CFUN0, rxBuf, CFUN_TIMEOUT, sizeof(AT_CFUN0)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
@@ -99,6 +114,7 @@ eRadioStatus_t bg95_config(void)
 
 	if(bg95_sendAtCmd(AT_CFUN1, rxBuf, CFUN_TIMEOUT, sizeof(AT_CFUN1)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
@@ -130,26 +146,31 @@ eRadioStatus_t bg95_connect(char *mcu_uid, uint32_t uidSize)
 
 	if(bg95_sendAtCmd(AT_QNWINFO, rxBuf, CONFIG_TIMEOUT, sizeof(AT_QNWINFO)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
 	if(bg95_sendAtCmd(AT_CSQ, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CSQ)) == bg95_error)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
 	if(bg95_sendAtCmd(AT_CGATT1, rxBuf, CGATT_TIMEOUT, sizeof(AT_CGATT1)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
 	if(bg95_sendAtCmd(AT_QMTOPEN, rxBuf, MQTT_TIMEOUT, sizeof(AT_QMTOPEN)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
 	if(bg95_sendAtCmd(AT_QMTCONN, rxBuf, MQTT_TIMEOUT, sizeof(AT_QMTCONN)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
@@ -163,6 +184,7 @@ eRadioStatus_t bg95_publish(void)	//const char *msg)
 
 	if(bg95_sendAtCmd(AT_QMTPUBEX, rxBuf, MQTT_TIMEOUT, sizeof(AT_QMTPUBEX)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
@@ -176,11 +198,13 @@ eRadioStatus_t bg95_disconnect(void)
 
 	if(bg95_sendAtCmd(AT_QMTDISC, rxBuf, MQTT_TIMEOUT, sizeof(AT_QMTDISC)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
 	if(bg95_sendAtCmd(AT_CGATT0, rxBuf, CGATT_TIMEOUT, sizeof(AT_CGATT0)) != bg95_ok)
 	{
+		breakpoint();
 		return radio_error;
 	}
 
