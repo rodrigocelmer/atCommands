@@ -70,8 +70,8 @@ void read_uniqueID(char *uid);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	char		uidString[UID_STRING_SIZE];
-	char		radioSerialNumber[SERIAL_NUMBER_SIZE];
+	char		uidString[UID_STRING_SIZE] = {'\0'};
+	char		radioSerialNumber[SERIAL_NUMBER_SIZE] = {'\0'};
 	sRadio_t 	radio;
 
   /* USER CODE END 1 */
