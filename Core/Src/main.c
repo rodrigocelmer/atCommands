@@ -114,6 +114,10 @@ int main(void)
 
 
 
+	   radio.checkSignal();
+
+
+
 	   radio.connect(uidString, UID_STRING_SIZE);	//not registred to network, poor signal, cannot attach or open/connect do mqtt
 
 
