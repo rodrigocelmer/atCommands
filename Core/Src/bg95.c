@@ -2,7 +2,7 @@
 #include "stdint.h"
 #include "string.h"
 #include "main.h"
-#include "radio.h"	//because of delay_ms()
+#include "radio.h"
 #include "bg95.h"
 #include "atCommands.h"
 #include "stdio.h"
@@ -51,7 +51,7 @@ void bg95_reset(void)
 }
 
 #define CONF_RXBUF_SIZE	20
-void bg95_config(void)
+eRadioStatus_t bg95_config(void)
 {
 	char rxBuf[CONF_RXBUF_SIZE] = {'\0'};
 
@@ -105,7 +105,7 @@ void bg95_config(void)
 
 #define CONN_RXBUF_SIZE		100
 #define QMTCONN_STRING_SIZE	43
-void bg95_connect(char *mcu_uid, uint32_t uidSize)
+eRadioStatus_t bg95_connect(char *mcu_uid, uint32_t uidSize)
 {
 	char 			AT_QMTCONN[QMTCONN_STRING_SIZE + (uidSize - 1)];
 	char 			rxBuf[CONN_RXBUF_SIZE] = {'\0'};
@@ -153,7 +153,7 @@ void bg95_connect(char *mcu_uid, uint32_t uidSize)
 }
 
 #define PUB_RXBUF_SIZE	100
-void bg95_publish(void)	//const char *msg)
+eRadioStatus_t bg95_publish(void)	//const char *msg)
 {
 	char rxBuf[PUB_RXBUF_SIZE] = {'\0'};
 
@@ -164,7 +164,7 @@ void bg95_publish(void)	//const char *msg)
 }
 
 #define DISC_RXBUF_SIZE	20
-void bg95_disconnect(void)
+eRadioStatus_t bg95_disconnect(void)
 {
 	char rxBuf[DISC_RXBUF_SIZE] = {'\0'};
 
