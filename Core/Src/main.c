@@ -103,6 +103,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   radio.turnOn();
   delay_ms(10000);
+  radio.getSerialNumber();
 
   while (1)
   {

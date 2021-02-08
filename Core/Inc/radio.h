@@ -43,6 +43,13 @@ typedef struct sRadio
 	  * @param	None
 	  * @retval	None
 	  */
+	eRadioStatus_t (*getSerialNumber)(void);
+
+	/**
+	  * @brief	Pointer to
+	  * @param	None
+	  * @retval	None
+	  */
 	eRadioStatus_t (*config)(void);
 
 	/**
