@@ -110,23 +110,23 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	   radio.config();
+	   radio.config();								//error on SIM card check
 
 
 
-	   radio.connect(uidString, UID_STRING_SIZE);
+	   radio.connect(uidString, UID_STRING_SIZE);	//not registred to network, poor signal, cannot attach or open/connect do mqtt
 
 
 
-	   radio.publish();
+	   radio.publish();								//error on publish
 
 
 
-	   radio.disconnect();
+	   radio.disconnect();							//I don't think we're going to have problems here
 
 
 
-	   radio.turnOff();
+	   radio.turnOff();								//just AT+QPOWD command
 
 
 
