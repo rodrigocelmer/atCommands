@@ -79,7 +79,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  read_uniqueID(uidString);
+  system_readUID(uidString);
 
   /* USER CODE END Init */
 
