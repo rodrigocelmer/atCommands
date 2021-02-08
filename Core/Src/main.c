@@ -44,33 +44,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-const char AT[]					= {"AT\r\n\0"};
-const char AT_QPOWD[] 			= {"AT+QPOWD\r\n\0"};
-const char AT_CPIN[]			= {"AT+CPIN?\r\n\0"};
-const char AT_QCFG_NWSCANMODE[]	= {"AT+QCFG=\"NWSCANMODE\",0\r\n\0"};
-const char AT_QCFG_NWSCANSEQ[]	= {"AT+QCFG=\"NWSCANSEQ\",020103\r\n\0"};
-const char AT_QCFG_IOTOPMODE[]	= {"AT+QCFG=\"IOTOPMODE\",2\r\n\0"};
-const char AT_QCFG_BAND[]		= {"AT+QCFG=\"BAND\",0XF,0,0X8000004\r\n\0"};
-const char AT_QICSGP[]			= {"AT+QICSGP=1,1,\"virtueyes.com.br\",\"virtu\",\"virtu\",3\r\n\0"};
-const char AT_CFUN0[]			= {"AT+CFUN=0\r\n\0"};
-const char AT_CFUN1[]			= {"AT+CFUN=1\r\n\0"};
-const char AT_CREG[]			= {"AT+CREG?\r\n\0"};
-const char AT_CGREG[]			= {"AT+CGREG?\r\n\0"};
-const char AT_CEREG[]			= {"AT+CEREG?\r\n\0"};
-const char AT_CGATT0[]			= {"AT+CGATT=0\r\n\0"};
-const char AT_CGATT1[]			= {"AT+CGATT=1\r\n\0"};
-const char AT_CSQ[]				= {"AT+CSQ\r\n\0"};
-const char ATE0[]				= {"ATE0\r\n\0"};
-const char AT_QNWINFO[]			= {"AT+QNWINFO\r\n\0"};
 
-//MQTT commands
-const char AT_QMTOPEN[]			= {"AT+QMTOPEN=1,\"tailor.cloudmqtt.com\",13291\r\n\0"};
-const char AT_QMTCLOSE[]		= {"AT+QMTCLOSE=1\r\n\0"};
-const char AT_QMTCONN[]			= {"AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n\0"};
-const char AT_QMTDISC[]			= {"AT+QMTDISC=1\r\n\0"};
-const char AT_QMTSUB[]			= {"AT+QMTSUB=1,1,\"celmer\",1\r\n\0"};
-const char AT_QMTUNS[]			= {"AT+QMTUNS=1,1,\"celmer\"\r\n\0"};
-const char AT_QMTPUBEX[]		= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"many man\"\r\n\0"};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -80,16 +54,12 @@ void gpioInit(void);
 void uartInit(void);
 void delay_ms(uint32_t time_ms);
 void breakpoint(void);
-void radio_turnOn(void);
-void radio_turnOff(void);
-void radio_reset(void);
-void radio_transmit(const char *txData);
-void radio_receive(char *rxData);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-char rxBuf[100] = {'\0'};
+
 /* USER CODE END 0 */
 
 /**
@@ -126,110 +96,13 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  radio_turnOn();
-  delay_ms(10000);
 
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  radio_transmit(ATE0);
-	  radio_receive(rxBuf);
-	  breakpoint();
 
-	  radio_transmit(AT_CPIN);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QCFG_NWSCANMODE);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QCFG_NWSCANSEQ);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QCFG_IOTOPMODE);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QCFG_BAND);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QICSGP);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_CFUN0);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  delay_ms(5000);
-
-	  radio_transmit(AT_CFUN1);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_CREG);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_CGREG);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_CEREG);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QNWINFO);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_CSQ);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_CGATT1);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QMTOPEN);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QMTCONN);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QMTPUBEX);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QMTDISC);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QMTCLOSE);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_CGATT0);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-	  radio_transmit(AT_QPOWD);
-	  radio_receive(rxBuf);
-	  breakpoint();
-
-//	  if(!(GPIOC->IDR & GPIO_IDR_ID13))
-//	  {
-//		  while(!(GPIOC->IDR & GPIO_IDR_ID13));
-//		  radio_transmit(AT_QPOWD);
-		  while(1);
-//	  }
   }
   /* USER CODE END 3 */
 }
@@ -325,97 +198,8 @@ void delay_ms(uint32_t time_ms)
 void breakpoint(void)
 {
 	asm("nop");
-
-	uint8_t i = 0;
-	for(i=0; i<100; i++)
-	{
-		rxBuf[i] = '\0';
-	}
-}
-/*
- * TX Module functions
- */
-void radio_turnOn(void)
-{
-	GPIOA->ODR	 &= ~GPIO_ODR_OD1;
-	delay_ms(750);
-	GPIOA->ODR	 |= GPIO_ODR_OD1;
 }
 
-void radio_turnOff(void)
-{
-	GPIOA->ODR	 &= ~GPIO_ODR_OD1;
-	delay_ms(1250);
-	GPIOA->ODR	 |= GPIO_ODR_OD1;
-}
-
-void radio_reset(void)
-{
-	GPIOA->ODR	 &= ~GPIO_ODR_OD1;
-	delay_ms(2500);
-	GPIOA->ODR	 |= GPIO_ODR_OD1;
-}
-
-void radio_transmit(const char *txData)
-{
-	uint8_t i = 0, txDataSize = 0;
-
-	txDataSize = strlen(txData);
-
-	for(i = 0; i< txDataSize; i++)
-	{
-		while(!(USART2->SR & USART_SR_TXE));
-		USART2->DR = *txData;
-		txData++;
-	}
-}
-
-void radio_receive(char *rxData)
-{
-	uint8_t timeout = 0;
-	uint32_t startTick, actualTick;
-	uint32_t bufCount = 0;
-
-	actualTick = HAL_GetTick();
-	startTick = actualTick;
-
-	while(!timeout)
-	{
-		if(USART2->SR & USART_SR_RXNE)
-		{
-			USART2->SR &= ~USART_SR_RXNE;
-			if((USART2->DR != '\r') && (USART2->DR != '\n'))
-			{
-//				*rxData = USART2->DR;						//store it in data
-//				rxData++;
-				rxData[bufCount] = USART2->DR;
-				bufCount++;
-			}
-			else
-			{
-				if((bufCount != 0) && (rxData[bufCount - 1] != ' '))
-				{
-					rxData[bufCount] = ' ';
-					bufCount++;
-				}
-			}
-			actualTick = HAL_GetTick();
-			startTick = actualTick;
-		}
-		else
-		{
-			if(actualTick - startTick <= 1)
-			{
-				actualTick = HAL_GetTick();
-			}
-			else
-			{
-				rxData[bufCount - 1] = '\0';
-				timeout = 1;
-			}
-		}
-	}
-}
 /* USER CODE END 4 */
 
 /**
