@@ -203,6 +203,12 @@ eRadioStatus_t bg95_disconnect(void)
 		return radio_error;
 	}
 
+	if(bg95_sendAtCmd(AT_QIDEACT, rxBuf, QIDEACT_TIMEOUT, sizeof(AT_QIDEACT)) != bg95_ok)
+	{
+		breakpoint();
+		return radio_error;
+	}
+
 	if(bg95_sendAtCmd(AT_CGATT0, rxBuf, CGATT_TIMEOUT, sizeof(AT_CGATT0)) != bg95_ok)
 	{
 		breakpoint();

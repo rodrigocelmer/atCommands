@@ -6,6 +6,7 @@
 #define CGATT_TIMEOUT	140000
 #define MQTT_TIMEOUT	15000
 #define CONFIG_TIMEOUT	300
+#define QIDEACT_TIMEOUT	40000
 
 typedef enum {
 	bg95_ok = 0x00,
