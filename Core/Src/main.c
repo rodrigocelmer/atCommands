@@ -110,27 +110,42 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	   radio.config();								//error on SIM card check
+	   if(radio.config() != radio_ok)								//error on SIM card check
+	   {
+		   Error_Handler();
+	   }
 
 
 
-	   radio.checkSignal();
+	   if(radio.checkSignal() != radio_ok)							//not registred to network, poor signal,
+	   {
+		   Error_Handler();
+	   }
 
 
 
-	   radio.connect(uidString, UID_STRING_SIZE);	//not registred to network, poor signal, cannot attach or open/connect do mqtt
+	   if(radio.connect(uidString, UID_STRING_SIZE) != radio_ok)	//cannot attach or open/connect do mqtt
+	   {
+		   Error_Handler();
+	   }
 
 
 
-	   radio.publish();								//error on publish
+	   if(radio.publish() != radio_ok)								//error on publish
+	   {
+		   Error_Handler();
+	   }
 
 
 
-	   radio.disconnect();							//I don't think we're going to have problems here
+	   if(radio.disconnect() != radio_ok)							//I don't think we're going to have problems here
+	   {
+		   Error_Handler();
+	   }
 
 
 
-	   radio.turnOff();								//just AT+QPOWD command
+	   radio.turnOff();												//just AT+QPOWD command
 
 
 
@@ -232,7 +247,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-
+	asm("nop");
   /* USER CODE END Error_Handler_Debug */
 }
 
