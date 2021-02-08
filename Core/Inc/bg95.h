@@ -15,7 +15,8 @@ typedef enum {
 	csq_noSignal,
 	csq_poorSignal,
 	csq_goodSignal,
-	csq_greatSignal
+	csq_greatSignal,
+	bg95_unknownMessage
 }eBg95Status_t;
 
 void bg95_turnOn(void);

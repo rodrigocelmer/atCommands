@@ -349,6 +349,10 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 		{
 			return bg95_ok;
 		}
+		else
+		{
+			return bg95_unknownMessage;
+		}
 	}
 	else
 	{
@@ -381,6 +385,10 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 			{
 				parser = parse_mqttPubex;
 			}
+			else
+			{
+				return bg95_unknownMessage;
+			}
 		}
 		else if((c0 == 'O') && (c1 == 'K'))
 		{
@@ -393,6 +401,10 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 		else if((c0 == 'E') && (c1 == 'R'))	//ERROR
 		{
 			return bg95_error;
+		}
+		else
+		{
+			return bg95_unknownMessage;
 		}
 	}
 

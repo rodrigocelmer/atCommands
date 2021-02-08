@@ -7,6 +7,7 @@ typedef enum {
 	poorSignal,
 	goodSignal,
 	greatSignal,
+	radio_unknownMessage
 }eRadioStatus_t;
 
 void delay_ms(uint32_t time_ms);	//must be on proper module
