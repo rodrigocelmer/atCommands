@@ -26,6 +26,7 @@
 #include "stdint.h"
 #include "stdio.h"
 #include "string.h"
+#include "system.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -34,9 +35,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define UID_SIZE		12				/*!< Actual STM32L053's unique ID size	*/
-#define UID_STRING_SIZE	(UID_SIZE + 16)	/*!< 16 bytes offset for uidString		*/
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -57,7 +55,6 @@ void gpioInit(void);
 void uartInit(void);
 void delay_ms(uint32_t time_ms);
 void breakpoint(void);
-void read_uniqueID(char *uid);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -187,11 +184,6 @@ void uartInit(void)
 /*
  * General functions
  */
-void read_uniqueID(char *uid)
-{
-	sprintf(uid,"0x%08lx%08lx%08lx", *(volatile uint32_t *)(UID_BASE+8), *(volatile uint32_t *)(UID_BASE+4), *(volatile uint32_t *)(UID_BASE));
-}
-
 void delay_ms(uint32_t time_ms)
 {
 	uint32_t startTick, actualTick;
