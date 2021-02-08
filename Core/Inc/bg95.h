@@ -22,7 +22,7 @@ typedef enum {
 void bg95_turnOn(void);
 void bg95_turnOff(void);
 void bg95_reset(void);
-eRadioStatus_t bg95_getSerialNumber(void);
+eRadioStatus_t bg95_getSerialNumber(char *serialNumBuf);
 eRadioStatus_t bg95_config(void);
 eRadioStatus_t bg95_checkSignal(void);
 eRadioStatus_t bg95_connect(char *mcu_uid, uint32_t uidSize);

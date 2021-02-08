@@ -18,6 +18,7 @@ const char AT_CGREG[]				= {"AT+CGREG?\r\n"};												//resp: +CGREG: 0,[10]4
 const char AT_CEREG[]				= {"AT+CEREG?\r\n"};												//resp: +CEREG: 0,[10]2 OK
 const char AT_CSQ[]					= {"AT+CSQ\r\n"};													//resp: +CSQ: [6]2[7]6,99 OK
 const char AT_QNWINFO[]				= {"AT+QNWINFO\r\n"};												//resp: +QNWINFO: "GPRS","72405,"GSM 1800", 594
+const char AT_GSN[]					= {"AT+GSN\r\n"};
 
 //MQTT commands
 const char AT_QMTOPEN[]				= {"AT+QMTOPEN=1,\"tailor.cloudmqtt.com\",13291\r\n"};				//resp: OK +QMTOPEN: [13]1,[15]0

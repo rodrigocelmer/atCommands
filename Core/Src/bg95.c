@@ -57,9 +57,9 @@ void bg95_reset(void)
 	GPIOA->ODR	 |= GPIO_ODR_OD1;
 }
 
-eRadioStatus_t bg95_getSerialNumber(void)
+eRadioStatus_t bg95_getSerialNumber(char *serialNumBuf)
 {
-
+	return bg95_sendAtCmd(AT_GSN, serialNumBuf, CONFIG_TIMEOUT, sizeof(AT_GSN));
 }
 
 #define CONF_RXBUF_SIZE	20

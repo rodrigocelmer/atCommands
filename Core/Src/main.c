@@ -35,9 +35,9 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define UID_SIZE		12				/*!< Actual STM32L053's unique ID size	*/
-#define UID_STRING_SIZE	(UID_SIZE + 16)	/*!< 16 bytes offset for uidString		*/
-
+#define UID_SIZE			12				/*!< Actual STM32L053's unique ID size	*/
+#define UID_STRING_SIZE		(UID_SIZE + 16)	/*!< 16 bytes offset for uidString		*/
+#define SERIAL_NUMBER_SIZE	30
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -71,6 +71,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	char		uidString[UID_STRING_SIZE];
+	char		radioSerialNumber[SERIAL_NUMBER_SIZE];
 	sRadio_t 	radio;
 
   /* USER CODE END 1 */
@@ -103,7 +104,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   radio.turnOn();
   delay_ms(10000);
-  radio.getSerialNumber();
 
   while (1)
   {
@@ -116,6 +116,8 @@ int main(void)
 		   Error_Handler();
 	   }
 
+
+	   radio.getSerialNumber(radioSerialNumber);
 
 
 	   if(radio.checkSignal() == radio_error)						//not registred to network, poor signal,
