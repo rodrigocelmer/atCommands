@@ -121,17 +121,13 @@ eRadioStatus_t bg95_config(void)
 	return radio_ok;
 }
 
-#define CONN_RXBUF_SIZE		100
-#define QMTCONN_STRING_SIZE	43
-eRadioStatus_t bg95_connect(char *mcu_uid, uint32_t uidSize)
+#define CHECK_SIGNAL_RXBUF_SIZE	100
+eRadioStatus_t bg95_checkSignal(void)
 {
-	char 			AT_QMTCONN[QMTCONN_STRING_SIZE + (uidSize - 1)];
-	char 			rxBuf[CONN_RXBUF_SIZE] = {'\0'};
+	char 			rxBuf[CHECK_SIGNAL_RXBUF_SIZE] = {'\0'};
 	eBg95Status_t 	creg	= bg95_error,
 					cgreg	= bg95_error,
 					cereg	= bg95_error;
-
-	sprintf(AT_QMTCONN, "AT+QMTCONN=1,\"%s\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n", mcu_uid);
 
 	//#TODO we have to add a timeout here
 	do
@@ -151,11 +147,24 @@ eRadioStatus_t bg95_connect(char *mcu_uid, uint32_t uidSize)
 		return radio_error;
 	}
 
+	//return bg95_sendAtCmd(AT_CSQ, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CSQ));
 	if(bg95_sendAtCmd(AT_CSQ, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CSQ)) == bg95_error)
 	{
 		breakpoint();
 		return radio_error;
 	}
+
+	return bg95_ok;
+}
+
+#define CONN_RXBUF_SIZE		20
+#define QMTCONN_STRING_SIZE	43
+eRadioStatus_t bg95_connect(char *mcu_uid, uint32_t uidSize)
+{
+	char 			AT_QMTCONN[QMTCONN_STRING_SIZE + (uidSize - 1)];
+	char 			rxBuf[CONN_RXBUF_SIZE] = {'\0'};
+
+	sprintf(AT_QMTCONN, "AT+QMTCONN=1,\"%s\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n", mcu_uid);
 
 	if(bg95_sendAtCmd(AT_CGATT1, rxBuf, CGATT_TIMEOUT, sizeof(AT_CGATT1)) != bg95_ok)
 	{

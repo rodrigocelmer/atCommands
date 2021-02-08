@@ -47,6 +47,13 @@ typedef struct sRadio
 	/**
 	  * @brief	Pointer to
 	  * @param	None
+	  * @retval	None
+	  */
+	eRadioStatus_t (*checkSignal)(void);
+
+	/**
+	  * @brief	Pointer to
+	  * @param	None
 	  * @retval None
 	  */
 	eRadioStatus_t (*connect)(char *mcuUid, uint32_t uidSize);
