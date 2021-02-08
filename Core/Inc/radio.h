@@ -42,28 +42,28 @@ typedef struct sRadio
 	  * @param	None
 	  * @retval	None
 	  */
-	void (*config)(void);
+	eRadioStatus_t (*config)(void);
 
 	/**
 	  * @brief	Pointer to
 	  * @param	None
 	  * @retval None
 	  */
-	void (*connect)(char *mcuUid, uint32_t uidSize);
+	eRadioStatus_t (*connect)(char *mcuUid, uint32_t uidSize);
 
 	/**
 	  * @brief  Pointer to
 	  * @param	None
 	  * @retval None
 	  */
-	void (*publish)(void);	//const char *msg);
+	eRadioStatus_t (*publish)(void);	//const char *msg);
 
 	/**
 	  * @brief  Pointer to
 	  * @param	None
 	  * @retval None
 	  */
-	void (*disconnect)(void);
+	eRadioStatus_t (*disconnect)(void);
 }sRadio_t;
 
 void radio_init(sRadio_t *radioModule);
