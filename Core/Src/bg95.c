@@ -424,6 +424,11 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 		{
 			return bg95_error;
 		}
+		else if(((c0 >= '0') && (c0 <= '9'))	&&
+				((c1 >= '0') && (c1 <= '9'))	)
+		{
+			return bg95_ok;					//we asked for BG's serial number
+		}
 		else
 		{
 			return bg95_unknownMessage;
