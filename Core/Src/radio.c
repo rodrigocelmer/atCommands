@@ -20,7 +20,7 @@ void radio_init(sRadio_t *radioModule)
 {
 	//gpio_init();
 
-	if((GPIOC->IDR & GPIO_IDR_ID1) && !(GPIOC->IDR & GPIO_IDR_ID0))
+	if((GPIOC->IDR & GPIO_IDR_ID1) && (GPIOC->IDR & GPIO_IDR_ID0))
 	{
 		//bg95
 		radioModule->turnOn		 = bg95_turnOn;
