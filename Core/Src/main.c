@@ -117,7 +117,10 @@ int main(void)
 	   }
 
 
-	   radio.getSerialNumber(radioSerialNumber);
+	   if(radio.getSerialNumber(radioSerialNumber) == radio_error)
+	   {
+		   Error_Handler();
+	   }
 
 
 	   if(radio.checkSignal() == radio_error)						//not registred to network, poor signal,
