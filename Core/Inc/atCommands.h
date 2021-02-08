@@ -1,4 +1,3 @@
-
 //AT commands
 const char AT_AT[]					= {"AT\r\n"};														//resp: OK
 const char AT_QPOWD[] 				= {"AT+QPOWD\r\n"};													//resp: OK POWERED DOWN
@@ -26,4 +25,4 @@ const char AT_QMTCLOSE[]			= {"AT+QMTCLOSE=1\r\n"};											//resp:
 const char AT_QMTDISC[]				= {"AT+QMTDISC=1\r\n"};												//resp: OK +QMTDISC: [13]1,[15]0
 const char AT_QMTSUB[]				= {"AT+QMTSUB=1,1,\"celmer\",1\r\n"};								//resp: OK +QMTSUB: 1,1,0,1 +QMTRECV: 1,1,"topic","msg"
 const char AT_QMTUNS[]				= {"AT+QMTUNS=1,1,\"celmer\"\r\n"};									//resp: OK +QMTUNS: [12]1,[14]1,[16]0
-const char AT_QMTPUBEX[]			= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"all the way\"\r\n"};			//resp: OK +QMTPUB: [12]1,[14]3,[16]0
+const char AT_QMTPUBEX[]			= {"AT+QMTPUBEX=1,1,1,1,\"celmer\",\"you and me and the devil makes three\"\r\n"};			//resp: OK +QMTPUB: [12]1,[14]3,[16]0

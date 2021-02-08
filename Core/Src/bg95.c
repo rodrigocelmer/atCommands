@@ -1,11 +1,11 @@
 #include "stm32f411xe.h"
-#include "stdint.h"
-#include "string.h"
 #include "main.h"
+#include "stdint.h"
+#include "stdio.h"
+#include "string.h"
 #include "radio.h"
 #include "bg95.h"
 #include "atCommands.h"
-#include "stdio.h"
 
 typedef eBg95Status_t (*parseFunction)(char *respToParse);
 
@@ -133,6 +133,7 @@ eRadioStatus_t bg95_connect(char *mcu_uid, uint32_t uidSize)
 
 	sprintf(AT_QMTCONN, "AT+QMTCONN=1,\"%s\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n", mcu_uid);
 
+	//#TODO we have to add a timeout here
 	do
 	{
 		creg = bg95_sendAtCmd(AT_CREG, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CREG));
