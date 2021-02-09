@@ -58,7 +58,7 @@ void bg95_reset(void)
 	GPIOA->ODR	 |= GPIO_ODR_OD1;
 }
 
-eRadioStatus_t bg95_getSerialNumber(char *serialNumBuf)
+eRadioStatus_t bg95_getSN(char *serialNumBuf)
 {
 	if(bg95_sendAtCmd(AT_GSN, serialNumBuf, CONFIG_TIMEOUT, sizeof(AT_GSN)) == bg95_error)
 	{

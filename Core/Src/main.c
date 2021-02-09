@@ -117,7 +117,7 @@ int main(void)
 	   }
 
 
-	   if(radio.getSerialNumber(radioSerialNumber) == radio_error)
+	   if(radio.getSN(radioSerialNumber) == radio_error)
 	   {
 		   Error_Handler();
 	   }

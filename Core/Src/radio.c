@@ -23,15 +23,15 @@ void radio_init(sRadio_t *radioModule)
 	if((GPIOC->IDR & GPIO_IDR_ID1) && (GPIOC->IDR & GPIO_IDR_ID0))
 	{
 		//bg95
-		radioModule->turnOn		 		= bg95_turnOn;
-		radioModule->turnOff	 		= bg95_turnOff;
-		radioModule->reset		 		= bg95_reset;
-		radioModule->getSerialNumber	= bg95_getSerialNumber;
-		radioModule->config		 		= bg95_config;
-		radioModule->checkSignal 		= bg95_checkSignal;
-		radioModule->connect	 		= bg95_connect;
-		radioModule->publish	 		= bg95_publish;
-		radioModule->disconnect	 		= bg95_disconnect;
+		radioModule->turnOn		 	= bg95_turnOn;
+		radioModule->turnOff	 	= bg95_turnOff;
+		radioModule->reset		 	= bg95_reset;
+		radioModule->getSN			= bg95_getSN;
+		radioModule->config		 	= bg95_config;
+		radioModule->checkSignal 	= bg95_checkSignal;
+		radioModule->connect	 	= bg95_connect;
+		radioModule->publish	 	= bg95_publish;
+		radioModule->disconnect	 	= bg95_disconnect;
 	}
 	else if(!(GPIOC->IDR & GPIO_IDR_ID1) && (GPIOC->IDR & GPIO_IDR_ID0))
 	{
