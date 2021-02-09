@@ -76,7 +76,7 @@ int main(void)
 	sRadio_t 	radio;
 
 	char logBuff[170] = {'\0'};
-	int testCounter = 0, signal = 0;
+	int testCounter = 1612902600, signal = 0;
 	eRadioStatus_t	radioSignal;
 
   /* USER CODE END 1 */
@@ -108,7 +108,6 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   radio.turnOn();
-  delay_ms(10000);
 
   if(radio.config() == radio_error)							//error on SIM card check
   {
@@ -131,7 +130,7 @@ int main(void)
 	   switch(radioSignal)
 	   {
 	   	   case radio_error:
-	   		   signal = -1;
+	   		   signal = 666;
 	   		   break;
 	   	   case noSignal:
 	   		   signal = 0;
@@ -146,7 +145,7 @@ int main(void)
 	   		   signal = 3;
 	   		   break;
 	   	   default:
-	   		   signal = 666;
+	   		   signal = 255;
 	   		   break;
 	   }
 
@@ -158,7 +157,7 @@ int main(void)
 	   }
 
 
-	   sprintf(logBuff,"{\"raw_moisture\":%d,\"battery\":%d,\"v_anl\":0,\"v_refint\":0,\"t_pcb\":0,\"t_uc\":0,\"t_air\":0,\"adc_media\":0,\"adc_comp\":0,\"adc_ref\":0,\"snr\":0,\"rssi\":0,\"ping\":0,\"ts\":000000000}", testCounter, signal);
+	   sprintf(logBuff,"{\"raw_moisture\":0,\"battery\":0,\"v_anl\":0,\"v_refint\":0,\"t_pcb\":%d,\"t_uc\":0,\"t_air\":0,\"adc_media\":0,\"adc_comp\":0,\"adc_ref\":0,\"snr\":0,\"rssi\":0,\"ping\":0,\"ts\":%d}", signal, testCounter);
 
 	   if(radio.publish(logBuff, strlen(logBuff)) == radio_error)							//error on publish
 	   {
@@ -181,6 +180,8 @@ int main(void)
 
 	   radio.turnOn();
 	   delay_ms(10000);
+
+	   testCounter += 900;
   }
   /* USER CODE END 3 */
 }
