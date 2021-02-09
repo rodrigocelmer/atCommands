@@ -19,6 +19,7 @@ eBg95Status_t parse_cgreg(char *respToParse);
 eBg95Status_t parse_cereg(char *respToParse);
 eBg95Status_t parse_csq(char *respToParse);
 eBg95Status_t parse_cme(char *respToParse);
+eBg95Status_t parser_serialNumber(char *respToParse);
 eBg95Status_t parse_mqttOpen(char *respToParse);
 eBg95Status_t parse_mqttConn(char *respToParse);
 eBg95Status_t parse_mqttDisc(char *respToParse);
@@ -57,22 +58,12 @@ void bg95_reset(void)
 	GPIOA->ODR	 |= GPIO_ODR_OD1;
 }
 
-#define SERIAL_NUMBER_SIZE	30
 eRadioStatus_t bg95_getSerialNumber(char *serialNumBuf)
 {
-	char 		rxBuf[SERIAL_NUMBER_SIZE] = {'\0'};
-	uint8_t 	i = 0;
-
-	if(bg95_sendAtCmd(AT_GSN, rxBuf, CONFIG_TIMEOUT, sizeof(AT_GSN)) == bg95_error)
+	if(bg95_sendAtCmd(AT_GSN, serialNumBuf, CONFIG_TIMEOUT, sizeof(AT_GSN)) == bg95_error)
 	{
 		breakpoint();
 		return radio_error;
-	}
-
-	while(rxBuf[i] != ' ')
-	{
-		serialNumBuf[i] = rxBuf[i];
-		i++;
 	}
 
 	return bg95_ok;
@@ -427,7 +418,8 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 		else if(((c0 >= '0') && (c0 <= '9'))	&&
 				((c1 >= '0') && (c1 <= '9'))	)
 		{
-			return bg95_ok;					//we asked for BG's serial number
+			respToParse = respToParse - 2;
+			parser = parser_serialNumber;
 		}
 		else
 		{
@@ -501,6 +493,19 @@ eBg95Status_t parse_cme(char *respToParse)
 	//#TODO error handler
 }
 
+#define SN_SIZE			15
+#define	PARSER_BUF_SIZE	18
+eBg95Status_t parser_serialNumber(char *respToParse)
+{
+	uint8_t i = 0;
+
+	for(i = SN_SIZE; i < PARSER_BUF_SIZE; i++)
+	{
+		respToParse[i] = '\0';
+	}
+
+	return bg95_ok;
+}
 eBg95Status_t parse_mqttOpen(char *respToParse)
 {
 	if(respToParse[8] == '0')	//OPEN: 1,[8]0
