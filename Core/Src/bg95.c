@@ -36,9 +36,14 @@ void breakpoint(void)
 
 void bg95_turnOn(void)
 {
+	char rxBuf[20];
+
 	GPIOA->ODR	 &= ~GPIO_ODR_OD1;
 	delay_ms(750);
 	GPIOA->ODR	 |= GPIO_ODR_OD1;
+
+
+	bg95_sendAtCmd(AT_ATE0, rxBuf, CONFIG_TIMEOUT, sizeof(AT_ATE0));
 }
 
 void bg95_turnOff(void)
@@ -73,6 +78,12 @@ eRadioStatus_t bg95_getSN(char *serialNumBuf)
 eRadioStatus_t bg95_config(void)
 {
 	char rxBuf[CONF_RXBUF_SIZE] = {'\0'};
+//
+//	if(bg95_sendAtCmd(AT_ATE0, rxBuf, CONFIG_TIMEOUT, sizeof(AT_ATE0)) != bg95_ok)
+//	{
+//		breakpoint();
+//		return radio_error;
+//	}
 
 	if(bg95_sendAtCmd(AT_ATE0, rxBuf, CONFIG_TIMEOUT, sizeof(AT_ATE0)) != bg95_ok)
 	{
