@@ -42,6 +42,7 @@ void bg95_turnOn(void)
 	delay_ms(750);
 	GPIOA->ODR	 |= GPIO_ODR_OD1;
 
+	  delay_ms(10000);
 
 	bg95_sendAtCmd(AT_ATE0, rxBuf, CONFIG_TIMEOUT, sizeof(AT_ATE0));
 }
