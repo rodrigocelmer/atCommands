@@ -85,12 +85,6 @@ eRadioStatus_t bg95_config(void)
 //		return radio_error;
 //	}
 
-	if(bg95_sendAtCmd(AT_ATE0, rxBuf, CONFIG_TIMEOUT, sizeof(AT_ATE0)) != bg95_ok)
-	{
-		breakpoint();
-		return radio_error;
-	}
-
 	if(bg95_sendAtCmd(AT_CPIN, rxBuf, CPIN_TIMEOUT, sizeof(AT_CPIN)) != bg95_ok)
 	{
 		breakpoint();
@@ -155,14 +149,14 @@ eRadioStatus_t bg95_checkSignal(void)
 		return radio_error;
 	}
 
-	//return bg95_sendAtCmd(AT_CSQ, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CSQ));
-	if(bg95_sendAtCmd(AT_CSQ, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CSQ)) == bg95_error)
-	{
-		breakpoint();
-		return radio_error;
-	}
-
-	return radio_ok;
+	return bg95_sendAtCmd(AT_CSQ, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CSQ));
+//	if(bg95_sendAtCmd(AT_CSQ, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CSQ)) == bg95_error)
+//	{
+//		breakpoint();
+//		return radio_error;
+//	}
+//
+//	return radio_ok;
 }
 
 #define CONN_RXBUF_SIZE		20
@@ -212,9 +206,14 @@ eRadioStatus_t bg95_connect(char *mcu_uid, uint32_t uidSize)
 }
 
 #define PUB_RXBUF_SIZE	100
-eRadioStatus_t bg95_publish(void)	//const char *msg)
+eRadioStatus_t bg95_publish(const char *msg, uint32_t msgSize)
 {
 	char rxBuf[PUB_RXBUF_SIZE] = {'\0'};
+
+	char 			AT_QMTPUBEX[QMTCONN_STRING_SIZE + (msgSize)];
+
+	sprintf(AT_QMTPUBEX, "AT+QMTPUBEX=1,1,1,1,\"celmer\",\"%s\"\r\n", msg);
+
 
 	if(bg95_sendAtCmd(AT_QMTPUBEX, rxBuf, MQTT_TIMEOUT, sizeof(AT_QMTPUBEX)) != bg95_ok)
 	{

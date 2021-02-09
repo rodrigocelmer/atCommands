@@ -26,6 +26,7 @@
 #include "stdint.h"
 #include "radio.h"
 #include "stdio.h"
+#include "string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -74,6 +75,10 @@ int main(void)
 	char		radioSerialNumber[SERIAL_NUMBER_SIZE] = {'\0'};
 	sRadio_t 	radio;
 
+	char logBuff[170] = {'\0'};
+	int testCounter = 0, signal = 0;
+	eRadioStatus_t	radioSignal;
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -105,27 +110,44 @@ int main(void)
   radio.turnOn();
   delay_ms(10000);
 
+  if(radio.config() == radio_error)							//error on SIM card check
+  {
+	   Error_Handler();
+  }
+
+
+  if(radio.getSN(radioSerialNumber) == radio_error)
+  {
+	   Error_Handler();
+  }
+
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
 
-	   if(radio.config() == radio_error)							//error on SIM card check
+	   radioSignal = radio.checkSignal();
+	   switch(radioSignal)
 	   {
-		   Error_Handler();
-	   }
-
-
-	   if(radio.getSN(radioSerialNumber) == radio_error)
-	   {
-		   Error_Handler();
-	   }
-
-
-	   if(radio.checkSignal() == radio_error)						//not registred to network, poor signal,
-	   {
-		   Error_Handler();
+	   	   case radio_error:
+	   		   signal = -1;
+	   		   break;
+	   	   case noSignal:
+	   		   signal = 0;
+	   		   break;
+	   	   case poorSignal:
+	   		   signal = 1;
+	   		   break;
+	   	   case goodSignal:
+	   		   signal = 2;
+	   		   break;
+	   	   case	greatSignal:
+	   		   signal = 3;
+	   		   break;
+	   	   default:
+	   		   signal = 666;
+	   		   break;
 	   }
 
 
@@ -136,8 +158,9 @@ int main(void)
 	   }
 
 
+	   sprintf(logBuff,"{\"raw_moisture\":%d,\"battery\":%d,\"v_anl\":0,\"v_refint\":0,\"t_pcb\":0,\"t_uc\":0,\"t_air\":0,\"adc_media\":0,\"adc_comp\":0,\"adc_ref\":0,\"snr\":0,\"rssi\":0,\"ping\":0,\"ts\":000000000}", testCounter, signal);
 
-	   if(radio.publish() == radio_error)							//error on publish
+	   if(radio.publish(logBuff, strlen(logBuff)) == radio_error)							//error on publish
 	   {
 		   Error_Handler();
 	   }
@@ -154,8 +177,10 @@ int main(void)
 	   radio.turnOff();												//just AT+QPOWD command
 
 
+	   delay_ms(900000);
 
-	   while(1);
+	   radio.turnOn();
+	   delay_ms(10000);
   }
   /* USER CODE END 3 */
 }
