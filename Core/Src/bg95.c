@@ -373,7 +373,7 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 		}
 		else
 		{
-			return bg95_unknownMessage;
+			return bg95_cmdNotRegistred;
 		}
 	}
 	else
@@ -409,7 +409,7 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 			}
 			else
 			{
-				return bg95_unknownMessage;
+				return bg95_cmdNotRegistred;
 			}
 		}
 		else if((c0 == 'O') && (c1 == 'K'))
@@ -431,7 +431,7 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 		}
 		else
 		{
-			return bg95_unknownMessage;
+			return bg95_cmdNotRegistred;
 		}
 	}
 
