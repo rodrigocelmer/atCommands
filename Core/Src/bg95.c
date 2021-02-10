@@ -213,7 +213,7 @@ eRadioStatus_t bg95_publish(const char *msg, uint32_t msgSize)
 
 	char 			AT_QMTPUBEX[QMTCONN_STRING_SIZE + (msgSize)];
 
-	sprintf(AT_QMTPUBEX, "AT+QMTPUBEX=1,1,1,1,\"celmer\",\"%s\"\r\n", msg);
+	sprintf(AT_QMTPUBEX, "AT+QMTPUBEX=1,1,1,1,\"v2/tl/cc50e33d036b/0x203235344d524313001e0012\",\"%s\"\r\n", msg);
 
 
 	if(bg95_sendAtCmd(AT_QMTPUBEX, rxBuf, MQTT_TIMEOUT, sizeof(AT_QMTPUBEX)) != bg95_ok)
