@@ -31,7 +31,7 @@ void breakpoint(void);
 
 void breakpoint(void)
 {
-	asm("nop");
+	while(1);
 }
 
 void bg95_turnOn(void)
@@ -206,12 +206,13 @@ eRadioStatus_t bg95_connect(char *mcu_uid, uint32_t uidSize)
 	return radio_ok;
 }
 
-#define PUB_RXBUF_SIZE	100
+#define PUB_RXBUF_SIZE			100
+#define QMTPUBEX_STRING_SIZE	83
 eRadioStatus_t bg95_publish(const char *msg, uint32_t msgSize)
 {
 	char rxBuf[PUB_RXBUF_SIZE] = {'\0'};
 
-	char 			AT_QMTPUBEX[QMTCONN_STRING_SIZE + (msgSize)];
+	char 			AT_QMTPUBEX[QMTPUBEX_STRING_SIZE + (msgSize)];
 
 	sprintf(AT_QMTPUBEX, "AT+QMTPUBEX=1,1,1,1,\"v2/tl/cc50e33d036b/0x203235344d524313001e0012\",\"%s\"\r\n", msg);
 
