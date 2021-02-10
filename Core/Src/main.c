@@ -176,7 +176,7 @@ int main(void)
 	   radio.turnOff();												//just AT+QPOWD command
 
 
-	   delay_ms(900000);
+	   delay_ms(450000);	//15 minutes would be 900.000 ms, but it looks like it take 30 minutes to publish
 
 	   radio.turnOn();
 	   delay_ms(10000);
