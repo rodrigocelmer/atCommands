@@ -167,7 +167,7 @@ eRadioStatus_t bg95_connect(char *mcu_uid, uint32_t uidSize)
 	char 			AT_QMTCONN[QMTCONN_STRING_SIZE + (uidSize - 1)];
 	char 			rxBuf[CONN_RXBUF_SIZE] = {'\0'};
 
-	sprintf(AT_QMTCONN, "AT+QMTCONN=1,\"%s\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n", mcu_uid);
+	sprintf(AT_QMTCONN, "AT+QMTCONN=1,\"%s\",\"xzbseimn\",\"ffAc_8Cuxlow\"\r\n", mcu_uid);
 
 	eBg95Status_t 	creg	= bg95_error,
 					cgreg	= bg95_error,

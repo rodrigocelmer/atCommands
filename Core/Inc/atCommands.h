@@ -21,7 +21,7 @@ const char AT_QNWINFO[]				= {"AT+QNWINFO\r\n"};												//resp: +QNWINFO: "G
 const char AT_GSN[]					= {"AT+GSN\r\n"};
 
 //MQTT commands
-const char AT_QMTOPEN[]				= {"AT+QMTOPEN=1,\"tailor.cloudmqtt.com\",13291\r\n"};				//resp: OK +QMTOPEN: [13]1,[15]0
+const char AT_QMTOPEN[]				= {"AT+QMTOPEN=1,\"m15.cloudmqtt.com\",17901\r\n"};				//resp: OK +QMTOPEN: [13]1,[15]0
 const char AT_QMTCLOSE[]			= {"AT+QMTCLOSE=1\r\n"};											//resp:
 //const char AT_QMTCONN[]				= {"AT+QMTCONN=1,\"usrCelmer\",\"zgxbgfsy\",\"H7Mnnfi0_2rk\"\r\n"};	//resp: OK +QMTCONN: [13]1,[15]0,[17]0
 const char AT_QMTDISC[]				= {"AT+QMTDISC=1\r\n"};												//resp: OK +QMTDISC: [13]1,[15]0
