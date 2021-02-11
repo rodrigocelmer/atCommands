@@ -493,16 +493,14 @@ eBg95Status_t parse_cme(char *respToParse)
 	//#TODO error handler
 }
 
-#define SN_SIZE			15
-#define	PARSER_BUF_SIZE	18
 eBg95Status_t parser_serialNumber(char *respToParse)
 {
-	uint8_t i = 0;
-
-	for(i = SN_SIZE; i < PARSER_BUF_SIZE; i++)
+	if(respToParse[15] != ' ')
 	{
-		respToParse[i] = '\0';
+		return bg95_error;
 	}
+
+	respToParse[15] = '\0';
 
 	return bg95_ok;
 }
