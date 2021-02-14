@@ -76,7 +76,7 @@ int main(void)
 	sRadio_t 	radio;
 
 	char logBuff[170] = {'\0'};
-	int testCounter = 1612902600, signal = 0;
+	int testCounter = 1613324650, signal = 0;
 	eRadioStatus_t	radioSignal;
 
   /* USER CODE END 1 */
@@ -153,7 +153,8 @@ int main(void)
 
 	   if(radio.connect(uidString, UID_STRING_SIZE) == radio_error)	//cannot attach or open/connect do mqtt
 	   {
-		   Error_Handler();
+//		   Error_Handler();
+		   goto turnOff;
 	   }
 
 
@@ -161,18 +162,20 @@ int main(void)
 
 	   if(radio.publish(logBuff, strlen(logBuff)) == radio_error)							//error on publish
 	   {
-		   Error_Handler();
+//		   Error_Handler();
+		   goto turnOff;
 	   }
 
 
 
 	   if(radio.disconnect() == radio_error)						//I don't think we're going to have problems here
 	   {
-		   Error_Handler();
+//		   Error_Handler();
+		   goto turnOff;
 	   }
 
 
-
+turnOff:
 	   radio.turnOff();												//just AT+QPOWD command
 
 

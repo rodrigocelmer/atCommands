@@ -31,7 +31,7 @@ void breakpoint(void);
 
 void breakpoint(void)
 {
-	while(1);
+//	while(1);
 }
 
 void bg95_turnOn(void)
