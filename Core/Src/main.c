@@ -235,7 +235,8 @@ void SystemClock_Config(void)
 void gpioInit(void)
 {
 	RCC->AHB1ENR	|= 	RCC_AHB1ENR_GPIOAEN;
-	GPIOA->MODER	|= 	(0b01 << GPIO_MODER_MODE1_Pos);
+	GPIOA->MODER	|= 	(0b01 << GPIO_MODER_MODE1_Pos)	|
+						(0b01 << GPIO_MODER_MODE5_Pos)	;
 	GPIOA->ODR		|= 	GPIO_ODR_OD1;
 
 	RCC->AHB1ENR	|=	RCC_AHB1ENR_GPIOCEN;
