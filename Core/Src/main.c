@@ -76,7 +76,7 @@ int main(void)
 	sRadio_t 	radio;
 
 	char logBuff[170] = {'\0'};
-	int testCounter = 1613324650, signal = 0;
+	int testCounter = 1613744100, signal = 0;
 	eRadioStatus_t	radioSignal;
 
   /* USER CODE END 1 */
