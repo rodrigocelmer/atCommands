@@ -31,7 +31,9 @@ void breakpoint(void);
 
 void breakpoint(void)
 {
-//	while(1);
+	GPIOA->ODR	 |= GPIO_ODR_OD5;
+	while(GPIOC->IDR & GPIO_IDR_IDR_13);
+	GPIOA->ODR	 &= ~GPIO_ODR_OD5;
 }
 
 void bg95_turnOn(void)
