@@ -71,7 +71,7 @@ typedef struct sRadio
 	  * @param	None
 	  * @retval None
 	  */
-	eRadioStatus_t (*publish)(const char *msg, uint32_t msgSize);
+	eRadioStatus_t (*publish)(const char *msg);
 
 	/**
 	  * @brief  Pointer to

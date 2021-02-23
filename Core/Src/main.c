@@ -160,7 +160,7 @@ int main(void)
 
 	   sprintf(logBuff,"{\"raw_moisture\":0,\"battery\":0,\"v_anl\":0,\"v_refint\":0,\"t_pcb\":%d,\"t_uc\":0,\"t_air\":0,\"adc_media\":0,\"adc_comp\":0,\"adc_ref\":0,\"snr\":0,\"rssi\":0,\"ping\":0,\"ts\":%d}", signal, testCounter);
 
-	   if(radio.publish(logBuff, strlen(logBuff)) == radio_error)							//error on publish
+	   if(radio.publish(logBuff) == radio_error)							//error on publish
 	   {
 //		   Error_Handler();
 		   goto turnOff;

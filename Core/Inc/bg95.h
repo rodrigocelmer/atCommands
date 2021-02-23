@@ -26,5 +26,5 @@ eRadioStatus_t bg95_getSN(char *serialNumBuf);
 eRadioStatus_t bg95_config(void);
 eRadioStatus_t bg95_checkSignal(void);
 eRadioStatus_t bg95_connect(char *mcu_uid);
-eRadioStatus_t bg95_publish(const char *msg, uint32_t msgSize);
+eRadioStatus_t bg95_publish(const char *msg);
 eRadioStatus_t bg95_disconnect(void);
