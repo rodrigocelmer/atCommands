@@ -151,7 +151,7 @@ int main(void)
 
 
 
-	   if(radio.connect(uidString, UID_STRING_SIZE) == radio_error)	//cannot attach or open/connect do mqtt
+	   if(radio.connect(uidString) == radio_error)	//cannot attach or open/connect do mqtt
 	   {
 //		   Error_Handler();
 		   goto turnOff;

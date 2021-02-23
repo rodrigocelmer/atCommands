@@ -163,10 +163,11 @@ eRadioStatus_t bg95_checkSignal(void)
 }
 
 #define CONN_RXBUF_SIZE		20
-#define QMTCONN_STRING_SIZE	43
-eRadioStatus_t bg95_connect(char *mcu_uid, uint32_t uidSize)
+#define TDR_UID_STRING_SIZE	28
+#define QMTCONN_STRING_SIZE	(TDR_UID_STRING_SIZE + 43)
+eRadioStatus_t bg95_connect(char *mcu_uid)
 {
-	char 			AT_QMTCONN[QMTCONN_STRING_SIZE + (uidSize - 1)];
+	char 			AT_QMTCONN[QMTCONN_STRING_SIZE];
 	char 			rxBuf[CONN_RXBUF_SIZE] = {'\0'};
 
 	sprintf(AT_QMTCONN, "AT+QMTCONN=1,\"%s\",\"xzbseimn\",\"ffAc_8Cuxlow\"\r\n", mcu_uid);
