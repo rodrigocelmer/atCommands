@@ -210,7 +210,7 @@ eRadioStatus_t bg95_connect(char *mcu_uid)
 }
 
 #define PUB_RXBUF_SIZE			100
-#define MSG_MAX_SIZE			172
+#define MSG_MAX_SIZE			429
 #define QMTPUBEX_STRING_SIZE	(MSG_MAX_SIZE + 83)
 eRadioStatus_t bg95_publish(const char *msg)
 {

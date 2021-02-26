@@ -75,7 +75,7 @@ int main(void)
 	char		radioSerialNumber[SERIAL_NUMBER_SIZE] = {'\0'};
 	sRadio_t 	radio;
 
-	char logBuff[170] = {'\0'};
+	char logBuff[429] = {'\0'};
 	int testCounter = 0, signal = 0, errCnt = 0;
 	eRadioStatus_t	radioSignal;
 
