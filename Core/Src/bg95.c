@@ -275,7 +275,7 @@ eBg95Status_t bg95_sendAtCmd(const char *txData, char *rxData, uint32_t timeout,
 
 eBg95Status_t bg95_serialTx(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize, uint8_t mqttCmd)
 {
-	uint8_t i = 0;
+	uint16_t i = 0;
 
 	for(i = 0; i< txDataSize; i++)
 	{
