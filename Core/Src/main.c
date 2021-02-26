@@ -151,10 +151,16 @@ int main(void)
 
 
 
-	   if(radio.connect(uidString) == radio_error)	//cannot attach or open/connect do mqtt
+	   while((radio.connect(uidString) == radio_error) && (errCnt < 3))	//cannot attach or open/connect do mqtt
 	   {
 //		   Error_Handler();
-		   goto turnOff;
+//		   goto turnOff;
+		   errCnt++;
+	   }
+
+	   if(errCnt >= 3)
+	   {
+		   goto disconnect;
 	   }
 
 
@@ -168,7 +174,7 @@ int main(void)
 	   }
 
 
-
+disconnect:
 	   if(radio.disconnect() == radio_error)						//I don't think we're going to have problems here
 	   {
 //		   Error_Handler();
