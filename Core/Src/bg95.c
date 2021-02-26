@@ -210,13 +210,13 @@ eRadioStatus_t bg95_connect(char *mcu_uid)
 }
 
 #define PUB_RXBUF_SIZE			100
-#define MSG_MAX_SIZE			429
+#define MSG_MAX_SIZE			320
 #define QMTPUBEX_STRING_SIZE	(MSG_MAX_SIZE + 83)
 eRadioStatus_t bg95_publish(const char *msg)
 {
 	char rxBuf[PUB_RXBUF_SIZE] = {'\0'};
 
-	char 			AT_QMTPUBEX[QMTPUBEX_STRING_SIZE] = {'\0'};
+	char AT_QMTPUBEX[QMTPUBEX_STRING_SIZE] = {'\0'};
 
 	sprintf(AT_QMTPUBEX, "AT+QMTPUBEX=1,1,1,1,\"raks213/cc50e33d036b/0x203235344d524313001e0012\",\"%s\"\r\n", msg);
 
