@@ -191,7 +191,8 @@ turnOff:
 	   radio.turnOn();
 	   delay_ms(10000);
 
-	   testCounter += 900;
+	   testCounter++;
+	   errCnt = 0;
   }
   /* USER CODE END 3 */
 }
