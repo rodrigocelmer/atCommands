@@ -172,6 +172,7 @@ int main(void)
 //		   Error_Handler();
 		   goto turnOff;
 	   }
+	   testCounter++;
 
 
 disconnect:
@@ -191,7 +192,6 @@ turnOff:
 	   radio.turnOn();
 	   delay_ms(10000);
 
-	   testCounter++;
 	   errCnt = 0;
   }
   /* USER CODE END 3 */
