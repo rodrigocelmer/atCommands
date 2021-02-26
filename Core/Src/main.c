@@ -76,7 +76,7 @@ int main(void)
 	sRadio_t 	radio;
 
 	char logBuff[170] = {'\0'};
-	int testCounter = 1614214800, signal = 0;
+	int testCounter = 0, signal = 0, errCnt = 0;
 	eRadioStatus_t	radioSignal;
 
   /* USER CODE END 1 */
@@ -158,7 +158,8 @@ int main(void)
 	   }
 
 
-	   sprintf(logBuff,"{\"raw_moisture\":0,\"battery\":0,\"v_anl\":0,\"v_refint\":0,\"t_pcb\":%d,\"t_uc\":0,\"t_air\":0,\"adc_media\":0,\"adc_comp\":0,\"adc_ref\":0,\"snr\":0,\"rssi\":0,\"ping\":0,\"ts\":%d}", signal, testCounter);
+//	   sprintf(logBuff,"{\"raw_moisture\":0,\"battery\":0,\"v_anl\":0,\"v_refint\":0,\"t_pcb\":%d,\"t_uc\":0,\"t_air\":0,\"adc_media\":0,\"adc_comp\":0,\"adc_ref\":0,\"snr\":0,\"rssi\":0,\"ping\":0,\"ts\":%d}", signal, testCounter);
+	   sprintf(logBuff,"{\"uid\":\"0x383633393235510200320029\",\"id\":131,\"referencia\":1658,\"umidade\":578,\"v_bat\":90,\"v_anlarm\":%d,\"t_ntc\":23,\"t_arm\":0,\"v_dgtarm\":0,\"t_ar\":21,\"u_ar\":0.00,\"adc_media\":2409,\"adc_mediaMovel\":0,\"adc_comp\":0,\"airRef\":0,\"waterRef\":0,\"fwVersion\":\"0.0.0\",\"snr\":-63,\"rssi\":%d,\"ping\":%d,\"lastData\":\"22.02.2021 15:22:01\"}", errCnt, signal, testCounter);
 
 	   if(radio.publish(logBuff) == radio_error)							//error on publish
 	   {
