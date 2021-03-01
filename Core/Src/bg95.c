@@ -218,7 +218,7 @@ eRadioStatus_t bg95_publish(const char *msg)
 
 	char AT_QMTPUBEX[QMTPUBEX_STRING_SIZE] = {'\0'};
 
-	sprintf(AT_QMTPUBEX, "AT+QMTPUBEX=1,1,1,1,\"raks213/cc50e33d036b/0x203235344d524313001e0012\",\"%s\"\r\n", msg);
+	sprintf(AT_QMTPUBEX, "AT+QMTPUBEX=1,1,1,1,\"raks213/central/sensor\",\"%s\"\r\n", msg);
 
 
 	if(bg95_sendAtCmd(AT_QMTPUBEX, rxBuf, MQTT_TIMEOUT, sizeof(AT_QMTPUBEX)) != bg95_ok)
@@ -275,9 +275,7 @@ eBg95Status_t bg95_sendAtCmd(const char *txData, char *rxData, uint32_t timeout,
 
 eBg95Status_t bg95_serialTx(const char *txData, char *rxData, uint32_t timeout, uint32_t txDataSize, uint8_t mqttCmd)
 {
-	uint16_t i = 0;
-
-	for(i = 0; i< txDataSize; i++)
+	while(*txData != '\0')
 	{
 		while(!(USART2->SR & USART_SR_TXE));
 		USART2->DR = *txData;
