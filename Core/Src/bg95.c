@@ -267,6 +267,7 @@ eBg95Status_t bg95_sendAtCmd(const char *txData, char *rxData, uint32_t timeout,
 
 	if(bg95_serialTx(txData, rxData, timeout, txDataSize, flagMqttCmd) == bg95_timeout)
 	{
+		breakpoint();
 		return bg95_timeout;
 	}
 
