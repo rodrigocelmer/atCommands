@@ -194,7 +194,7 @@ eRadioStatus_t bg95_connect(char *mcu_uid)
 		return radio_error;
 	}
 
-	if(bg95_sendAtCmd(AT_QMTOPEN, rxBuf, MQTT_TIMEOUT, sizeof(AT_QMTOPEN)) != bg95_ok)
+	if(bg95_sendAtCmd(AT_QMTOPEN, rxBuf, (MQTT_TIMEOUT * 2), sizeof(AT_QMTOPEN)) != bg95_ok)
 	{
 		breakpoint();
 		return radio_error;
