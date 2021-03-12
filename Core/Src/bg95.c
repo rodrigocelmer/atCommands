@@ -379,6 +379,7 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 		}
 		else
 		{
+			breakpoint();
 			return bg95_cmdNotRegistred;
 		}
 	}
@@ -415,6 +416,7 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 			}
 			else
 			{
+				breakpoint();
 				return bg95_cmdNotRegistred;
 			}
 		}
@@ -428,6 +430,7 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 		}
 		else if((c0 == 'E') && (c1 == 'R'))	//ERROR
 		{
+			breakpoint();
 			return bg95_error;
 		}
 		else if(((c0 >= '0') && (c0 <= '9'))	&&
@@ -438,6 +441,7 @@ eBg95Status_t bg95_parseResponse(char *respToParse)
 		}
 		else
 		{
+			breakpoint();
 			return bg95_cmdNotRegistred;
 		}
 	}
@@ -451,6 +455,7 @@ eBg95Status_t parse_cpin(char *respToParse)
 	{
 		return bg95_ok;
 	}
+	breakpoint();
 	return bg95_error;
 }
 
@@ -460,6 +465,7 @@ eBg95Status_t parse_creg(char *respToParse)
 	{
 		return bg95_ok;
 	}
+	breakpoint();
 	return bg95_error;
 }
 
@@ -469,6 +475,7 @@ eBg95Status_t parse_cgreg(char *respToParse)
 	{
 		return bg95_ok;
 	}
+	breakpoint();
 	return bg95_error;
 }
 
@@ -478,6 +485,7 @@ eBg95Status_t parse_cereg(char *respToParse)
 	{
 		return bg95_ok;
 	}
+	breakpoint();
 	return bg95_error;
 }
 
@@ -500,12 +508,14 @@ eBg95Status_t parse_csq(char *respToParse)
 	{
 		return csq_goodSignal;
 	}
+	breakpoint();
 	return bg95_error;
 }
 
 eBg95Status_t parse_cme(char *respToParse)
 {
 	//#TODO error handler
+	breakpoint();
 }
 
 #define SN_SIZE			15
@@ -527,6 +537,7 @@ eBg95Status_t parse_mqttOpen(char *respToParse)
 	{
 		return bg95_ok;
 	}
+	breakpoint();
 	return bg95_error;
 }
 
@@ -536,6 +547,7 @@ eBg95Status_t parse_mqttConn(char *respToParse)
 	{
 		return bg95_ok;
 	}
+	breakpoint();
 	return bg95_error;
 }
 
@@ -545,6 +557,7 @@ eBg95Status_t parse_mqttDisc(char *respToParse)
 	{
 		return bg95_ok;
 	}
+	breakpoint();
 	return bg95_error;
 }
 
@@ -554,6 +567,7 @@ eBg95Status_t parse_mqttSub(char *respToParse)
 	{
 		return bg95_ok;
 	}
+	breakpoint();
 	return bg95_error;
 }
 
@@ -563,6 +577,7 @@ eBg95Status_t parse_mqttUns(char *respToParse)
 	{
 		return bg95_ok;
 	}
+	breakpoint();
 	return bg95_error;
 }
 
@@ -572,5 +587,6 @@ eBg95Status_t parse_mqttPubex(char *respToParse)
 	{
 		return bg95_ok;
 	}
+	breakpoint();
 	return bg95_error;
 }
