@@ -165,10 +165,12 @@ eRadioStatus_t bg95_checkSignal(void)
 #define CONN_RXBUF_SIZE		20
 #define TDR_UID_STRING_SIZE	28
 #define QMTCONN_STRING_SIZE	(TDR_UID_STRING_SIZE + 43)
+#define NW_REGISTER_TIMEOUT	300000
 eRadioStatus_t bg95_connect(char *mcu_uid)
 {
 	char 			AT_QMTCONN[QMTCONN_STRING_SIZE] = {'\0'};
 	char 			rxBuf[CONN_RXBUF_SIZE] = {'\0'};
+	uint32_t 		startTick	= HAL_GetTick();
 
 	sprintf(AT_QMTCONN, "AT+QMTCONN=1,\"%s\",\"xzbseimn\",\"ffAc_8Cuxlow\"\r\n", mcu_uid);
 
@@ -186,7 +188,8 @@ eRadioStatus_t bg95_connect(char *mcu_uid)
 		cereg = bg95_sendAtCmd(AT_CEREG, rxBuf, CONFIG_TIMEOUT, sizeof(AT_CEREG));
 	}while(	(creg != bg95_ok)	&&
 			(cgreg != bg95_ok)	&&
-			(cereg != bg95_ok)	);
+			(cereg != bg95_ok)	&&
+			(HAL_GetTick() - startTick) <= NW_REGISTER_TIMEOUT);
 
 	if(bg95_sendAtCmd(AT_CGATT1, rxBuf, CGATT_TIMEOUT, sizeof(AT_CGATT1)) != bg95_ok)
 	{
