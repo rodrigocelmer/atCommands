@@ -130,7 +130,7 @@ int main(void)
 	   switch(radioSignal)
 	   {
 	   	   case radio_error:
-	   		   signal = -120;	//fixed value
+	   		   signal = -2;	//fixed value
 	   		   break;
 	   	   case noSignal:
 	   		   signal = 0;
@@ -145,7 +145,7 @@ int main(void)
 	   		   signal = 3;
 	   		   break;
 	   	   default:
-	   		   signal = -119;	//fixed value
+	   		   signal = -1;	//fixed value
 	   		   break;
 	   }
 
