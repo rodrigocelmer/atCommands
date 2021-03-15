@@ -1,7 +1,7 @@
 //AT commands
 const char AT_AT[]					= {"AT\r\n"};														//resp: OK
 const char AT_QPOWD[] 				= {"AT+QPOWD\r\n"};													//resp: OK POWERED DOWN
-const char AT_QCFG_NWSCANMODE[]		= {"AT+QCFG=\"NWSCANMODE\",0\r\n"};									//resp: OK
+const char AT_QCFG_NWSCANMODE[]		= {"AT+QCFG=\"NWSCANMODE\",3\r\n"};//0\r\n"};									//resp: OK
 const char AT_QCFG_NWSCANSEQ[]		= {"AT+QCFG=\"NWSCANSEQ\",030102\r\n"};//020103\r\n"};							//resp: OK
 const char AT_QCFG_IOTOPMODE[]		= {"AT+QCFG=\"IOTOPMODE\",1\r\n"};//2\r\n"};								//resp: OK
 const char AT_QCFG_BAND[]			= {"AT+QCFG=\"BAND\",0XF,0,0X8000004\r\n"};							//resp: OK
