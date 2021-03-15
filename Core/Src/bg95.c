@@ -507,6 +507,7 @@ eBg95Status_t parse_csq(char *respToParse)
 	{
 		return csq_goodSignal;
 	}
+	breakpoint();
 	return bg95_error;
 }
 
