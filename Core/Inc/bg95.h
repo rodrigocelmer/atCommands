@@ -8,16 +8,16 @@
 #define CONFIG_TIMEOUT	300
 #define QIDEACT_TIMEOUT	40000
 
-typedef enum {
-	bg95_ok = 0x00,
-	bg95_error,
-	bg95_timeout,
-	csq_noSignal,
-	csq_poorSignal,
-	csq_goodSignal,
-	csq_greatSignal,
-	bg95_cmdNotRegistred
-}eBg95Status_t;
+//typedef enum {
+//	bg95_ok = 0x00,
+//	bg95_error,
+//	bg95_timeout,
+//	csq_noSignal,
+//	csq_poorSignal,
+//	csq_goodSignal,
+//	csq_greatSignal,
+//	bg95_cmdNotRegistred
+//}eBg95Status_t;
 
 void bg95_turnOn(void);
 void bg95_turnOff(void);
