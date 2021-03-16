@@ -3,10 +3,11 @@
 typedef enum {
 	radio_ok = 0x00,
 	radio_error,
-	noSignal,
-	poorSignal,
-	goodSignal,
-	greatSignal,
+	radio_timeout,
+	radio_noSignal,
+	radio_poorSignal,
+	radio_goodSignal,
+	radio_greatSignal,
 	radio_cmdNotRegistred
 }eRadioStatus_t;
 

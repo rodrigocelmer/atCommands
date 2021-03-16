@@ -132,16 +132,16 @@ int main(void)
 	   	   case radio_error:
 	   		   signal = -2;	//fixed value
 	   		   break;
-	   	   case noSignal:
+	   	   case radio_noSignal:
 	   		   signal = 0;
 	   		   break;
-	   	   case poorSignal:
+	   	   case radio_poorSignal:
 	   		   signal = 1;
 	   		   break;
-	   	   case goodSignal:
+	   	   case radio_goodSignal:
 	   		   signal = 2;
 	   		   break;
-	   	   case	greatSignal:
+	   	   case	radio_greatSignal:
 	   		   signal = 3;
 	   		   break;
 	   	   default:
