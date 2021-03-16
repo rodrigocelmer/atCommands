@@ -145,6 +145,9 @@ int main(void)
 	   		   signal = 3;
 	   		   break;
 	   	   default:
+	   		GPIOA->ODR	 |= GPIO_ODR_OD5;
+	   		while(GPIOC->IDR & GPIO_IDR_IDR_13);
+	   		GPIOA->ODR	 &= ~GPIO_ODR_OD5;
 	   		   signal = -1;	//fixed value
 	   		   break;
 	   }
