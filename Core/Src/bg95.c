@@ -74,7 +74,7 @@ eRadioStatus_t bg95_getSN(char *serialNumBuf)
 		return radio_error;
 	}
 
-	return bg95_ok;
+	return radio_ok;
 }
 
 #define CONF_RXBUF_SIZE	20
